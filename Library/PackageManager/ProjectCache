@@ -1199,6 +1199,7 @@ m_ResolvedPackages:
     - 1.9.6
     - 1.9.7
     - 1.9.8
+    - 1.9.9
     compatible:
     - 1.7.8
     - 1.8.0
@@ -1210,6 +1211,7 @@ m_ResolvedPackages:
     - 1.9.6
     - 1.9.7
     - 1.9.8
+    - 1.9.9
     verified: 1.7.8
   dependencies:
   - name: com.unity.ugui

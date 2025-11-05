@@ -1,55 +1,62 @@
-using System;
+// Tower.cs (fragmento clave)
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    [Header("Stats")]
-    public float range = 7f;
-    public float fireRate = 1.0f; 
+    [Header("Shoot points")]
+    public Transform front;                 // <-- Asigná el child "Front"
+    public float range = 6f;
+    public float fireRate = 0.6f;
+
+    [Header("Proj/Factory")]
+    public ProjectileFactoryTD projectileFactory;
     public ProjectileId projectileType = ProjectileId.Basic;
 
-    [Header("Refs")]
-    public Transform front;                        
-    public ProjectileFactoryTD projectileFactory;
-    public ProjectilePoolManager projectilePools;
-
-    IShootStrategy strategy;
-    float fireTimer;
-
-    void Awake() { strategy = new SingleShot(); }
+    float nextShootTime;
 
     void Update()
     {
-        fireTimer += Time.deltaTime;
-        if (fireTimer < 1f / fireRate) return;
-
         var target = FindNearestEnemyInRange();
         if (target == null) return;
 
-        var prefab = projectileFactory.GetPrefab(projectileType);
-        if (prefab == null) return;
+        if (Time.time >= nextShootTime)
+        {
+            Shoot(target);
+            nextShootTime = Time.time + fireRate;
+        }
+    }
 
-        fireTimer = 0f;
-        strategy.Shoot(
-            front,
-            target,
-            (Vector3 pos) => projectilePools.Get(prefab, pos),
-            (Projectile p) => projectilePools.Release(p)
-        );
+    void Shoot(Transform target)
+    {
+        // Punto y dirección
+        Vector3 muzzlePos = (front != null) ? front.position : transform.position;
+        Vector3 dir = (target.position - muzzlePos).normalized;
+        Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+
+        var proj = projectileFactory.Create(projectileType, muzzlePos, rot);
+        if (proj != null) proj.Launch(dir);   // tu proyectil debe tener un método Launch(dir/vel)
     }
 
     Transform FindNearestEnemyInRange()
     {
-        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        Transform best = null; float bestD = float.MaxValue;
-        Vector3 p = transform.position;
-        foreach (var go in enemies)
-        {
-            float d = Vector3.Distance(p, go.transform.position);
-            if (d <= range && d < bestD) { bestD = d; best = go.transform; }
-        }
-        return best;
+        // Tu implementación actual (tag/layer). Asegurate que Enemy tenga Tag/Layer correcto.
+        // …
+        return null;
     }
 
-    public void SetStrategy(IShootStrategy s) => strategy = s; 
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        // Rango
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, range);
+
+        // Muzzle dir
+        if (front != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(front.position, front.position + front.forward * 1.0f);
+        }
+    }
+#endif
 }

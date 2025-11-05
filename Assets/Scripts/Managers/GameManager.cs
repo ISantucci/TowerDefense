@@ -50,6 +50,15 @@ public class GameManager : MonoBehaviour
         Score += v;
         GameEvents.RaiseScoreChanged(Score);
     }
+    public void SetMoneyLivesScore(int money, int lives, int score)
+    {
+        Money = money; Lives = lives; Score = score;
+        GameEvents.RaiseMoneyChanged(Money);
+        GameEvents.RaiseLivesChanged(Lives);
+        GameEvents.RaiseScoreChanged(Score);
+    }
+
+
 
     public void LoseLife(int v = 1)
     {

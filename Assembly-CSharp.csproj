@@ -72,6 +72,12 @@
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\WaypointsPath.cs" />
     <Compile Include="Assets\Scripts\Events\GameEvent.cs" />
+    <Compile Include="Assets\Scripts\Patterns\Command\ICommand.cs" />
+    <Compile Include="Assets\Scripts\Build\PlaceTowerCommand.cs" />
+    <Compile Include="Assets\Scripts\Build\BuildInvoker.cs" />
+    <Compile Include="Assets\Scripts\Build\TowerPlacer.cs" />
+    <Compile Include="Assets\Scripts\Build\BuildGrid.cs" />
+    <Compile Include="Assets\Scripts\Build\TowerSelectUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   currentIndex: 0
-  moveSpeed: 2.5
+  moveSpeed: 5
 --- !u!54 &5638653244653248785
 Rigidbody:
   m_ObjectHideFlags: 0
