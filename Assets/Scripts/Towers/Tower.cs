@@ -1,15 +1,17 @@
-// Tower.cs (fragmento clave)
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    [Header("Shoot points")]
-    public Transform front;                 // <-- Asigná el child "Front"
+    [Header("Targeting")]
     public float range = 6f;
     public float fireRate = 0.6f;
 
-    [Header("Proj/Factory")]
-    public ProjectileFactoryTD projectileFactory;
+    [Header("Shoot point")]
+    public Transform front;                 // hijo "Front" (muzzle)
+
+    [Header("Projectile")]
+    public ProjectileFactoryTD projectileFactory;   // tu factory con GetPrefab(...)
+    public ProjectilePoolManager projectilePool;    // tu pool (UnityEngine.Pool)
     public ProjectileId projectileType = ProjectileId.Basic;
 
     float nextShootTime;
@@ -28,35 +30,39 @@ public class Tower : MonoBehaviour
 
     void Shoot(Transform target)
     {
-        // Punto y dirección
-        Vector3 muzzlePos = (front != null) ? front.position : transform.position;
+        if (projectileFactory == null || projectilePool == null)
+        {
+            Debug.LogError("[Tower] Falta projectileFactory o projectilePool.");
+            return;
+        }
+
+        var prefab = projectileFactory.GetPrefab(projectileType);
+        if (prefab == null) { Debug.LogError("[Tower] Prefab nulo en factory."); return; }
+
+        Vector3 muzzlePos = front != null ? front.position : transform.position;
         Vector3 dir = (target.position - muzzlePos).normalized;
         Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
 
-        var proj = projectileFactory.Create(projectileType, muzzlePos, rot);
-        if (proj != null) proj.Launch(dir);   // tu proyectil debe tener un método Launch(dir/vel)
+        // Get del pool y disparo con tu API
+        var proj = projectilePool.Get(prefab, muzzlePos);
+        proj.transform.rotation = rot;
+        proj.FireAt(target, projectilePool.Release);   // <- clave: Release del pool
     }
 
     Transform FindNearestEnemyInRange()
     {
-        // Tu implementación actual (tag/layer). Asegurate que Enemy tenga Tag/Layer correcto.
-        // …
-        return null;
-    }
+        EnemyTD best = null;
+        float bestD = float.MaxValue;
 
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected()
-    {
-        // Rango
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, range);
-
-        // Muzzle dir
-        if (front != null)
+        var enemies = FindObjectsOfType<EnemyTD>();
+        foreach (var e in enemies)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(front.position, front.position + front.forward * 1.0f);
+            float d = Vector3.Distance(transform.position, e.transform.position);
+            if (d <= range && d < bestD)
+            {
+                bestD = d; best = e;
+            }
         }
+        return best ? best.transform : null;
     }
-#endif
 }
