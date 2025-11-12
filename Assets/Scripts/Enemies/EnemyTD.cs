@@ -24,6 +24,10 @@ public class EnemyTD : MonoBehaviour
 
     void Die()
     {
+        // --- ABB: remover de prioridad ---
+        var prog = GetComponent<EnemyProgress>();
+        EnemyPriorityABB.Instance?.Remove(prog);
+
         GameManager.I.AddMoney(bounty);
         GameManager.I.AddScore(1);
         GameEvents.RaiseEnemyRemoved();   // <<< Observer
@@ -32,6 +36,10 @@ public class EnemyTD : MonoBehaviour
 
     public void ReachEnd()
     {
+        // --- ABB: remover de prioridad ---
+        var prog = GetComponent<EnemyProgress>();
+        EnemyPriorityABB.Instance?.Remove(prog);
+
         GameManager.I.LoseLife(damageToBase);
         GameEvents.RaiseEnemyRemoved();   // <<< Observer
         Destroy(gameObject);

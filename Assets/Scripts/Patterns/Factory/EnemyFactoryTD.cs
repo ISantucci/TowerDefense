@@ -1,3 +1,4 @@
+// Assets/Scripts/Factories/EnemyFactoryTD.cs
 using UnityEngine;
 
 public enum EnemyId { Goblin }
@@ -17,11 +18,9 @@ public class EnemyFactoryTD : MonoBehaviour
         if (prefab == null) { Debug.LogError($"EnemyId sin prefab: {id}"); return null; }
 
         var go = Instantiate(prefab, pos, rot);
-        var mover = go.GetComponent<EnemyMovement>();
-        if (mover != null) mover.path = path;
 
-        
         GameEvents.RaiseEnemySpawned();
         return go;
     }
 }
+

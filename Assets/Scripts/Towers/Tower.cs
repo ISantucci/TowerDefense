@@ -7,25 +7,55 @@ public class Tower : MonoBehaviour
     public float fireRate = 0.6f;
 
     [Header("Shoot point")]
-    public Transform front;                 // hijo "Front" (muzzle)
+    public Transform front;
 
     [Header("Projectile")]
-    public ProjectileFactoryTD projectileFactory;   // tu factory con GetPrefab(...)
-    public ProjectilePoolManager projectilePool;    // tu pool (UnityEngine.Pool)
+    public ProjectileFactoryTD projectileFactory;
+    public ProjectilePoolManager projectilePool;
     public ProjectileId projectileType = ProjectileId.Basic;
 
     float nextShootTime;
 
     void Update()
     {
-        var target = FindNearestEnemyInRange();
-        if (target == null) return;
+        if (EnemyPriorityABB.Instance == null) return;
+
+        var targetEnemy = EnemyPriorityABB.Instance.GetMostAdvancedInRange(transform.position, range);
+        if (targetEnemy == null) return;
+
+        var target = targetEnemy.transform;
 
         if (Time.time >= nextShootTime)
         {
             Shoot(target);
             nextShootTime = Time.time + fireRate;
         }
+    }
+
+
+    Transform GetTarget()
+    {
+        // 1) Intentar ABB
+        var abb = EnemyPriorityABB.Instance;
+        if (abb != null)
+        {
+            var best = abb.GetMostAdvancedInRange(transform.position, range);
+            if (best != null) return best.transform;
+        }
+
+        // 2) Fallback: lógica vieja (distancia)
+        EnemyTD bestEnemy = null;
+        float bestD = float.MaxValue;
+        var enemies = FindObjectsOfType<EnemyTD>();
+        foreach (var e in enemies)
+        {
+            float d = Vector3.Distance(transform.position, e.transform.position);
+            if (d <= range && d < bestD)
+            {
+                bestD = d; bestEnemy = e;
+            }
+        }
+        return bestEnemy ? bestEnemy.transform : null;
     }
 
     void Shoot(Transform target)
@@ -43,26 +73,8 @@ public class Tower : MonoBehaviour
         Vector3 dir = (target.position - muzzlePos).normalized;
         Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
 
-        // Get del pool y disparo con tu API
         var proj = projectilePool.Get(prefab, muzzlePos);
         proj.transform.rotation = rot;
-        proj.FireAt(target, projectilePool.Release);   // <- clave: Release del pool
-    }
-
-    Transform FindNearestEnemyInRange()
-    {
-        EnemyTD best = null;
-        float bestD = float.MaxValue;
-
-        var enemies = FindObjectsOfType<EnemyTD>();
-        foreach (var e in enemies)
-        {
-            float d = Vector3.Distance(transform.position, e.transform.position);
-            if (d <= range && d < bestD)
-            {
-                bestD = d; best = e;
-            }
-        }
-        return best ? best.transform : null;
+        proj.FireAt(target, projectilePool.Release);
     }
 }
