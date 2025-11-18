@@ -1,25 +1,32 @@
-// Assets/Scripts/Build/TowerSelectUI.cs
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TowerSelectUI : MonoBehaviour
 {
-    public TowerPlacer placer;          // arrastrá _Managers/TowerPlacer_GO
+    public TowerPlacer placer;       // arrastrá el TowerPlacer
     public TowerId towerId = TowerId.Basic;
-    public int cost = 50;
-    public Image selectedGlow;          // arrastrá el hijo "SelectedGlow"
+    public Image selectedGlow;       // hijo "SelectedGlow" (Image)
 
-    // estado simple de selección
     static TowerSelectUI current;
+
+    void OnEnable()
+    {
+        if (placer != null)
+            placer.OnSelectionCleared += Deselect;
+    }
+
+    void OnDisable()
+    {
+        if (placer != null)
+            placer.OnSelectionCleared -= Deselect;
+    }
 
     public void SelectThisTower()
     {
-        if (placer == null) { Debug.LogWarning("[TowerSelectUI] Placer no asignado"); return; }
+        if (!placer) return;
 
-        placer.SelectTower(towerId, cost);
-        Debug.Log($"[TowerSelectUI] Seleccionado {towerId} (${cost})");
+        placer.SelectTower(towerId);
 
-        // Apago el glow del anterior, enciendo el mío
         if (current != null && current != this && current.selectedGlow != null)
             current.selectedGlow.enabled = false;
 
@@ -27,5 +34,13 @@ public class TowerSelectUI : MonoBehaviour
             selectedGlow.enabled = true;
 
         current = this;
+    }
+
+    void Deselect()
+    {
+        if (selectedGlow != null)
+            selectedGlow.enabled = false;
+        if (current == this)
+            current = null;
     }
 }

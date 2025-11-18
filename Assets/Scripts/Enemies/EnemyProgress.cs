@@ -1,66 +1,73 @@
-using System.Collections.Generic;
+// Assets/Scripts/Enemies/EnemyProgress.cs
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
 public class EnemyProgress : MonoBehaviour
 {
-    EnemyMovement movement;
-    float totalDistance;
+    private EnemyMovement movement;
+    private float totalDistance;
     public float progressValue { get; private set; }  // 0 = inicio, 1 = llegó
-
-    IReadOnlyList<Transform> Route => movement.Route;
 
     void Start()
     {
         movement = GetComponent<EnemyMovement>();
 
-        if (movement == null || Route == null || Route.Count < 2)
+        var route = movement.Route;
+        if (route == null || route.Count < 2)
         {
             Debug.LogError($"[EnemyProgress] Ruta inválida en {name}");
-            enabled = false; return;
+            enabled = false;
+            return;
         }
 
-        // Distancia total de toda la ruta
+        // Distancia total desde el primer hasta el último punto de la ruta
         totalDistance = 0f;
-        for (int i = 1; i < Route.Count; i++)
+        for (int i = 1; i < route.Count; i++)
+        {
+            if (route[i - 1] == null || route[i] == null) continue;
             totalDistance += Vector3.Distance(
-                Route[i - 1].position,
-                Route[i].position);
+                route[i - 1].position,
+                route[i].position
+            );
+        }
 
-        // me registro en el ABB
-        EnemyPriorityABB.Instance?.Insert(this);
-    }
-
-    void OnDestroy()
-    {
-        // me saco del ABB si muero / llego
-        EnemyPriorityABB.Instance?.Remove(this);
+        if (totalDistance <= 0f)
+        {
+            Debug.LogWarning($"[EnemyProgress] totalDistance=0 en {name}");
+            totalDistance = 1f; // evitamos división por cero
+        }
     }
 
     void Update()
     {
-        if (!enabled || movement == null || Route == null || Route.Count == 0)
-            return;
+        var route = movement.Route;
+        if (movement == null || route == null || route.Count == 0) return;
 
-        int idx = Mathf.Clamp(movement.CurrentIndex, 0, Route.Count - 1);
-
-        // distancia recorrida hasta el waypoint actual
+        // Calcula distancia recorrida según CurrentIndex + tramo parcial
         float covered = 0f;
-        for (int i = 1; i <= idx && i < Route.Count; i++)
-            covered += Vector3.Distance(
-                Route[i - 1].position,
-                Route[i].position);
+        int idx = Mathf.Clamp(movement.CurrentIndex, 0, route.Count - 1);
 
-        // más la parcial hacia el siguiente waypoint
-        if (idx < Route.Count)
+        // tramos ya completados
+        for (int i = 1; i < idx && i < route.Count; i++)
         {
-            var next = Route[idx];
-            covered += Vector3.Distance(transform.position, next.position);
+            if (route[i - 1] == null || route[i] == null) continue;
+            covered += Vector3.Distance(
+                route[i - 1].position,
+                route[i].position
+            );
+        }
+
+        // tramo parcial hacia el siguiente punto
+        if (idx < route.Count)
+        {
+            var next = route[idx];
+            if (next != null)
+                covered += Vector3.Distance(next.position, transform.position);
         }
 
         progressValue = Mathf.Clamp01(covered / totalDistance);
 
-        // actualizo mi posición en el ABB
+        // Actualiza posición en ABB si está activo
         EnemyPriorityABB.Instance?.UpdateProgress(this);
     }
 }

@@ -1,7 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+
+    public static readonly List<Tower> Instances = new();
+
+    public TowerId towerType;   
+
+
     [Header("Targeting")]
     public float range = 6f;
     public float fireRate = 0.6f;
@@ -15,6 +22,28 @@ public class Tower : MonoBehaviour
     public ProjectileId projectileType = ProjectileId.Basic;
 
     float nextShootTime;
+
+    void OnEnable()
+    {
+        if (!Instances.Contains(this))
+            Instances.Add(this);
+    }
+
+    void OnDisable()
+    {
+        Instances.Remove(this);
+    }
+
+
+    void Awake()
+    {
+        // Si no están seteados por inspector, los busco en la escena.
+        if (!projectileFactory)
+            projectileFactory = FindObjectOfType<ProjectileFactoryTD>();
+
+        if (!projectilePool)
+            projectilePool = FindObjectOfType<ProjectilePoolManager>();
+    }
 
     void Update()
     {

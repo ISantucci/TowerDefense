@@ -1,76 +1,51 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildInvoker : MonoBehaviour
 {
-    // Pilas por índices (TDA) para Undo/Redo
-    private readonly ArrayStack<ICommand> undoStack = new(32);
-    private readonly ArrayStack<ICommand> redoStack = new(32);
+    readonly Stack<ICommand> undoStack = new();
+    readonly Stack<ICommand> redoStack = new();
+
+    public bool CanUndo => undoStack.Count > 0;
+    public bool CanRedo => redoStack.Count > 0;
 
     public void Do(ICommand cmd)
     {
         cmd.Execute();
 
-        // Si es PlaceTowerCommand y no se completó, no apilo
-        if (cmd is PlaceTowerCommand ptc && !ptc.IsDone)
-        {
-            Debug.Log($"[BuildInvoker] Do(cancel) -> IsDone=false | undoCount={undoStack.Count}, redoCount={redoStack.Count}");
-            return;
-        }
+        // si el comando falló (PlaceTowerCommand.IsDone = false), no lo guardes
+        if (cmd is PlaceTowerCommand ptc && !ptc.IsDone) return;
 
         undoStack.Push(cmd);
         redoStack.Clear();
-
-        Debug.Log($"[BuildInvoker] Do(push) -> undoTop={undoStack.Count} | redo=0 | topCmd={TopName(undoStack)}");
     }
 
     public void Undo()
     {
-        if (undoStack.IsEmpty)
-        {
-            Debug.Log("[BuildInvoker] Undo -> pila vacía");
-            return;
-        }
+        if (undoStack.Count == 0) return;
 
         var c = undoStack.Pop();
         c.Undo();
         redoStack.Push(c);
 
-        Debug.Log($"[BuildInvoker] Undo(pop->push) -> undoTop={undoStack.Count}, redoTop={redoStack.Count} | redoTopCmd={TopName(redoStack)}");
+        Debug.Log("[Invoker] Undo ejecutado.");
     }
 
     public void Redo()
     {
-        if (redoStack.IsEmpty)
-        {
-            Debug.Log("[BuildInvoker] Redo -> pila vacía");
-            return;
-        }
+        if (redoStack.Count == 0) return;
 
         var c = redoStack.Pop();
         c.Execute();
-
-        // Si fuera PlaceTowerCommand y falló al re-ejecutar, no lo apilo
-        if (c is PlaceTowerCommand ptc && !ptc.IsDone)
-        {
-            Debug.Log($"[BuildInvoker] Redo(cancel) -> IsDone=false | undoTop={undoStack.Count}, redoTop={redoStack.Count}");
-            return;
-        }
-
         undoStack.Push(c);
 
-        Debug.Log($"[BuildInvoker] Redo(pop->push) -> undoTop={undoStack.Count}, redoTop={redoStack.Count} | undoTopCmd={TopName(undoStack)}");
+        Debug.Log("[Invoker] Redo ejecutado.");
     }
 
-    private static string TopName(ArrayStack<ICommand> s)
+    public void ClearHistory()
     {
-        try
-        {
-            var top = s.Peek();
-            return top?.GetType().Name ?? "(null)";
-        }
-        catch
-        {
-            return "(empty)";
-        }
+        undoStack.Clear();
+        redoStack.Clear();
+        Debug.Log("[Invoker] Historial limpiado.");
     }
 }

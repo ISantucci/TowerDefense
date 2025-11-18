@@ -1,54 +1,56 @@
-// PlaceTowerCommand.cs
 using UnityEngine;
 
 public class PlaceTowerCommand : ICommand
 {
-    private readonly TowerFactoryTD factory;
-    private readonly TowerId towerId;
-    private readonly Vector3 position;
-    private readonly Quaternion rotation;
-    private readonly int cost;
+    readonly TowerFactoryTD factory;
+    readonly TowerId towerId;
+    readonly Vector3 position;
+    readonly Quaternion rotation;
+    readonly int cost;
 
-    private Tower created;
-    public bool IsDone { get; private set; }  // <-- nuevo
+    Tower createdTower;
+    public bool IsDone { get; private set; }
 
-    public PlaceTowerCommand(TowerFactoryTD factory, TowerId id, Vector3 pos, Quaternion rot, int cost)
+    public PlaceTowerCommand(TowerFactoryTD factory, TowerId towerId, Vector3 position, Quaternion rotation, int cost)
     {
-        this.factory = factory; towerId = id; position = pos; rotation = rot; this.cost = cost;
+        this.factory = factory;
+        this.towerId = towerId;
+        this.position = position;
+        this.rotation = rotation;
+        this.cost = cost;
     }
 
     public void Execute()
     {
         IsDone = false;
 
+        // 1) plata
         if (!GameManager.I.SpendMoney(cost))
         {
-            Debug.LogWarning($"[PlaceTowerCommand] No alcanza dinero (${cost}).");
+            Debug.LogWarning($"[PlaceTowerCommand] No alcanza dinero. Cost={cost}, Money={GameManager.I.Money}");
             return;
         }
 
-        created = factory.Create(towerId, position, rotation);
-
-        if (created == null)
+        // 2) crear torre
+        createdTower = factory.Create(towerId, position, rotation);
+        if (createdTower == null)
         {
-            Debug.LogError("[PlaceTowerCommand] factory.Create() devolvió null. Hago refund.");
-            GameManager.I.AddMoney(cost); // rollback
+            Debug.LogError("[PlaceTowerCommand] Factory devolvió null, devolviendo plata.");
+            GameManager.I.AddMoney(cost);
             return;
         }
 
         IsDone = true;
-        Debug.Log($"[PlaceTowerCommand] Torre {towerId} creada en {position}.");
+        Debug.Log($"[PlaceTowerCommand] Torre {towerId} creada en {position}, cost={cost}");
     }
 
     public void Undo()
     {
-        if (!IsDone) return;
-        if (created != null)
-        {
-            Object.Destroy(created.gameObject);
-            GameManager.I.AddMoney(cost);
-            Debug.Log($"[PlaceTowerCommand] Undo {towerId}. Refund ${cost}.");
-        }
+        if (!IsDone || createdTower == null) return;
+
+        Object.Destroy(createdTower.gameObject);
+        GameManager.I.AddMoney(cost);
+        Debug.Log($"[PlaceTowerCommand] Undo torre {towerId}, reembolso={cost}");
         IsDone = false;
     }
 }

@@ -1,28 +1,49 @@
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public enum TowerId { Basic }
+public enum TowerId
+{
+    Basic
+    // después sumás más tipos
+}
+
+[Serializable]
+public class TowerPrefabEntry
+{
+    public TowerId id;
+    public Tower prefab;   // 👈 tipo Tower, NO GameObject
+}
 
 public class TowerFactoryTD : MonoBehaviour
 {
-    [Header("Prefabs")]
-    public Tower basicTowerPrefab;
+    [Header("Prefabs de Torres")]
+    public List<TowerPrefabEntry> towerPrefabs = new();
 
-    public Tower GetPrefab(TowerId id)
+    public Tower Create(TowerId id, Vector3 position, Quaternion rotation)
     {
-        switch (id)
+        // Buscar el prefab correspondiente
+        var entry = towerPrefabs.Find(e => e.id == id);
+        if (entry == null || entry.prefab == null)
         {
-            case TowerId.Basic: return basicTowerPrefab;
-            default:
-                UnityEngine.Debug.LogError($"TowerId sin prefab: {id}");
-                return null;
+            Debug.LogError($"[TowerFactoryTD] No hay prefab asignado para TowerId={id}");
+            return null;
         }
-    }
 
-    public Tower Create(TowerId id, Vector3 pos, Quaternion rot)
-    {
-        var prefab = GetPrefab(id);
-        if (prefab == null) return null;
-        return Instantiate(prefab, pos, rot);
+        // VALIDACIÓN fuerte: el prefab debe tener Tower
+        if (entry.prefab.GetComponent<Tower>() == null)
+        {
+            Debug.LogError($"[TowerFactoryTD] El prefab asignado a {id} NO tiene componente Tower. Revisá el prefab.");
+            return null;
+        }
+
+        // Instanciar
+        var instance = Instantiate(entry.prefab, position, rotation);
+
+        // Setear tipo
+        instance.towerType = id;
+
+        Debug.Log($"[TowerFactoryTD] Torre {id} creada en {position}");
+        return instance;
     }
 }
