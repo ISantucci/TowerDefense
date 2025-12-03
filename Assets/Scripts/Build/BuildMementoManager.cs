@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class BuildMementoManager : MonoBehaviour
 {
-    public TowerFactoryTD towerFactory;   // arrastrá tu factory
-    public BuildInvoker invoker;          // mismo invoker que usa TowerPlacer
+    public TowerFactoryTD towerFactory;   
+    public BuildInvoker invoker;          
 
     BuildSnapshot lastSnapshot;
 
-    // --- ORIGINATOR: crear snapshot del estado actual ---
+  
     public BuildSnapshot CreateSnapshot()
     {
         var snap = new BuildSnapshot();

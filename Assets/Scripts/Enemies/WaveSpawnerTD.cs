@@ -1,175 +1,128 @@
+Ôªøusing System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 using UnityEngine;
+
+[Serializable]
+public class WaveConfig
+{
+    public string name;
+    public EnemyId enemyType = EnemyId.Goblin;
+    public int count = 5;
+    public float interval = 1f;
+}
 
 public class WaveSpawnerTD : MonoBehaviour
 {
     [Header("Refs")]
-    public EnemyFactoryTD factory;
-    public WaypointsPath path;
+    public EnemyFactoryTD enemyFactory;
     public Transform spawnPoint;
 
-    [Header("Spawn")]
-    public float spawnInterval = 0.8f;
-    public float nextWaveDelay = 3f;
+    [Header("Waves (config en Inspector)")]
+    public WaveConfig[] waves;   
 
-    [Header("Waves")]
-    public int[] waveSizes = new int[] { 5, 8, 12 };
+    //COLA REAL DE WAVES
+    Queue<WaveConfig> waveQueue;
 
-    Queue<EnemyId> currentQueue = new Queue<EnemyId>();
-    int waveIndex = -1;
-    bool finishedSpawningCurrent = false;
-    bool launchingNext = false;
-
-    int aliveCount = 0;
-
-    [Header("Debug")]
-    [SerializeField] bool dataTrace = true; // TRACE: toggle para logs
-
-    public EnemyGraphPath graphProvider;
-
-    void Trace(string msg)              // TRACE: helper (no altera lÛgica)
-    {
-        if (dataTrace) Debug.Log($"[WaveSpawnerTD] {msg}");
-    }
+    int currentWaveIndex = -1;   // solo para HUD / debug
+    int totalWaves = 0;          // cantidad total (para mostrar en HUD)
+    int enemiesAlive = 0;
+    bool spawning = false;
 
     void OnEnable()
     {
-        GameEvents.EnemySpawned += OnEnemySpawned;
         GameEvents.EnemyRemoved += OnEnemyRemoved;
-        Trace("OnEnable suscripto a eventos"); // TRACE
     }
 
     void OnDisable()
     {
-        GameEvents.EnemySpawned -= OnEnemySpawned;
         GameEvents.EnemyRemoved -= OnEnemyRemoved;
-        Trace("OnDisable desuscripto de eventos"); // TRACE
     }
 
     void Start()
     {
-        if (path == null || path.points == null || path.points.Length == 0)
-        {
-            Debug.LogError("WaveSpawnerTD: falta asignar WaypointsPath");
-            enabled = false; return;
-        }
-        Trace($"Start OK. Waypoints: {path.points.Length}"); // TRACE
+        BuildWaveQueue();
         StartNextWave();
     }
 
-    void OnEnemySpawned()
+    // üëá Armamos la cola a partir del array del Inspector
+    void BuildWaveQueue()
     {
-        aliveCount++;
-        Trace($"EnemySpawned -> aliveCount={aliveCount}"); // TRACE
-    }
+        waveQueue = new Queue<WaveConfig>();
 
-    void OnEnemyRemoved()
-    {
-        aliveCount = Mathf.Max(0, aliveCount - 1);
-        Trace($"EnemyRemoved -> aliveCount={aliveCount}"); // TRACE
-        CheckAdvance();
-    }
-
-    void CheckAdvance()
-    {
-        // TRACE: mostramos estado clave para entender el avance
-        Trace($"CheckAdvance finishedSpawningCurrent={finishedSpawningCurrent}, aliveCount={aliveCount}, waveIndex={waveIndex}/{waveSizes.Length - 1}");
-
-        if (finishedSpawningCurrent && aliveCount == 0)
+        if (waves != null)
         {
-            bool hayMasWaves = (waveIndex + 1) < waveSizes.Length;
-            if (hayMasWaves && !launchingNext)
+            foreach (var w in waves)
             {
-                Trace("Listo para siguiente wave (cola vacÌa y sin vivos). Arranco delay..."); // TRACE
-                StartCoroutine(StartNextWaveDelayed());
-            }
-            else if (!hayMasWaves)
-            {
-                Trace("No hay m·s waves. Level WON"); // TRACE
-                GameEvents.RaiseLevelWon();
+                if (w != null)
+                    waveQueue.Enqueue(w);   // ENQUEUE 
             }
         }
-    }
 
-    IEnumerator StartNextWaveDelayed()
-    {
-        launchingNext = true;
-        Trace($"Esperando {nextWaveDelay} s para prÛxima wave..."); // TRACE
-        yield return new WaitForSeconds(nextWaveDelay);
-        launchingNext = false;
-        StartNextWave();
+        totalWaves = waveQueue.Count;
+        if (totalWaves == 0)
+        {
+            Debug.LogWarning("[WaveSpawnerTD] No hay waves configuradas.");
+        }
     }
 
     void StartNextWave()
     {
-        waveIndex++;
-        if (waveIndex >= waveSizes.Length)
+        if (spawning) return;
+
+        // Si la cola est√° vac√≠a, no hay m√°s waves
+        if (waveQueue == null || waveQueue.Count == 0)
         {
-            Trace("StartNextWave llamado pero no hay m·s waves."); // TRACE
+            Debug.Log("[WaveSpawnerTD] No hay m√°s waves, nivel ganado.");
+            GameEvents.RaiseLevelWon();
             return;
         }
 
-        if (EnemyPriorityABB.Instance != null)
-            EnemyPriorityABB.Instance.Clear();
+        // √çndice l√≥gico para HUD (Wave 1, Wave 2, etc.)
+        currentWaveIndex++;
 
-        int size = waveSizes[waveIndex];
-        GameEvents.RaiseWaveChanged(waveIndex + 1, waveSizes.Length);
+        // DEQUEUE = DESACOLAR: saco la wave del frente de la cola
+        WaveConfig w = waveQueue.Dequeue();
 
-        currentQueue.Clear();
-        Trace($"Wave {waveIndex + 1}/{waveSizes.Length} -> preparando cola con {size} enemigos"); // TRACE
+        Debug.Log($"[WaveSpawnerTD] Wave {currentWaveIndex + 1}/{totalWaves} -> {w.count} {w.enemyType}");
 
-        for (int i = 0; i < size; i++)
-        {
-            currentQueue.Enqueue(EnemyId.Goblin);
-            // opcional: evita spam, pero te deja ver la progresiÛn
-            if (dataTrace && (i < 5 || i == size - 1))
-                Trace($"Enqueue {EnemyId.Goblin} (i={i}) -> queueCount={currentQueue.Count}"); // TRACE
-        }
+        // Avisar al HUD (Wave actual y total)
+        GameEvents.RaiseWaveChanged(currentWaveIndex + 1, totalWaves);
 
-        finishedSpawningCurrent = false;
-        StartCoroutine(SpawnCurrentWave());
-        Trace($"Wave {waveIndex + 1} armada. queueCount={currentQueue.Count}"); // TRACE
+        // Lanzar la corrutina de spawn
+        StartCoroutine(SpawnWave(w));
     }
 
-    IEnumerator SpawnCurrentWave()
+    IEnumerator SpawnWave(WaveConfig w)
     {
-        Vector3 pos = (spawnPoint != null ? spawnPoint.position : path.points[0].position);
-        Trace("SpawnCurrentWave iniciado");
+        spawning = true;
 
-        while (currentQueue.Count > 0)
+        for (int i = 0; i < w.count; i++)
         {
-            var id = currentQueue.Dequeue();
-            Trace($"Dequeue {id} -> queueCount={currentQueue.Count}");
+            enemyFactory.Spawn(w.enemyType, spawnPoint.position, Quaternion.identity);
+            enemiesAlive++;
 
-            // 1) Crear enemigo
-            var go = factory.Create(id, pos, Quaternion.identity, path);
-            if (go != null)
-            {
-                // 2) Calcular ruta con Dijkstra en ESTE enemigo
-                var gpath = go.GetComponent<EnemyGraphPath>();
-                if (gpath != null)
-                {
-                    gpath.path = path; // aseguramos el path
-                    var route = gpath.ComputeAndGetPath();
+            // si quer√©s, ac√° podr√≠as avisar EnemySpawned:
+            // GameEvents.RaiseEnemySpawned();
 
-                    // 3) Inyectar ruta al movimiento
-                    var move = go.GetComponent<EnemyMovement>();
-                    if (move != null) move.SetRoute(route);
-
-                    // 4) Asegurar EnemyProgress + registrarlo en ABB
-                    var prog = go.GetComponent<EnemyProgress>();
-                    if (prog == null) prog = go.AddComponent<EnemyProgress>();
-                    EnemyPriorityABB.Instance?.Insert(prog);
-                }
-            }
-
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(w.interval);
         }
 
-        finishedSpawningCurrent = true;
-        Trace("Cola de la wave vacÌa. finishedSpawningCurrent=true");
-        CheckAdvance();
+        spawning = false;
+        CheckWaveEnd();
     }
 
+    void OnEnemyRemoved()
+    {
+        enemiesAlive--;
+        CheckWaveEnd();
+    }
+
+    void CheckWaveEnd()
+    {
+        if (!spawning && enemiesAlive <= 0)
+        {
+            StartNextWave();
+        }
+    }
 }

@@ -1,46 +1,60 @@
-// Assets/Scripts/UI/BuildHUDActions.cs
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildHUDActions : MonoBehaviour
 {
-    public BuildInvoker invoker;          // arrastrá tu BuildInvoker_GO
-    public BuildMementoManager memento;   // arrastrá tu BuildMementoManager_GO
+    [Header("Facade")]
+    public GameplayFacade facade;
 
-    [Header("Botones (opcionales)")]
+    [Header("Botones")]
     public Button btnUndo;
     public Button btnRedo;
     public Button btnSave;
     public Button btnLoad;
 
+    void Awake()
+    {
+        // Si no lo asignaste en el inspector, lo toma del singleton
+        if (!facade)
+            facade = GameplayFacade.I;
+    }
+
     void Update()
     {
-        if (btnUndo != null) btnUndo.interactable = invoker != null && invoker.CanUndo;
-        if (btnRedo != null) btnRedo.interactable = invoker != null && invoker.CanRedo;
-        if (btnLoad != null) btnLoad.interactable = memento != null && memento.HasHistory;
-        // Save normalmente siempre activo
+        if (!facade) return;
+
+        if (btnUndo != null)
+            btnUndo.interactable = facade.CanUndoBuild;
+
+        if (btnRedo != null)
+            btnRedo.interactable = facade.CanRedoBuild;
+
+        if (btnLoad != null)
+            btnLoad.interactable = facade.CanLoadSnapshot;
+
+        if (btnSave != null)
+            btnSave.interactable = true; // siempre se puede guardar
     }
+
+    // ===== METODOS QUE VA A VER EL BUTTON =====
 
     public void OnUndo()
     {
-        Debug.Log("[HUD] OnUndo()");
-        invoker?.Undo();
+        facade?.UndoBuild();
     }
 
     public void OnRedo()
     {
-        invoker?.Redo();
+        facade?.RedoBuild();
     }
 
     public void OnSaveSnapshot()
     {
-        Debug.Log("[HUD] OnSaveSnapshot()");
-        memento?.SaveCurrent();
+        facade?.SaveLayout();
     }
 
     public void OnLoadSnapshot()
     {
-        memento?.RestoreLast();
-
+        facade?.LoadLayout();
     }
 }
