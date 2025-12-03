@@ -2,24 +2,36 @@
 
 public class EnemyTD : MonoBehaviour
 {
-    public int maxHealth = 12;
-    public int bounty = 5;
-    public int damageToBase = 1;
-    public bool testAutoKill = false;
+    [Header("Datos compartidos (Flyweight)")]
+    public EnemyData data;   // 👉 referencia al ScriptableObject
 
-    int hp;
+    [Header("Estado de runtime (extrínseco)")]
+    public int currentHealth;   // vida actual de ESTA instancia
+    public bool testAutoKill = false;
 
     void Start()
     {
-        hp = maxHealth;
-        if (testAutoKill) Invoke(nameof(_TestKill), 0.8f);
+        if (data == null)
+        {
+            Debug.LogError("[EnemyTD] No hay EnemyData asignado en " + name, this);
+            currentHealth = 1; // valor de seguridad
+        }
+        else
+        {
+            currentHealth = data.maxHealth;
+        }
+
+        if (testAutoKill)
+            Invoke(nameof(_TestKill), 0.8f);
     }
+
     void _TestKill() => TakeDamage(999);
 
     public void TakeDamage(int dmg)
     {
-        hp -= dmg;
-        if (hp <= 0) Die();
+        currentHealth -= dmg;
+        if (currentHealth <= 0)
+            Die();
     }
 
     void Die()
@@ -28,8 +40,18 @@ public class EnemyTD : MonoBehaviour
         var prog = GetComponent<EnemyProgress>();
         EnemyPriorityABB.Instance?.Remove(prog);
 
-        GameManager.I.AddMoney(bounty);
-        GameManager.I.AddScore(1);
+        // Recompensas desde el Flyweight
+        if (data != null)
+        {
+            GameManager.I.AddMoney(data.bounty);
+            GameManager.I.AddScore(data.scoreReward);
+        }
+        else
+        {
+            GameManager.I.AddMoney(1);
+            GameManager.I.AddScore(1);
+        }
+
         GameEvents.RaiseEnemyRemoved();   // <<< Observer
         Destroy(gameObject);
     }
@@ -40,7 +62,9 @@ public class EnemyTD : MonoBehaviour
         var prog = GetComponent<EnemyProgress>();
         EnemyPriorityABB.Instance?.Remove(prog);
 
-        GameManager.I.LoseLife(damageToBase);
+        int dmgBase = data != null ? data.damageToBase : 1;
+        GameManager.I.LoseLife(dmgBase);
+
         GameEvents.RaiseEnemyRemoved();   // <<< Observer
         Destroy(gameObject);
     }
