@@ -13,8 +13,7 @@ public class BuildInvoker : MonoBehaviour
     {
         cmd.Execute();
 
-        // si el comando falló (PlaceTowerCommand.IsDone = false), no lo guardes
-        if (cmd is PlaceTowerCommand ptc && !ptc.IsDone) return;
+       if (cmd is PlaceTowerCommand ptc && !ptc.IsDone) return;
 
         undoStack.Push(cmd);
         redoStack.Clear();

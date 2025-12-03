@@ -5,7 +5,6 @@ using UnityEngine;
 public enum TowerId
 {
     Basic
-    // después sumás más tipos
 }
 
 [Serializable]

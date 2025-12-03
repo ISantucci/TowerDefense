@@ -1,26 +1,74 @@
-// Assets/Scripts/Factories/EnemyFactoryTD.cs
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyId { Goblin }
+[Serializable]
+public class EnemyEntry
+{
+    public EnemyData data;
+}
 
 public class EnemyFactoryTD : MonoBehaviour
 {
-    [Header("Prefabs")]
-    public GameObject goblinPrefab;
+    [Header("Catálogo de Enemigos (Flyweights)")]
+    public List<EnemyEntry> enemies = new();
 
-    public GameObject Create(EnemyId id, Vector3 pos, Quaternion rot, WaypointsPath path)
+    [Header("Ruta por defecto")]
+    [SerializeField] EnemyGraphPath defaultPath;  // 👈 arrastrás tu EnemyPath de la escena
+
+    EnemyData GetData(EnemyId id)
     {
-        GameObject prefab = id switch
+        foreach (var e in enemies)
         {
-            EnemyId.Goblin => goblinPrefab,
-            _ => null
-        };
-        if (prefab == null) { Debug.LogError($"EnemyId sin prefab: {id}"); return null; }
+            if (e != null && e.data != null && e.data.id == id)
+                return e.data;
+        }
 
-        var go = Instantiate(prefab, pos, rot);
+        Debug.LogError($"[EnemyFactoryTD] No se encontró EnemyData para id={id}");
+        return null;
+    }
 
-        GameEvents.RaiseEnemySpawned();
-        return go;
+    public EnemyTD Spawn(EnemyId id, Vector3 position, Quaternion rotation)
+    {
+        var data = GetData(id);
+        if (data == null)
+        {
+            Debug.LogError($"[EnemyFactoryTD] No hay EnemyData válido para id={id}");
+            return null;
+        }
+
+        if (data.prefab == null)
+        {
+            Debug.LogError($"[EnemyFactoryTD] EnemyData {data.name} no tiene prefab asignado.");
+            return null;
+        }
+
+        var enemy = Instantiate(data.prefab, position, rotation);
+        enemy.data = data;
+
+        // 🔹 Sincronizar velocidad con el Flyweight (opcional pero prolijo)
+        var movement = enemy.GetComponent<EnemyMovement>();
+        if (movement != null)
+        {
+            movement.moveSpeed = data.moveSpeed;
+
+            // 🔹 Asignar ruta usando EnemyGraphPath
+            if (defaultPath != null)
+            {
+                var route = defaultPath.ComputeAndGetPath();
+                movement.SetRoute(route);
+            }
+            else
+            {
+                Debug.LogWarning("[EnemyFactoryTD] defaultPath no asignado, enemigo sin ruta.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[EnemyFactoryTD] EnemyTD sin EnemyMovement en el prefab.");
+        }
+
+        Debug.Log($"[EnemyFactoryTD] Spawn {id} en {position}");
+        return enemy;
     }
 }
-
