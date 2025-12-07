@@ -1,19 +1,26 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildInvoker : MonoBehaviour
 {
-    readonly Stack<ICommand> undoStack = new();
-    readonly Stack<ICommand> redoStack = new();
+    private CommandStack undoStack = new CommandStack();
+    private CommandStack redoStack = new CommandStack();
 
-    public bool CanUndo => undoStack.Count > 0;
-    public bool CanRedo => redoStack.Count > 0;
+    private const int MaxHistory = 3;
+
+    private void Awake()
+    {
+        undoStack.Initialize(MaxHistory);
+        redoStack.Initialize(MaxHistory);
+    }
 
     public void Do(ICommand cmd)
     {
+        if (cmd == null) return;
+
         cmd.Execute();
 
-       if (cmd is PlaceTowerCommand ptc && !ptc.IsDone) return;
+        if (cmd is PlaceTowerCommand ptc && !ptc.IsDone)
+            return;
 
         undoStack.Push(cmd);
         redoStack.Clear();
@@ -21,30 +28,32 @@ public class BuildInvoker : MonoBehaviour
 
     public void Undo()
     {
-        if (undoStack.Count == 0) return;
+        if (undoStack.IsEmpty()) return;
 
-        var c = undoStack.Pop();
-        c.Undo();
-        redoStack.Push(c);
+        ICommand cmd = undoStack.Pop();
+        if (cmd == null) return;
 
-        Debug.Log("[Invoker] Undo ejecutado.");
+        cmd.Undo();
+        redoStack.Push(cmd);
     }
 
     public void Redo()
     {
-        if (redoStack.Count == 0) return;
+        if (redoStack.IsEmpty()) return;
 
-        var c = redoStack.Pop();
-        c.Execute();
-        undoStack.Push(c);
+        ICommand cmd = redoStack.Pop();
+        if (cmd == null) return;
 
-        Debug.Log("[Invoker] Redo ejecutado.");
+        cmd.Execute();
+        undoStack.Push(cmd);
     }
 
     public void ClearHistory()
     {
         undoStack.Clear();
         redoStack.Clear();
-        Debug.Log("[Invoker] Historial limpiado.");
     }
+
+    public bool CanUndo => !undoStack.IsEmpty();
+    public bool CanRedo => !redoStack.IsEmpty();
 }
