@@ -24,14 +24,13 @@ public class PlaceTowerCommand : ICommand
     {
         IsDone = false;
 
-        // 1) plata
+       
         if (!GameManager.I.SpendMoney(cost))
         {
             Debug.LogWarning($"[PlaceTowerCommand] No alcanza dinero. Cost={cost}, Money={GameManager.I.Money}");
             return;
         }
 
-        // 2) crear torre
         createdTower = factory.Create(towerId, position, rotation);
         if (createdTower == null)
         {

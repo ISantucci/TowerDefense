@@ -7,11 +7,11 @@ public class EnemyData : ScriptableObject
     public EnemyId id;
 
     [Header("Stats base (intrínsecos)")]
-    public int maxHealth = 10;      // 👈 ojo: int, no float, para matchear con EnemyTD
+    public int maxHealth = 10;      
     public float moveSpeed = 3f;
-    public int bounty = 5;          // dinero que da al morir
-    public int scoreReward = 1;     // puntos que da al morir
-    public int damageToBase = 1;    // cuánto le resta a las vidas si llega al final
+    public int bounty = 5;          
+    public int scoreReward = 1;     
+    public int damageToBase = 1;    
 
     [Header("Prefab")]
     public EnemyTD prefab;

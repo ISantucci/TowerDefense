@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum ProjectileId { Basic /* , Piercing, Slow, AOE ... */ }
+public enum ProjectileId { Basic  }
 
 public class ProjectileFactoryTD : MonoBehaviour
 {

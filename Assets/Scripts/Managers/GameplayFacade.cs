@@ -9,8 +9,7 @@ public class GameplayFacade : MonoBehaviour
     [SerializeField] BuildInvoker buildInvoker;
     [SerializeField] BuildMementoManager mementoManager;
     [SerializeField] TowerPlacer towerPlacer;
-    // (Opcional, para más adelante)
-    // [SerializeField] WaveSpawner waveSpawner;
+   
 
     void Awake()
     {
@@ -20,13 +19,10 @@ public class GameplayFacade : MonoBehaviour
             return;
         }
         I = this;
-        // Si tus managers persisten entre escenas:
-        // DontDestroyOnLoad(gameObject);
+
     }
 
-    // ─────────────────────────────
-    //  Sección: estado del jugador
-    // ─────────────────────────────
+
     public int CurrentMoney => gameManager ? gameManager.Money : 0;
     public int CurrentLives => gameManager ? gameManager.Lives : 0;
     public int CurrentScore => gameManager ? gameManager.Score : 0;
@@ -42,9 +38,7 @@ public class GameplayFacade : MonoBehaviour
         return gameManager.SpendMoney(amount);
     }
 
-    // ─────────────────────────────
-    //  Sección: construcción (Command)
-    // ─────────────────────────────
+  
     public bool CanUndoBuild => buildInvoker && buildInvoker.CanUndo;
     public bool CanRedoBuild => buildInvoker && buildInvoker.CanRedo;
 
