@@ -4,45 +4,68 @@ using UnityEngine;
 
 public enum TowerId
 {
-    Basic
-}
-
-[Serializable]
-public class TowerPrefabEntry
-{
-    public TowerId id;
-    public Tower prefab;   // 👈 tipo Tower, NO GameObject
+    Archer,
+    Bomber,
 }
 
 public class TowerFactoryTD : MonoBehaviour
 {
-    [Header("Prefabs de Torres")]
-    public List<TowerPrefabEntry> towerPrefabs = new();
+    [Header("Catálogo de Torres (Type Object)")]
+    public List<TowerData> towerCatalog = new();
+
+    TowerData GetData(TowerId id)
+    {
+        foreach (var d in towerCatalog)
+        {
+            if (d != null && d.id == id)
+                return d;
+        }
+
+        Debug.LogError($"[TowerFactoryTD] No se encontró TowerData para id={id}");
+        return null;
+    }
+
+    public int GetCost(TowerId id)
+    {
+        var d = GetData(id);
+        return d != null ? d.cost : 0;
+    }
 
     public Tower Create(TowerId id, Vector3 position, Quaternion rotation)
     {
-        // Buscar el prefab correspondiente
-        var entry = towerPrefabs.Find(e => e.id == id);
-        if (entry == null || entry.prefab == null)
+        var data = GetData(id);
+        if (data == null)
         {
-            Debug.LogError($"[TowerFactoryTD] No hay prefab asignado para TowerId={id}");
+            Debug.LogError($"[TowerFactoryTD] TowerData nulo para id={id}");
             return null;
         }
 
-        // VALIDACIÓN fuerte: el prefab debe tener Tower
-        if (entry.prefab.GetComponent<Tower>() == null)
+        if (data.prefab == null)
         {
-            Debug.LogError($"[TowerFactoryTD] El prefab asignado a {id} NO tiene componente Tower. Revisá el prefab.");
+            Debug.LogError($"[TowerFactoryTD] TowerData {data.name} no tiene prefab asignado.");
             return null;
         }
 
-        // Instanciar
-        var instance = Instantiate(entry.prefab, position, rotation);
+        var tower = Instantiate(data.prefab, position, rotation);
+        if (tower == null)
+        {
+            Debug.LogError($"[TowerFactoryTD] Falló Instantiate para {id}");
+            return null;
+        }
 
-        // Setear tipo
-        instance.towerType = id;
+        // Aplico datos Type Object
+        tower.ApplyData(data);
+
+        // Encolar evento (ya lo hacías antes)
+        EventQueueManager.Enqueue(
+            new GameplayEvent(
+                GameplayEventType.TowerBuilt,
+                (int)id,
+                data.cost
+            )
+        );
 
         Debug.Log($"[TowerFactoryTD] Torre {id} creada en {position}");
-        return instance;
+        return tower;
     }
 }

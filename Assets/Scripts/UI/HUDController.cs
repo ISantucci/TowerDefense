@@ -10,9 +10,8 @@ public class HUDController : MonoBehaviour
     public UnityEngine.UI.Text txtScore;
     public UnityEngine.UI.Text txtWave;
 
-    [Header("Panels")]
-    public GameObject panelWin;
-    public GameObject panelLose;
+
+
 
     void OnEnable()
     {
@@ -20,8 +19,7 @@ public class HUDController : MonoBehaviour
         GameEvents.MoneyChanged += OnMoney;
         GameEvents.ScoreChanged += OnScore;
         GameEvents.WaveChanged += OnWave;
-        GameEvents.LevelWon += OnWin;
-        GameEvents.LevelLost += OnLose;
+
     }
 
     void OnDisable()
@@ -30,14 +28,12 @@ public class HUDController : MonoBehaviour
         GameEvents.MoneyChanged -= OnMoney;
         GameEvents.ScoreChanged -= OnScore;
         GameEvents.WaveChanged -= OnWave;
-        GameEvents.LevelWon -= OnWin;
-        GameEvents.LevelLost -= OnLose;
+
     }
 
     void Start()
     {
-        panelWin?.SetActive(false);
-        panelLose?.SetActive(false);
+
     }
 
     void OnLives(int v) => txtLives.text = $"LIVES: {v}";
@@ -45,8 +41,6 @@ public class HUDController : MonoBehaviour
     void OnScore(int v) => txtScore.text = $"SCORE: {v}";
     void OnWave(int cur, int total) => txtWave.text = $"WAVE: {cur}/{total}";
 
-    void OnWin() { panelWin.SetActive(true); Time.timeScale = 0f; }
-    void OnLose() { panelLose.SetActive(true); Time.timeScale = 0f; }
 
     public void BtnRestart()
     {

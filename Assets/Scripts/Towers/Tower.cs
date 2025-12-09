@@ -1,13 +1,13 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-
     public static readonly List<Tower> Instances = new();
 
-    public TowerId towerType;   
-
+    [Header("Type Object")]
+    public TowerData data;       // ðŸ‘ˆ Type Object
+    public TowerId towerType;    // Id lÃ³gico (Basic, etc.)
 
     [Header("Targeting")]
     public float range = 6f;
@@ -34,10 +34,23 @@ public class Tower : MonoBehaviour
         Instances.Remove(this);
     }
 
+    public void ApplyData(TowerData d)
+    {
+        data = d;
+        if (d == null) return;
+
+        towerType = d.id;
+        range = d.range;
+        fireRate = d.fireRate;
+        projectileType = d.projectileType;
+    }
 
     void Awake()
     {
-        // Si no están seteados por inspector, los busco en la escena.
+        // Si el prefab ya viene con un TowerData asignado, aplico sus valores
+        if (data != null)
+            ApplyData(data);
+
         if (!projectileFactory)
             projectileFactory = FindObjectOfType<ProjectileFactoryTD>();
 
@@ -61,10 +74,8 @@ public class Tower : MonoBehaviour
         }
     }
 
-
     Transform GetTarget()
     {
-        // 1) Intentar ABB
         var abb = EnemyPriorityABB.Instance;
         if (abb != null)
         {
@@ -72,7 +83,6 @@ public class Tower : MonoBehaviour
             if (best != null) return best.transform;
         }
 
-        // 2) Fallback: lógica vieja (distancia)
         EnemyTD bestEnemy = null;
         float bestD = float.MaxValue;
         var enemies = FindObjectsOfType<EnemyTD>();
@@ -96,7 +106,11 @@ public class Tower : MonoBehaviour
         }
 
         var prefab = projectileFactory.GetPrefab(projectileType);
-        if (prefab == null) { Debug.LogError("[Tower] Prefab nulo en factory."); return; }
+        if (prefab == null)
+        {
+            Debug.LogError("[Tower] Prefab nulo en factory.");
+            return;
+        }
 
         Vector3 muzzlePos = front != null ? front.position : transform.position;
         Vector3 dir = (target.position - muzzlePos).normalized;

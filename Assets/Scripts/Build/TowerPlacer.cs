@@ -17,12 +17,7 @@ public class TowerPlacer : MonoBehaviour
     TowerId selectedTower;
     int selectedCost;
 
-    // tabla de costos (puede venir de otro lado, pero algo así)
-    public Dictionary<TowerId, int> towerCosts = new Dictionary<TowerId, int>
-    {
-        { TowerId.Basic, 50 },
-        // { TowerId.Sniper, 120 }, etc.
-    };
+  
 
     // para avisar a los botones que apaguen el highlight
     public System.Action OnSelectionCleared;
@@ -40,7 +35,9 @@ public class TowerPlacer : MonoBehaviour
     {
         selectedTower = id;
         hasSelection = true;
-        selectedCost = towerCosts.TryGetValue(id, out var c) ? c : 0;
+
+        // costo leído desde el Type Object vía factory
+        selectedCost = towerFactory != null ? towerFactory.GetCost(id) : 0;
 
         Debug.Log($"[TowerPlacer] Selección: {id} (${selectedCost})");
     }

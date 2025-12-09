@@ -3,10 +3,10 @@
 public class EnemyTD : MonoBehaviour
 {
     [Header("Datos compartidos (Flyweight)")]
-    public EnemyData data;   // 👉 referencia al ScriptableObject
+    public EnemyData data;
 
     [Header("Estado de runtime (extrínseco)")]
-    public int currentHealth;   // vida actual de ESTA instancia
+    public int currentHealth;
     public bool testAutoKill = false;
 
     void Start()
@@ -14,7 +14,7 @@ public class EnemyTD : MonoBehaviour
         if (data == null)
         {
             Debug.LogError("[EnemyTD] No hay EnemyData asignado en " + name, this);
-            currentHealth = 1; // valor de seguridad
+            currentHealth = 1;
         }
         else
         {
@@ -36,36 +36,44 @@ public class EnemyTD : MonoBehaviour
 
     void Die()
     {
-        // --- ABB: remover de prioridad ---
         var prog = GetComponent<EnemyProgress>();
         EnemyPriorityABB.Instance?.Remove(prog);
 
-        // Recompensas desde el Flyweight
+        int bounty = 1;
+        int score = 1;
+
         if (data != null)
         {
-            GameManager.I.AddMoney(data.bounty);
-            GameManager.I.AddScore(data.scoreReward);
-        }
-        else
-        {
-            GameManager.I.AddMoney(1);
-            GameManager.I.AddScore(1);
+            bounty = data.bounty;
+            score = data.scoreReward;
         }
 
-        GameEvents.RaiseEnemyRemoved();   // <<< Observer
+        // 👉 Toda la consecuencia de la muerte viaja por la EventQueue
+        EventQueueManager.Enqueue(
+            new GameplayEvent(GameplayEventType.EnemyDied, bounty, score)
+        );
+
         Destroy(gameObject);
     }
 
     public void ReachEnd()
     {
-        // --- ABB: remover de prioridad ---
         var prog = GetComponent<EnemyProgress>();
         EnemyPriorityABB.Instance?.Remove(prog);
 
         int dmgBase = data != null ? data.damageToBase : 1;
-        GameManager.I.LoseLife(dmgBase);
 
-        GameEvents.RaiseEnemyRemoved();   // <<< Observer
+        // 👉 Perder vida via EventQueue
+        EventQueueManager.Enqueue(
+            new GameplayEvent(GameplayEventType.LifeLost, dmgBase)
+        );
+
+        // 👉 También cuenta como “enemigo removido” para el spawner,
+        // pero sin recompensa de dinero/score.
+        EventQueueManager.Enqueue(
+            new GameplayEvent(GameplayEventType.EnemyDied, 0, 0)
+        );
+
         Destroy(gameObject);
     }
 }

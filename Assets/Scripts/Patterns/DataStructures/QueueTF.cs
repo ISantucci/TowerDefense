@@ -30,16 +30,50 @@ public class QueueTF<T>
         return items[0];
     }
 
-    public void Dequeue()
-    {
-        if (count == 0) return;
 
+    public void Enqueue(T item)
+    {
+        // si el array es null, inicializamos
+        if (items == null)
+        {
+            items = new T[1];
+            items[0] = item;
+            count = 1;
+            return;
+        }
+
+        // si hay espacio libre al final
+        if (count < items.Length)
+        {
+            items[count] = item;
+            count++;
+            return;
+        }
+
+        // si está llena, agrandamos en 1 (simple, suficiente para el TP)
+        T[] nuevo = new T[count + 1];
+        for (int i = 0; i < count; i++)
+            nuevo[i] = items[i];
+
+        nuevo[count] = item;
+        items = nuevo;
+        count++;
+    }
+
+    public T Dequeue()
+    {
+        if (IsEmpty()) return default;
+
+        T first = items[0];
+
+        // corrimiento a la izquierda
         for (int i = 1; i < count; i++)
             items[i - 1] = items[i];
 
-        items[count - 1] = default;
         count--;
+        return first;
     }
+
 
     public int Count => count;
 }
