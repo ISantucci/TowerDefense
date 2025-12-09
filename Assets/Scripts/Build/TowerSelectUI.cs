@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class TowerSelectUI : MonoBehaviour
 {
-    public TowerPlacer placer;       // arrastrá el TowerPlacer
-    public TowerId towerId = TowerId.Basic;
-    public Image selectedGlow;       // hijo "SelectedGlow" (Image)
+    public TowerPlacer placer;      
+    public TowerId towerId = TowerId.Archer;   
+    public Image selectedGlow;      
 
     static TowerSelectUI current;
 

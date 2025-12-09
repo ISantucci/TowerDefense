@@ -58,9 +58,10 @@ public class WaveSpawnerTD : MonoBehaviour
         {
             if (enemiesAlive <= 0)
             {
-                // acá ya no hay enemigos vivos -> nivel ganado
-                Debug.Log("[WaveSpawnerTD] LEVEL WON -> RaiseLevelWon()");
-                GameEvents.RaiseLevelWon();
+                // Nivel ganado -> ahora va por EventQueue
+                EventQueueManager.Enqueue(
+                    new GameplayEvent(GameplayEventType.LevelWon)
+                );
             }
             return;
         }
@@ -68,8 +69,14 @@ public class WaveSpawnerTD : MonoBehaviour
         // avanzamos el número de wave
         currentWaveNumber++;
 
-        // 🔹 aviso al HUD de la wave actual (X/Y)
-        GameEvents.RaiseWaveChanged(currentWaveNumber, totalWaves);
+        // 🔹 Aviso de wave actual (X/Y) via EventQueue
+        EventQueueManager.Enqueue(
+            new GameplayEvent(
+                GameplayEventType.WaveStarted,
+                currentWaveNumber,
+                totalWaves
+            )
+        );
 
         // tomo la siguiente wave y la disparo
         WaveConfig next = waveQueue.Primero();
