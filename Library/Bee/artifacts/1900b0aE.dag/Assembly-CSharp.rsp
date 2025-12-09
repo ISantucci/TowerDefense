@@ -391,6 +391,7 @@
 "Assets/Scripts/Patterns/Strategy/IShootStrategy.cs"
 "Assets/Scripts/Patterns/Strategy/SingleShot.cs"
 "Assets/Scripts/Projectiles/Projectile.cs"
+"Assets/Scripts/Projectiles/ProjectileData.cs"
 "Assets/Scripts/Towers/Tower.cs"
 "Assets/Scripts/Towers/TowerData.cs"
 "Assets/Scripts/UI/BuildHUDActions.cs"

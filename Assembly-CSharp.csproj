@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Build\PlaceTowerCommand.cs" />
     <Compile Include="Assets\Scripts\Patterns\DataStructures\EnemyPriorityABB.cs" />
     <Compile Include="Assets\Scripts\Build\BuildSnapshot.cs" />
+    <Compile Include="Assets\Scripts\Towers\TowerData.cs" />
     <Compile Include="Assets\Scripts\Managers\LevelManager.cs" />
     <Compile Include="Assets\Scripts\UI\BuildHUDActions.cs" />
     <Compile Include="Assets\Scripts\Patterns\DataStructures\GraphNode.cs" />
@@ -105,7 +106,7 @@
     <Compile Include="Assets\Scripts\UI\LoseUI.cs" />
     <Compile Include="Assets\Scripts\WaypointsPath.cs" />
     <Compile Include="Assets\Scripts\Events\GameEvent.cs" />
-    <Compile Include="Assets\Scripts\Towers\TowerData.cs" />
+    <Compile Include="Assets\Scripts\Projectiles\ProjectileData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

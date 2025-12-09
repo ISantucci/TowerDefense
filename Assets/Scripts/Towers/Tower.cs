@@ -6,8 +6,8 @@ public class Tower : MonoBehaviour
     public static readonly List<Tower> Instances = new();
 
     [Header("Type Object")]
-    public TowerData data;       // 👈 Type Object
-    public TowerId towerType;    // Id lógico (Basic, etc.)
+    public TowerData data;
+    public TowerId towerType;
 
     [Header("Targeting")]
     public float range = 6f;
@@ -19,7 +19,7 @@ public class Tower : MonoBehaviour
     [Header("Projectile")]
     public ProjectileFactoryTD projectileFactory;
     public ProjectilePoolManager projectilePool;
-    public ProjectileId projectileType = ProjectileId.Basic;
+    public ProjectileId projectileType = ProjectileId.Arrow;
 
     float nextShootTime;
 
@@ -42,12 +42,11 @@ public class Tower : MonoBehaviour
         towerType = d.id;
         range = d.range;
         fireRate = d.fireRate;
-        projectileType = d.projectileType;
+        projectileType = d.projectileId;    // ← usa projectileId del Type Object
     }
 
     void Awake()
     {
-        // Si el prefab ya viene con un TowerData asignado, aplico sus valores
         if (data != null)
             ApplyData(data);
 
@@ -74,29 +73,6 @@ public class Tower : MonoBehaviour
         }
     }
 
-    Transform GetTarget()
-    {
-        var abb = EnemyPriorityABB.Instance;
-        if (abb != null)
-        {
-            var best = abb.GetMostAdvancedInRange(transform.position, range);
-            if (best != null) return best.transform;
-        }
-
-        EnemyTD bestEnemy = null;
-        float bestD = float.MaxValue;
-        var enemies = FindObjectsOfType<EnemyTD>();
-        foreach (var e in enemies)
-        {
-            float d = Vector3.Distance(transform.position, e.transform.position);
-            if (d <= range && d < bestD)
-            {
-                bestD = d; bestEnemy = e;
-            }
-        }
-        return bestEnemy ? bestEnemy.transform : null;
-    }
-
     void Shoot(Transform target)
     {
         if (projectileFactory == null || projectilePool == null)
@@ -105,10 +81,19 @@ public class Tower : MonoBehaviour
             return;
         }
 
-        var prefab = projectileFactory.GetPrefab(projectileType);
+        // 1) obtengo el Type Object del proyectil
+        var projData = projectileFactory.GetData(projectileType);
+        if (projData == null)
+        {
+            Debug.LogError($"[Tower] No ProjectileData para {projectileType}");
+            return;
+        }
+
+        // 2) de ahí saco el prefab
+        var prefab = projData.prefab;
         if (prefab == null)
         {
-            Debug.LogError("[Tower] Prefab nulo en factory.");
+            Debug.LogError("[Tower] Prefab nulo en ProjectileData.");
             return;
         }
 
@@ -116,7 +101,13 @@ public class Tower : MonoBehaviour
         Vector3 dir = (target.position - muzzlePos).normalized;
         Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
 
+        // 3) pido una instancia al pool
         var proj = projectilePool.Get(prefab, muzzlePos);
+
+        // 4) le aplico los datos del Type Object
+        proj.ApplyData(projData);
+
+        // 5) oriento y disparo
         proj.transform.rotation = rot;
         proj.FireAt(target, projectilePool.Release);
     }
