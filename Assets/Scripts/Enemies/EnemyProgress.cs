@@ -1,73 +1,87 @@
-// Assets/Scripts/Enemies/EnemyProgress.cs
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
 public class EnemyProgress : MonoBehaviour
 {
-    private EnemyMovement movement;
-    private float totalDistance;
-    public float progressValue { get; private set; }  // 0 = inicio, 1 = llegó
+    EnemyMovement movement;
+
+    float totalDistance;
+    float[] prefixDistances;   
+
+    public float progressValue { get; private set; }  // 0 = inicio, 1 = fin
 
     void Start()
     {
         movement = GetComponent<EnemyMovement>();
 
         var route = movement.Route;
-        if (route == null || route.Count < 2)
+        if (movement == null || route == null || route.Count < 2)
         {
             Debug.LogError($"[EnemyProgress] Ruta inválida en {name}");
             enabled = false;
             return;
         }
 
-        // Distancia total desde el primer hasta el último punto de la ruta
-        totalDistance = 0f;
-        for (int i = 1; i < route.Count; i++)
+        int n = route.Count;
+        prefixDistances = new float[n];
+        prefixDistances[0] = 0f;
+
+        for (int i = 1; i < n; i++)
         {
-            if (route[i - 1] == null || route[i] == null) continue;
-            totalDistance += Vector3.Distance(
-                route[i - 1].position,
-                route[i].position
-            );
+            if (route[i - 1] == null || route[i] == null)
+            {
+                prefixDistances[i] = prefixDistances[i - 1];
+                continue;
+            }
+
+            float seg = Vector3.Distance(route[i - 1].position, route[i].position);
+            prefixDistances[i] = prefixDistances[i - 1] + seg;
         }
 
+        totalDistance = prefixDistances[n - 1];
         if (totalDistance <= 0f)
         {
             Debug.LogWarning($"[EnemyProgress] totalDistance=0 en {name}");
-            totalDistance = 1f; // evitamos división por cero
+            totalDistance = 1f;
         }
     }
 
     void Update()
     {
+        if (movement == null) return;
+
         var route = movement.Route;
-        if (movement == null || route == null || route.Count == 0) return;
+        if (route == null || route.Count == 0) return;
 
-        // Calcula distancia recorrida según CurrentIndex + tramo parcial
+        int n = route.Count;
+
+        // currentIndex en EnemyMovement apunta al "target" actual.
+        int idx = Mathf.Clamp(movement.CurrentIndex, 0, n - 1);
+
         float covered = 0f;
-        int idx = Mathf.Clamp(movement.CurrentIndex, 0, route.Count - 1);
 
-        // tramos ya completados
-        for (int i = 1; i < idx && i < route.Count; i++)
-        {
-            if (route[i - 1] == null || route[i] == null) continue;
-            covered += Vector3.Distance(
-                route[i - 1].position,
-                route[i].position
-            );
-        }
+        // Distancia de todos los segmentos completamente recorridos
+        if (idx > 0)
+            covered = prefixDistances[idx - 1];
 
-        // tramo parcial hacia el siguiente punto
-        if (idx < route.Count)
-        {
-            var next = route[idx];
-            if (next != null)
-                covered += Vector3.Distance(next.position, transform.position);
-        }
+        // Punto de referencia del tramo parcial
+        Vector3 prevPointPos;
+        if (idx == 0)
+            prevPointPos = route[0].position;
+        else
+            prevPointPos = route[idx - 1].position;
 
+        // Sumamos cuánto avanzó desde prevPoint hasta la posición actual
+        covered += Vector3.Distance(prevPointPos, transform.position);
+
+        // Normalizamos
         progressValue = Mathf.Clamp01(covered / totalDistance);
 
-        // Actualiza posición en ABB si está activo
+        // Avisamos al ABB
         EnemyPriorityABB.Instance?.UpdateProgress(this);
+
+        var enemy = movement.GetComponent<EnemyTD>();
+        if (enemy != null)
+            progressValue += enemy.uniqueId * 0.0001f;
     }
 }

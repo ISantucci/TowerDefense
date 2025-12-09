@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   maxHealth: 10
-  moveSpeed: 4
+  moveSpeed: 2
   bounty: 5
   scoreReward: 1
-  damageToBase: 10
+  damageToBase: 5
   prefab: {fileID: 8934162589441819570, guid: 3cae3f0e8fdd34f44b586d719bdc72d4, type: 3}

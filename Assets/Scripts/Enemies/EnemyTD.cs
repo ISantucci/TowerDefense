@@ -9,6 +9,14 @@ public class EnemyTD : MonoBehaviour
     public int currentHealth;
     public bool testAutoKill = false;
 
+    public static int nextId = 0;
+    public int uniqueId;
+
+    void Awake()
+    {
+        uniqueId = nextId++;
+    }
+
     void Start()
     {
         if (data == null)
