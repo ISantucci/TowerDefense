@@ -17,4 +17,4 @@ MonoBehaviour:
   range: 6
   fireRate: 1
   projectileId: 0
-  cost: 50
+  cost: 100

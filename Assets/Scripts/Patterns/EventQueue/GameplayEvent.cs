@@ -1,26 +1,46 @@
 public enum GameplayEventType
 {
-    EnemyDied,
-    TowerBuilt,
-    WaveStarted,
-    WaveEnded,
+    SetStats,
+    AddMoney,
+    AddScore,
     LifeLost,
+    EnemyRemoved,
+    WaveChanged,
     LevelWon,
-    LevelLost
+    LevelLost,
+    WaveStarted,
+    TowerBuilt,
 }
 
 public struct GameplayEvent
 {
+
+    public static GameplayEvent AddMoney(int amount)
+    {
+        return new GameplayEvent(GameplayEventType.AddMoney, amount, 0, 0);
+    }
+
+    public static GameplayEvent AddScore(int amount)
+    {
+        return new GameplayEvent(GameplayEventType.AddScore, amount, 0, 0);
+    }
+
+    public static GameplayEvent LifeLost(int dmg)
+    {
+        return new GameplayEvent(GameplayEventType.LifeLost, dmg, 0, 0);
+    }
+
+
     public GameplayEventType type;
     public int intParam1;
     public int intParam2;
-    public float floatParam1;
+    public int intParam3;
 
-    public GameplayEvent(GameplayEventType type, int intParam1 = 0, int intParam2 = 0, float floatParam1 = 0f)
+    public GameplayEvent(GameplayEventType type, int p1 = 0, int p2 = 0, int p3 = 0)
     {
         this.type = type;
-        this.intParam1 = intParam1;
-        this.intParam2 = intParam2;
-        this.floatParam1 = floatParam1;
+        intParam1 = p1;
+        intParam2 = p2;
+        intParam3 = p3;
     }
 }

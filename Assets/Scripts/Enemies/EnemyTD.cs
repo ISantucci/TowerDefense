@@ -2,44 +2,27 @@
 
 public class EnemyTD : MonoBehaviour
 {
-    [Header("Datos compartidos (Flyweight)")]
     public EnemyData data;
-
-    [Header("Estado de runtime (extrínseco)")]
     public int currentHealth;
-    public bool testAutoKill = false;
 
-    public static int nextId = 0;
-    public int uniqueId;
+    private static int _nextId = 1;
+    public int uniqueId { get; private set; }
 
     void Awake()
     {
-        uniqueId = nextId++;
+        uniqueId = _nextId++;
     }
+
 
     void Start()
     {
-        if (data == null)
-        {
-            Debug.LogError("[EnemyTD] No hay EnemyData asignado en " + name, this);
-            currentHealth = 1;
-        }
-        else
-        {
-            currentHealth = data.maxHealth;
-        }
-
-        if (testAutoKill)
-            Invoke(nameof(_TestKill), 0.8f);
+        currentHealth = data != null ? data.maxHealth : 1;
     }
-
-    void _TestKill() => TakeDamage(999);
 
     public void TakeDamage(int dmg)
     {
         currentHealth -= dmg;
-        if (currentHealth <= 0)
-            Die();
+        if (currentHealth <= 0) Die();
     }
 
     void Die()
@@ -47,19 +30,13 @@ public class EnemyTD : MonoBehaviour
         var prog = GetComponent<EnemyProgress>();
         EnemyPriorityABB.Instance?.Remove(prog);
 
-        int bounty = 1;
-        int score = 1;
+        int bounty = data != null ? data.bounty : 0;
 
-        if (data != null)
-        {
-            bounty = data.bounty;
-            score = data.scoreReward;
-        }
+        if (bounty != 0)
+            EventQueueManager.Enqueue(new GameplayEvent(GameplayEventType.AddMoney, bounty));
 
-        // 👉 Toda la consecuencia de la muerte viaja por la EventQueue
-        EventQueueManager.Enqueue(
-            new GameplayEvent(GameplayEventType.EnemyDied, bounty, score)
-        );
+        EventQueueManager.Enqueue(new GameplayEvent(GameplayEventType.AddScore, 1));
+        EventQueueManager.Enqueue(new GameplayEvent(GameplayEventType.EnemyRemoved));
 
         Destroy(gameObject);
     }
@@ -69,18 +46,10 @@ public class EnemyTD : MonoBehaviour
         var prog = GetComponent<EnemyProgress>();
         EnemyPriorityABB.Instance?.Remove(prog);
 
-        int dmgBase = data != null ? data.damageToBase : 1;
+        int dmgBase = (data != null && data.damageToBase > 0) ? data.damageToBase : 1;
 
-        // 👉 Perder vida via EventQueue
-        EventQueueManager.Enqueue(
-            new GameplayEvent(GameplayEventType.LifeLost, dmgBase)
-        );
-
-        // 👉 También cuenta como “enemigo removido” para el spawner,
-        // pero sin recompensa de dinero/score.
-        EventQueueManager.Enqueue(
-            new GameplayEvent(GameplayEventType.EnemyDied, 0, 0)
-        );
+        EventQueueManager.Enqueue(new GameplayEvent(GameplayEventType.LifeLost, dmgBase));
+        EventQueueManager.Enqueue(new GameplayEvent(GameplayEventType.EnemyRemoved));
 
         Destroy(gameObject);
     }

@@ -21,7 +21,6 @@ public class TowerFactoryTD : MonoBehaviour
                 return d;
         }
 
-        Debug.LogError($"[TowerFactoryTD] No se encontró TowerData para id={id}");
         return null;
     }
 
@@ -36,20 +35,17 @@ public class TowerFactoryTD : MonoBehaviour
         var data = GetData(id);
         if (data == null)
         {
-            Debug.LogError($"[TowerFactoryTD] TowerData nulo para id={id}");
             return null;
         }
 
         if (data.prefab == null)
         {
-            Debug.LogError($"[TowerFactoryTD] TowerData {data.name} no tiene prefab asignado.");
             return null;
         }
 
         var tower = Instantiate(data.prefab, position, rotation);
         if (tower == null)
         {
-            Debug.LogError($"[TowerFactoryTD] Falló Instantiate para {id}");
             return null;
         }
 
@@ -65,7 +61,6 @@ public class TowerFactoryTD : MonoBehaviour
             )
         );
 
-        Debug.Log($"[TowerFactoryTD] Torre {id} creada en {position}");
         return tower;
     }
 }

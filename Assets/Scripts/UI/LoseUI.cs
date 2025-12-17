@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class LoseUI : MonoBehaviour
 {
+    [SerializeField] GameStateMachine stateMachine;
+
     public Button btnRestart;
     public Button btnQuit;
 
@@ -18,7 +20,7 @@ public class LoseUI : MonoBehaviour
 
     void OnRestart()
     {
-       SceneManager.LoadScene("SampleScene");
+        stateMachine.ChangeState(new Level1State());
     }
 
     void OnQuit()

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,24 +10,38 @@ public class TowerPlacer : MonoBehaviour
     public TowerFactoryTD towerFactory;
     public BuildInvoker invoker;
 
-    [Header("Selección")]
-    public bool stickySelection = false;   // si false, se deselecciona después de colocar
-    bool hasSelection = false;
+    [Header("Selection")]
+    public bool stickySelection = false;
+
+    bool hasSelection;
     TowerId selectedTower;
     int selectedCost;
 
-  
-
-    // para avisar a los botones que apaguen el highlight
     public System.Action OnSelectionCleared;
+
+    void Awake()
+    {
+        AutoBind();
+    }
+
+    void OnEnable()
+    {
+        AutoBind();
+    }
 
     void Update()
     {
+        if (cam == null || buildGrid == null || towerFactory == null || invoker == null)
+            AutoBind();
+
         if (Input.GetMouseButtonDown(0))
             TryPlace();
 
         if (Input.GetKeyDown(KeyCode.Z)) invoker?.Undo();
         if (Input.GetKeyDown(KeyCode.Y)) invoker?.Redo();
+
+
+
     }
 
     public void SelectTower(TowerId id)
@@ -36,34 +49,42 @@ public class TowerPlacer : MonoBehaviour
         selectedTower = id;
         hasSelection = true;
 
-        // costo leído desde el Type Object vía factory
+        if (towerFactory == null) AutoBind();
         selectedCost = towerFactory != null ? towerFactory.GetCost(id) : 0;
 
-        Debug.Log($"[TowerPlacer] Selección: {id} (${selectedCost})");
+        Debug.Log($"[TowerPlacer] Seleccionaste {id}");
+
+    }
+
+    void AutoBind()
+    {
+        if (cam == null) cam = Camera.main;
+        if (buildGrid == null) buildGrid = FindObjectOfType<BuildGrid>(true);
+        if (towerFactory == null) towerFactory = FindObjectOfType<TowerFactoryTD>(true);
+        if (invoker == null) invoker = FindObjectOfType<BuildInvoker>(true);
     }
 
     void ClearSelection()
     {
         hasSelection = false;
         OnSelectionCleared?.Invoke();
-        Debug.Log("[TowerPlacer] Selección limpiada");
     }
 
     void TryPlace()
     {
-        // ?? esto es lo que evita construir sin botón
-        if (!hasSelection)
-        {
-            // Debug.Log("[TowerPlacer] No hay torre seleccionada");
-            return;
-        }
+        if (!hasSelection) return;
 
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
 
-        var c = cam != null ? cam : Camera.main;
-        if (!Physics.Raycast(c.ScreenPointToRay(Input.mousePosition),
-                             out var hit, 300f, groundMask.value, QueryTriggerInteraction.Ignore))
+        if (cam == null || buildGrid == null || towerFactory == null || invoker == null)
+        {
+            Debug.LogError($"[TowerPlacer] Missing refs. cam={cam != null}, grid={buildGrid != null}, factory={towerFactory != null}, invoker={invoker != null}");
+            return;
+        }
+
+        if (!Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition),
+            out var hit, 300f, groundMask.value, QueryTriggerInteraction.Ignore))
             return;
 
         var p = buildGrid.Snap(hit.point);
@@ -71,11 +92,17 @@ public class TowerPlacer : MonoBehaviour
 
         if (!buildGrid.CanBuildAt(p)) return;
 
-        var cmd = new PlaceTowerCommand(towerFactory, selectedTower, p, Quaternion.identity, selectedCost);
+        int cost = selectedCost;
+        if (cost <= 0 && towerFactory != null) cost = towerFactory.GetCost(selectedTower);
+
+        var cmd = new PlaceTowerCommand(towerFactory, selectedTower, p, Quaternion.identity, cost);
         invoker.Do(cmd);
 
-        // si el comando se ejecutó y no queremos "pintar", limpiamos selección
         if (!stickySelection && cmd.IsDone)
             ClearSelection();
+
+
+        Debug.Log("[TowerPlacer] Click bloqueado por UI (IsPointerOverGameObject = true)");
+
     }
 }

@@ -12,49 +12,48 @@ public class BuildHUDActions : MonoBehaviour
     public Button btnSave;
     public Button btnLoad;
 
-    void Awake()
+    void Start()
     {
-        // Si no lo asignaste en el inspector, lo toma del singleton
+        // Start es más seguro que Awake para agarrar singletons
         if (!facade)
             facade = GameplayFacade.I;
     }
 
     void Update()
     {
+        // Si por orden de ejecución quedó null, lo intentamos recuperar
+        if (!facade)
+            facade = GameplayFacade.I;
+
         if (!facade) return;
 
-        if (btnUndo != null)
-            btnUndo.interactable = facade.CanUndoBuild;
-
-        if (btnRedo != null)
-            btnRedo.interactable = facade.CanRedoBuild;
-
-        if (btnLoad != null)
-            btnLoad.interactable = facade.CanLoadSnapshot;
-
-        if (btnSave != null)
-            btnSave.interactable = true; // siempre se puede guardar
+        if (btnUndo != null) btnUndo.interactable = facade.CanUndoBuild;
+        if (btnRedo != null) btnRedo.interactable = facade.CanRedoBuild;
+        if (btnLoad != null) btnLoad.interactable = facade.CanLoadSnapshot;
+        if (btnSave != null) btnSave.interactable = true;
     }
-
-    // ===== METODOS QUE VA A VER EL BUTTON =====
 
     public void OnUndo()
     {
+        if (!facade) facade = GameplayFacade.I;
         facade?.UndoBuild();
     }
 
     public void OnRedo()
     {
+        if (!facade) facade = GameplayFacade.I;
         facade?.RedoBuild();
     }
 
     public void OnSaveSnapshot()
     {
+        if (!facade) facade = GameplayFacade.I;
         facade?.SaveLayout();
     }
 
     public void OnLoadSnapshot()
     {
+        if (!facade) facade = GameplayFacade.I;
         facade?.LoadLayout();
     }
 }

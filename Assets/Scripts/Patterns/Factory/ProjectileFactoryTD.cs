@@ -15,7 +15,6 @@ public class ProjectileFactoryTD : MonoBehaviour
                 return d;
         }
 
-        Debug.LogError($"[ProjectileFactoryTD] No ProjectileData para id = {id}");
         return null;
     }
 

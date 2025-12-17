@@ -107,6 +107,9 @@
     <Compile Include="Assets\Scripts\WaypointsPath.cs" />
     <Compile Include="Assets\Scripts\Events\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Projectiles\ProjectileData.cs" />
+    <Compile Include="Assets\Scripts\Patterns\QS\QS.cs" />
+    <Compile Include="Assets\Scripts\Patterns\QS\TowerButtonsQuickSort.cs" />
+    <Compile Include="Assets\Scripts\Patterns\QS\ButtonCostItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

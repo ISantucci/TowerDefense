@@ -24,7 +24,6 @@ public class EnemyFactoryTD : MonoBehaviour
                 return e.data;
         }
 
-        Debug.LogError($"[EnemyFactoryTD] No se encontró EnemyData para id={id}");
         return null;
     }
 
@@ -33,13 +32,11 @@ public class EnemyFactoryTD : MonoBehaviour
         var data = GetData(id);
         if (data == null)
         {
-            Debug.LogError($"[EnemyFactoryTD] No hay EnemyData válido para id={id}");
             return null;
         }
 
         if (data.prefab == null)
         {
-            Debug.LogError($"[EnemyFactoryTD] EnemyData {data.name} no tiene prefab asignado.");
             return null;
         }
 
@@ -60,15 +57,12 @@ public class EnemyFactoryTD : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("[EnemyFactoryTD] defaultPath no asignado, enemigo sin ruta.");
             }
         }
         else
         {
-            Debug.LogWarning("[EnemyFactoryTD] EnemyTD sin EnemyMovement en el prefab.");
         }
 
-        Debug.Log($"[EnemyFactoryTD] Spawn {id} en {position}");
         return enemy;
     }
 }

@@ -3,9 +3,10 @@ using UnityEngine.UI;
 
 public class TowerSelectUI : MonoBehaviour
 {
-    public TowerPlacer placer;      
-    public TowerId towerId = TowerId.Archer;   
-    public Image selectedGlow;      
+    public TowerPlacer placer;
+    public TowerId towerId;
+    public TowerData towerData;
+    public Image selectedGlow;
 
     static TowerSelectUI current;
 
@@ -13,6 +14,7 @@ public class TowerSelectUI : MonoBehaviour
     {
         if (placer != null)
             placer.OnSelectionCleared += Deselect;
+        AutoBind();
     }
 
     void OnDisable()
@@ -20,9 +22,17 @@ public class TowerSelectUI : MonoBehaviour
         if (placer != null)
             placer.OnSelectionCleared -= Deselect;
     }
+    
+    void AutoBind()
+    {
+        if (placer == null)
+            placer = FindObjectOfType<TowerPlacer>(true);
+    }
 
     public void SelectThisTower()
     {
+        AutoBind();
+
         if (!placer) return;
 
         placer.SelectTower(towerId);
@@ -40,7 +50,9 @@ public class TowerSelectUI : MonoBehaviour
     {
         if (selectedGlow != null)
             selectedGlow.enabled = false;
+
         if (current == this)
             current = null;
     }
 }
+

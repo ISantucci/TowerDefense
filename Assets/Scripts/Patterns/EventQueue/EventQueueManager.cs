@@ -8,60 +8,61 @@ public class EventQueueManager : MonoBehaviour
 
     void Awake()
     {
-        if (I != null && I != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        if (I != null && I != this) { Destroy(gameObject); return; }
         I = this;
         DontDestroyOnLoad(gameObject);
-
-        queue.InitializeFromArray(null); // arranca vacía
+        queue.InitializeFromArray(null);
     }
 
     public static void Enqueue(GameplayEvent e)
     {
-        if (I == null)
-        {
-            Debug.LogWarning("[EventQueueManager] No instance, evento ignorado.");
-            return;
-        }
-
+        if (I == null) return;
         I.queue.Enqueue(e);
     }
 
     void Update()
     {
         while (!queue.IsEmpty())
-        {
-            var evt = queue.Dequeue();
-            ProcessEvent(evt);
-        }
+            ProcessEvent(queue.Dequeue());
     }
 
     void ProcessEvent(GameplayEvent evt)
     {
+        if (GameManager.I == null) return;
+
         switch (evt.type)
         {
-            case GameplayEventType.EnemyDied:
-                if (GameManager.I != null)
-                {
-                    if (evt.intParam1 != 0)
-                        GameManager.I.AddMoney(evt.intParam1);
-                    if (evt.intParam2 != 0)
-                        GameManager.I.AddScore(evt.intParam2);
-                }
-                GameEvents.RaiseEnemyRemoved();
+            case GameplayEventType.SetStats:
+                GameManager.I.SetMoneyLivesScore(evt.intParam1, evt.intParam2, evt.intParam3);
+                GameEvents.RaiseMoneyChanged(GameManager.I.Money);
+                GameEvents.RaiseLivesChanged(GameManager.I.Lives);
+                GameEvents.RaiseScoreChanged(GameManager.I.Score);
+                break;
+
+            case GameplayEventType.AddMoney:
+                GameManager.I.AddMoney(evt.intParam1);
+                GameEvents.RaiseMoneyChanged(GameManager.I.Money);
+                break;
+
+            case GameplayEventType.AddScore:
+                GameManager.I.AddScore(evt.intParam1);
+                GameEvents.RaiseScoreChanged(GameManager.I.Score);
                 break;
 
             case GameplayEventType.LifeLost:
-                if (GameManager.I != null)
-                    GameManager.I.LoseLife(evt.intParam1);
+                {
+                    int dmg = evt.intParam1 <= 0 ? 1 : evt.intParam1;
+                    bool lost = GameManager.I.LoseLife(dmg);
+                    GameEvents.RaiseLivesChanged(GameManager.I.Lives);
+                    if (lost) Enqueue(new GameplayEvent(GameplayEventType.LevelLost));
+                }
                 break;
 
-            case GameplayEventType.WaveStarted:
-                // intParam1 = wave actual, intParam2 = total waves
+            case GameplayEventType.EnemyRemoved:
+                GameEvents.RaiseEnemyRemoved();
+                break;
+
+            case GameplayEventType.WaveChanged:
                 GameEvents.RaiseWaveChanged(evt.intParam1, evt.intParam2);
                 break;
 
@@ -71,11 +72,6 @@ public class EventQueueManager : MonoBehaviour
 
             case GameplayEventType.LevelLost:
                 GameEvents.RaiseLevelLost();
-                break;
-
-            case GameplayEventType.TowerBuilt:
-            case GameplayEventType.WaveEnded:
-            default:
                 break;
         }
     }

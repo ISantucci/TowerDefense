@@ -7,6 +7,8 @@ public class Level1State : IGameState
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("SampleScene");
+        Debug.Log(Time.timeScale);
+
     }
 
     public void Exit()

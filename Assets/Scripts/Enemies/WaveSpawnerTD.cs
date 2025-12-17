@@ -11,7 +11,6 @@ public class WaveConfig
 
 public class WaveSpawnerTD : MonoBehaviour
 {
-    [Header("Config")]
     [SerializeField] EnemyFactoryTD enemyFactory;
     [SerializeField] Transform spawnPoint;
     [SerializeField] WaveConfig[] waves;
@@ -21,16 +20,16 @@ public class WaveSpawnerTD : MonoBehaviour
     bool isSpawning;
     int enemiesAlive;
 
+    int waveIndex;
     int totalWaves;
-    int currentWaveNumber;   // 1,2,3,...
 
     void Awake()
     {
+        totalWaves = waves != null ? waves.Length : 0;
+        waveIndex = 0;
+
         waveQueue = new WaveQueueTF();
         waveQueue.InicializarCola(waves);
-
-        totalWaves = waves != null ? waves.Length : 0;
-        currentWaveNumber = 0;
 
         GameEvents.EnemyRemoved += OnEnemyRemoved;
     }
@@ -53,35 +52,18 @@ public class WaveSpawnerTD : MonoBehaviour
 
     void StartNextWave()
     {
-        // no quedan waves en la cola
         if (waveQueue.ColaVacia())
         {
             if (enemiesAlive <= 0)
-            {
-                // Nivel ganado -> ahora va por EventQueue
-                EventQueueManager.Enqueue(
-                    new GameplayEvent(GameplayEventType.LevelWon)
-                );
-            }
+                EventQueueManager.Enqueue(new GameplayEvent(GameplayEventType.LevelWon));
             return;
         }
 
-        // avanzamos el número de wave
-        currentWaveNumber++;
+        waveIndex++;
+        EventQueueManager.Enqueue(new GameplayEvent(GameplayEventType.WaveChanged, waveIndex, totalWaves));
 
-        // 🔹 Aviso de wave actual (X/Y) via EventQueue
-        EventQueueManager.Enqueue(
-            new GameplayEvent(
-                GameplayEventType.WaveStarted,
-                currentWaveNumber,
-                totalWaves
-            )
-        );
-
-        // tomo la siguiente wave y la disparo
         WaveConfig next = waveQueue.Primero();
         waveQueue.Desacolar();
-
         StartCoroutine(SpawnWave(next));
     }
 
@@ -89,26 +71,15 @@ public class WaveSpawnerTD : MonoBehaviour
     {
         isSpawning = true;
 
-        int count = wave.enemyCount;
-        float delay = wave.spawnInterval;
-
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < wave.enemyCount; i++)
         {
             Vector3 pos = spawnPoint != null ? spawnPoint.position : Vector3.zero;
-
             var enemy = enemyFactory.Spawn(wave.enemyType, pos, Quaternion.identity);
-            if (enemy != null)
-            {
-                enemiesAlive++;
-                GameEvents.RaiseEnemySpawned();
-            }
-
-            yield return new WaitForSeconds(delay);
+            if (enemy != null) enemiesAlive++;
+            yield return new WaitForSeconds(wave.spawnInterval);
         }
 
         isSpawning = false;
-
-        // si no quedan enemigos vivos, pasamos de wave
         if (enemiesAlive <= 0)
             StartNextWave();
     }
@@ -117,53 +88,31 @@ public class WaveSpawnerTD : MonoBehaviour
     {
         enemiesAlive--;
         if (enemiesAlive < 0) enemiesAlive = 0;
-
         if (!isSpawning && enemiesAlive == 0)
             StartNextWave();
     }
 
-    // ==========================================
-    //            COLA TIPO TF
-    // ==========================================
     class WaveQueueTF
     {
         WaveConfig[] elementos;
-        int indice; // cantidad actual
+        int indice;
 
         public void InicializarCola(WaveConfig[] origen)
         {
-            if (origen == null)
-            {
-                elementos = new WaveConfig[0];
-                indice = 0;
-                return;
-            }
-
+            if (origen == null) { elementos = new WaveConfig[0]; indice = 0; return; }
             elementos = new WaveConfig[origen.Length];
-            for (int i = 0; i < origen.Length; i++)
-                elementos[i] = origen[i];
-
+            for (int i = 0; i < origen.Length; i++) elementos[i] = origen[i];
             indice = origen.Length;
         }
 
-        public bool ColaVacia()
-        {
-            return indice == 0;
-        }
+        public bool ColaVacia() => indice == 0;
 
-        public WaveConfig Primero()
-        {
-            if (indice == 0) return null;
-            return elementos[0];
-        }
+        public WaveConfig Primero() => indice == 0 ? null : elementos[0];
 
         public void Desacolar()
         {
             if (indice == 0) return;
-
-            for (int i = 1; i < indice; i++)
-                elementos[i - 1] = elementos[i];
-
+            for (int i = 1; i < indice; i++) elementos[i - 1] = elementos[i];
             elementos[indice - 1] = null;
             indice--;
         }

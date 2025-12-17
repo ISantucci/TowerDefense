@@ -22,7 +22,6 @@ public class ProjectilePoolManager : MonoBehaviour
 
     ObjectPool<Projectile> EnsurePool(Projectile prefab, int defCap = 20, int max = 200)
     {
-        if (prefab == null) { Debug.LogError("Prefab nulo en EnsurePool"); return null; }
         if (pools.TryGetValue(prefab, out var pool)) return pool;
 
         pool = new ObjectPool<Projectile>(
