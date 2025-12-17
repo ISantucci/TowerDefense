@@ -9,6 +9,8 @@ public class PlaceTowerCommand : ICommand
     readonly int cost;
 
     Tower createdTower;
+
+    public int Cost => cost;
     public bool IsDone { get; private set; }
 
     public PlaceTowerCommand(TowerFactoryTD factory, TowerId towerId, Vector3 position, Quaternion rotation, int cost)
@@ -22,34 +24,20 @@ public class PlaceTowerCommand : ICommand
 
     public void Execute()
     {
-        IsDone = false;
-
-       
-        if (!GameManager.I.SpendMoney(cost))
-        {
-            Debug.LogWarning($"[PlaceTowerCommand] No alcanza dinero. Cost={cost}, Money={GameManager.I.Money}");
-            return;
-        }
+        if (IsDone) return;
+        if (factory == null) return;
 
         createdTower = factory.Create(towerId, position, rotation);
-        if (createdTower == null)
-        {
-            Debug.LogError("[PlaceTowerCommand] Factory devolvió null, devolviendo plata.");
-            GameManager.I.AddMoney(cost);
-            return;
-        }
-
-        IsDone = true;
-        Debug.Log($"[PlaceTowerCommand] Torre {towerId} creada en {position}, cost={cost}");
+        IsDone = createdTower != null;
     }
 
     public void Undo()
     {
-        if (!IsDone || createdTower == null) return;
+        if (!IsDone) return;
+        if (createdTower != null)
+            Object.Destroy(createdTower.gameObject);
 
-        Object.Destroy(createdTower.gameObject);
-        GameManager.I.AddMoney(cost);
-        Debug.Log($"[PlaceTowerCommand] Undo torre {towerId}, reembolso={cost}");
+        createdTower = null;
         IsDone = false;
     }
 }

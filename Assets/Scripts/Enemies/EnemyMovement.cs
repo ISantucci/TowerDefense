@@ -21,7 +21,6 @@ public class EnemyMovement : MonoBehaviour
     {
         if (points == null || points.Count == 0)
         {
-            Debug.LogError("[EnemyMovement] Ruta nula o vacía.");
             enabled = false;
             return;
         }

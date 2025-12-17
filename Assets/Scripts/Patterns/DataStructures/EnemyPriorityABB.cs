@@ -18,12 +18,10 @@ public class EnemyPriorityABB : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Debug.LogWarning("[EnemyPriorityABB] Ya había una instancia, destruyo esta.");
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        Debug.Log("[EnemyPriorityABB] Awake -> Instance seteada");
     }
 
     public EnemyTD GetMostAdvancedInRange(Vector3 origin, float range)
@@ -47,7 +45,6 @@ public class EnemyPriorityABB : MonoBehaviour
     // Llamar al inicio de cada wave
     public void Clear()
     {
-        Debug.Log("[EnemyPriorityABB] Clear() -> reseteando ABB");
         // restaurar color si había uno
         if (currentClosest != null)
             SetColor(currentClosest, Color.white);
@@ -61,7 +58,6 @@ public class EnemyPriorityABB : MonoBehaviour
     {
         if (p == null) return;
         root = InsertRec(root, p);
-        Debug.Log($"[EnemyPriorityABB] Insert -> {p.name}, prog={p.progressValue:0.00}");
         UpdateVisuals();
     }
 
@@ -82,7 +78,6 @@ public class EnemyPriorityABB : MonoBehaviour
     {
         if (p == null) return;
         root = RemoveRec(root, p);
-        Debug.Log($"[EnemyPriorityABB] Remove -> {p.name}");
         UpdateVisuals();
     }
 
@@ -149,7 +144,6 @@ public class EnemyPriorityABB : MonoBehaviour
             if (newClosest != null)
             {
                 SetColor(newClosest, Color.red);
-                Debug.Log($"[EnemyPriorityABB] Nuevo más avanzado: {newClosest.name} (prog={newClosest.progressValue:0.00})");
             }
 
             currentClosest = newClosest;

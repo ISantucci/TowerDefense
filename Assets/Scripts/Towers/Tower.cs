@@ -55,6 +55,8 @@ public class Tower : MonoBehaviour
 
         if (!projectilePool)
             projectilePool = FindObjectOfType<ProjectilePoolManager>();
+
+
     }
 
     void Update()
@@ -77,7 +79,6 @@ public class Tower : MonoBehaviour
     {
         if (projectileFactory == null || projectilePool == null)
         {
-            Debug.LogError("[Tower] Falta projectileFactory o projectilePool.");
             return;
         }
 
@@ -85,7 +86,6 @@ public class Tower : MonoBehaviour
         var projData = projectileFactory.GetData(projectileType);
         if (projData == null)
         {
-            Debug.LogError($"[Tower] No ProjectileData para {projectileType}");
             return;
         }
 
@@ -93,7 +93,6 @@ public class Tower : MonoBehaviour
         var prefab = projData.prefab;
         if (prefab == null)
         {
-            Debug.LogError("[Tower] Prefab nulo en ProjectileData.");
             return;
         }
 

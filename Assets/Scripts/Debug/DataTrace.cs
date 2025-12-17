@@ -35,6 +35,5 @@ public static class DataTrace
     public static void LogEvent(string title, string detail = null)
     {
         if (!Enabled) return;
-        Debug.Log($"[TRACE][EVT] {title}" + (string.IsNullOrEmpty(detail) ? "" : $" | {detail}"));
     }
 }

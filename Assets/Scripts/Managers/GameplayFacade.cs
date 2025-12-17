@@ -32,11 +32,6 @@ public class GameplayFacade : MonoBehaviour
         gameManager?.AddMoney(amount);
     }
 
-    public bool TrySpendMoney(int amount)
-    {
-        if (!gameManager) return false;
-        return gameManager.SpendMoney(amount);
-    }
 
   
     public bool CanUndoBuild => buildInvoker && buildInvoker.CanUndo;

@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
+
+    [SerializeField] GameStateMachine stateMachine;
+
     [Header("Buttons")]
     public Button btnPlay;
     public Button btnOptions;
@@ -26,12 +29,11 @@ public class MainMenuUI : MonoBehaviour
 
     void OnPlay()
     {
-        SceneManager.LoadScene("SampleScene");
+        stateMachine.ChangeState(new Level1State());
     }
 
     void OnOptions()
     {
-        Debug.Log("[MainMenu] Options todavía no implementado.");
     }
 
     void OnQuit()
