@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ai-game-developer__gameobject-component-add",
+      "mcp__ai-game-developer__scene-save"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "ai-game-developer"
+  ]
+}
