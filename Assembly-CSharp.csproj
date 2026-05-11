@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\Patterns\State\GameStateMachine.cs" />
     <Compile Include="Assets\Scripts\Managers\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Patterns\State\LevelSelectorState.cs" />
     <Compile Include="Assets\Scripts\Patterns\State\MainMenuState.cs" />
     <Compile Include="Assets\Scripts\Enemies\WaveSpawnerTD.cs" />
     <Compile Include="Assets\Scripts\UI\HUDController.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Assets\Scripts\Patterns\Factory\EnemyFactoryTD.cs" />
     <Compile Include="Assets\Scripts\Towers\TowerData.cs" />
     <Compile Include="Assets\Scripts\UI\BuildHUDActions.cs" />
+    <Compile Include="Assets\Scripts\UI\LevelSelectorUI.cs" />
     <Compile Include="Assets\Scripts\Patterns\State\IGameState.cs" />
     <Compile Include="Assets\Scripts\UI\LoseUI.cs" />
     <Compile Include="Assets\Scripts\Managers\GameplayFacade.cs" />
@@ -688,23 +690,23 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Options">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Options.8.0.2\Microsoft.Extensions.Options.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Options.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Collections.Immutable">
-      <HintPath>Assets\Plugins\NuGet\System.Collections.Immutable.7.0.0\System.Collections.Immutable.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.SignalR.Protocols.Json">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.SignalR.Protocols.Json.8.0.15\Microsoft.AspNetCore.SignalR.Protocols.Json.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.SignalR.Protocols.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Text.Json">
-      <HintPath>Assets\Plugins\NuGet\System.Text.Json.8.0.5\System.Text.Json.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.Text.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Assets\Plugins\NuGet\System.Runtime.CompilerServices.Unsafe.6.1.2\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="nunit.framework">
@@ -712,15 +714,15 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Connections.Common">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.Http.Connections.Common.8.0.15\Microsoft.AspNetCore.Http.Connections.Common.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.Http.Connections.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Annotations">
-      <HintPath>Assets\Plugins\NuGet\System.ComponentModel.Annotations.5.0.0\System.ComponentModel.Annotations.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.ComponentModel.Annotations.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.SignalR.Client">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.SignalR.Client.8.0.15\Microsoft.AspNetCore.SignalR.Client.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.SignalR.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ReportGeneratorMerged">
@@ -728,59 +730,59 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.2\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Connections.Client">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.Http.Connections.Client.8.0.15\Microsoft.AspNetCore.Http.Connections.Client.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.Http.Connections.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Features">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Features.8.0.15\Microsoft.Extensions.Features.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Features.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Configuration.Abstractions.8.0.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.SignalR.Client.Core">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.SignalR.Client.Core.8.0.15\Microsoft.AspNetCore.SignalR.Client.Core.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.SignalR.Client.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource">
-      <HintPath>Assets\Plugins\NuGet\System.Diagnostics.DiagnosticSource.8.0.1\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.CodeAnalysis.Common.4.8.0\Microsoft.CodeAnalysis.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.CodeAnalysis.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="McpPlugin.Common">
-      <HintPath>Assets\Plugins\NuGet\com.IvanMurzak.McpPlugin.Common.6.1.3\McpPlugin.Common.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\McpPlugin.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Reflection.Metadata">
-      <HintPath>Assets\Plugins\NuGet\System.Reflection.Metadata.7.0.0\System.Reflection.Metadata.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.Reflection.Metadata.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ReflectorNet">
-      <HintPath>Assets\Plugins\NuGet\com.IvanMurzak.ReflectorNet.5.1.1\ReflectorNet.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\ReflectorNet.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Connections.Abstractions">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.Connections.Abstractions.8.0.15\Microsoft.AspNetCore.Connections.Abstractions.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.Connections.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.Memory">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Bcl.Memory.10.0.3\Microsoft.Bcl.Memory.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Bcl.Memory.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Text.Encoding.CodePages">
-      <HintPath>Assets\Plugins\NuGet\System.Text.Encoding.CodePages.7.0.0\System.Text.Encoding.CodePages.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.Text.Encoding.CodePages.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Hosting.Abstractions">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Hosting.Abstractions.8.0.1\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
@@ -788,67 +790,67 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Threading.Channels">
-      <HintPath>Assets\Plugins\NuGet\System.Threading.Channels.8.0.0\System.Threading.Channels.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.Threading.Channels.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.DependencyInjection.8.0.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.DependencyInjection.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Diagnostics.Abstractions">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Diagnostics.Abstractions.8.0.1\Microsoft.Extensions.Diagnostics.Abstractions.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Diagnostics.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Logging.8.0.1\Microsoft.Extensions.Logging.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Logging.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.CodeAnalysis.CSharp.4.8.0\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Bcl.AsyncInterfaces.8.0.0\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="R3">
-      <HintPath>Assets\Plugins\NuGet\R3.1.3.0\R3.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\R3.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Pipelines">
-      <HintPath>Assets\Plugins\NuGet\System.IO.Pipelines.8.0.0\System.IO.Pipelines.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.IO.Pipelines.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Text.Encodings.Web">
-      <HintPath>Assets\Plugins\NuGet\System.Text.Encodings.Web.8.0.0\System.Text.Encodings.Web.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\System.Text.Encodings.Web.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Logging.Abstractions.8.0.3\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="McpPlugin">
-      <HintPath>Assets\Plugins\NuGet\com.IvanMurzak.McpPlugin.6.1.3\McpPlugin.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\McpPlugin.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.SignalR.Common">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.SignalR.Common.8.0.15\Microsoft.AspNetCore.SignalR.Common.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.AspNetCore.SignalR.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.TimeProvider">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Bcl.TimeProvider.8.0.1\Microsoft.Bcl.TimeProvider.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Bcl.TimeProvider.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Primitives.8.0.0\Microsoft.Extensions.Primitives.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Primitives.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Caching.Abstractions.8.0.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.FileProviders.Abstractions">
-      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.FileProviders.Abstractions.8.0.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+      <HintPath>Assets\Plugins\NuGet\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

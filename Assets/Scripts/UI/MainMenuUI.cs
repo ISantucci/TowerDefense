@@ -29,7 +29,7 @@ public class MainMenuUI : MonoBehaviour
 
     void OnPlay()
     {
-        stateMachine.ChangeState(new Level1State());
+        stateMachine.ChangeState(new LevelSelectorState());
     }
 
     void OnOptions()

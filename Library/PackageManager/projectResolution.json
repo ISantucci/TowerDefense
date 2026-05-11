@@ -9,6 +9,16 @@
     "C:\\Program Files\\Unity\\Hub\\Editor\\6000.4.2f1\\Editor\\Data\\Resources\\PackageManager\\BuiltInPackages\\BuiltInPackagesCombined.sha1"
   ],
   "outputs": {
+    "com.ivanmurzak.unity.mcp@0.72.0": {
+      "name": "com.ivanmurzak.unity.mcp",
+      "displayName": "AI Game Developer — MCP",
+      "resolvedPath": "C:\\Users\\ControlEquipos\\Documents\\GitHub\\TowerDefense\\Library\\PackageCache\\com.ivanmurzak.unity.mcp@cdb0b093a24a",
+      "fingerprint": "cdb0b093a24a9ebe94833d22f06e2b39f23b5949",
+      "editorCompatibility": "2022.3.0a1",
+      "version": "0.72.0",
+      "source": "registry",
+      "testable": false
+    },
     "com.unity.ai.navigation@2.0.12": {
       "name": "com.unity.ai.navigation",
       "displayName": "AI Navigation",
@@ -390,26 +400,6 @@
       "source": "builtin",
       "testable": false
     },
-    "com.ivanmurzak.unity.mcp@0.69.0": {
-      "name": "com.ivanmurzak.unity.mcp",
-      "displayName": "AI Game Developer — MCP",
-      "resolvedPath": "C:\\Users\\ControlEquipos\\Documents\\GitHub\\TowerDefense\\Library\\PackageCache\\com.ivanmurzak.unity.mcp@3d4d4707112d",
-      "fingerprint": "3d4d4707112dda7bb9e0c5cb5e5cf4a3916e2911",
-      "editorCompatibility": "2022.3.0a1",
-      "version": "0.69.0",
-      "source": "registry",
-      "testable": false
-    },
-    "extensions.unity.playerprefsex@2.1.3": {
-      "name": "extensions.unity.playerprefsex",
-      "displayName": "PlayerPrefsEx",
-      "resolvedPath": "C:\\Users\\ControlEquipos\\Documents\\GitHub\\TowerDefense\\Library\\PackageCache\\extensions.unity.playerprefsex@2038356f0c05",
-      "fingerprint": "2038356f0c056cd7fd04c0b6d920865900978f36",
-      "editorCompatibility": "2018.3.0a1",
-      "version": "2.1.3",
-      "source": "registry",
-      "testable": false
-    },
     "com.unity.modules.subsystems@1.0.0": {
       "name": "com.unity.modules.subsystems",
       "displayName": "Subsystems",
@@ -463,6 +453,16 @@
       "fingerprint": "19a8412216200955baa50132d98cb9fe4770e401",
       "editorCompatibility": "2021.3.0a1",
       "version": "1.3.0",
+      "source": "registry",
+      "testable": false
+    },
+    "extensions.unity.playerprefsex@2.1.3": {
+      "name": "extensions.unity.playerprefsex",
+      "displayName": "PlayerPrefsEx",
+      "resolvedPath": "C:\\Users\\ControlEquipos\\Documents\\GitHub\\TowerDefense\\Library\\PackageCache\\extensions.unity.playerprefsex@2038356f0c05",
+      "fingerprint": "2038356f0c056cd7fd04c0b6d920865900978f36",
+      "editorCompatibility": "2018.3.0a1",
+      "version": "2.1.3",
       "source": "registry",
       "testable": false
     },
