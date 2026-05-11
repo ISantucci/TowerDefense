@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ArcherTowerData
   m_EditorClassIdentifier: 
   id: 0
-  prefab: {fileID: 1525327178939709713, guid: 179904bdc47a91941a1e81c5979b198b, type: 3}
+  prefab: {fileID: 1525327178939709713, guid: 4f4e2c4b42bea0d46bbf9b41cee51b91, type: 3}
   range: 6
   fireRate: 1
   projectileId: 0

@@ -13,11 +13,12 @@ public class TowerPlacer : MonoBehaviour
     [Header("Selection")]
     public bool stickySelection = false;
 
-    bool hasSelection;
+    public bool HasSelection { get; private set; }
     TowerId selectedTower;
     int selectedCost;
 
     public System.Action OnSelectionCleared;
+    public System.Action OnTowerPlaced;
 
     void Awake()
     {
@@ -47,7 +48,7 @@ public class TowerPlacer : MonoBehaviour
     public void SelectTower(TowerId id)
     {
         selectedTower = id;
-        hasSelection = true;
+        HasSelection = true;
 
         if (towerFactory == null) AutoBind();
         selectedCost = towerFactory != null ? towerFactory.GetCost(id) : 0;
@@ -66,16 +67,19 @@ public class TowerPlacer : MonoBehaviour
 
     void ClearSelection()
     {
-        hasSelection = false;
+        HasSelection = false;
         OnSelectionCleared?.Invoke();
     }
 
     void TryPlace()
     {
-        if (!hasSelection) return;
+        if (!HasSelection) return;
 
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("[TowerPlacer] Click bloqueado por UI (IsPointerOverGameObject = true)");
             return;
+        }
 
         if (cam == null || buildGrid == null || towerFactory == null || invoker == null)
         {
@@ -98,11 +102,10 @@ public class TowerPlacer : MonoBehaviour
         var cmd = new PlaceTowerCommand(towerFactory, selectedTower, p, Quaternion.identity, cost);
         invoker.Do(cmd);
 
+        if (cmd.IsDone)
+            OnTowerPlaced?.Invoke();
+
         if (!stickySelection && cmd.IsDone)
             ClearSelection();
-
-
-        Debug.Log("[TowerPlacer] Click bloqueado por UI (IsPointerOverGameObject = true)");
-
     }
 }

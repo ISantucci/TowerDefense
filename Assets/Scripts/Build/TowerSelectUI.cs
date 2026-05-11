@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TowerSelectUI : MonoBehaviour
 {
@@ -10,19 +11,14 @@ public class TowerSelectUI : MonoBehaviour
 
     static TowerSelectUI current;
 
-    void OnEnable()
+    void Update()
     {
-        if (placer != null)
-            placer.OnSelectionCleared += Deselect;
+        if (current != this) return;
         AutoBind();
+        if (placer != null && !placer.HasSelection)
+            Deselect();
     }
 
-    void OnDisable()
-    {
-        if (placer != null)
-            placer.OnSelectionCleared -= Deselect;
-    }
-    
     void AutoBind()
     {
         if (placer == null)
@@ -32,7 +28,6 @@ public class TowerSelectUI : MonoBehaviour
     public void SelectThisTower()
     {
         AutoBind();
-
         if (!placer) return;
 
         placer.SelectTower(towerId);
@@ -53,6 +48,8 @@ public class TowerSelectUI : MonoBehaviour
 
         if (current == this)
             current = null;
+
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 }
-
