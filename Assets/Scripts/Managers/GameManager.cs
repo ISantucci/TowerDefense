@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] int startLives = 20;
     [SerializeField] int startMoney = 200;
 
+    [Header("Venta de Torres")]
+    [SerializeField, Range(0f, 1f)] private float towerSellRefundPercent = 0.5f;
+    public float TowerSellRefundPercent => towerSellRefundPercent;
+
     public int Lives { get; private set; }
     public int Money { get; private set; }
     public int Score { get; private set; }

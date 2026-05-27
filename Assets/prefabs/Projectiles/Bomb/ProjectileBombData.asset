@@ -16,7 +16,7 @@ MonoBehaviour:
   prefab: {fileID: 4382163432692736675, guid: 36b67a5a5b33a47479f158ff65def5a8, type: 3}
   speed: 10
   damage: 5
-  splashRadius: 5
+  splashRadius: 3
   enemyMask:
     serializedVersion: 2
     m_Bits: 64

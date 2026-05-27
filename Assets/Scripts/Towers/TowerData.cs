@@ -10,12 +10,13 @@ public class TowerData : ScriptableObject
     public Tower prefab;
 
     [Header("Stats")]
-    public float range = 6f;
+    public int   damage   = 10;
+    public float range    = 6f;
     public float fireRate = 0.6f;
 
     [Header("Projectile")]
     public ProjectileId projectileId;   
 
-    [Header("Economía")]
+    [Header("Economï¿½a")]
     public int cost = 50;
 }

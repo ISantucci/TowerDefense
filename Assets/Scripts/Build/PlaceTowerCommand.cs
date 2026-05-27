@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlaceTowerCommand : ICommand
+public class PlaceTowerCommand : ICostCommand
 {
     readonly TowerFactoryTD factory;
     readonly TowerId towerId;

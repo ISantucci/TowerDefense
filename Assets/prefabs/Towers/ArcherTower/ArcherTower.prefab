@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1525327178939709718}
   - component: {fileID: 1525327178939709713}
   - component: {fileID: 6359974625638842178}
+  - component: {fileID: 9115891592541308458}
+  - component: {fileID: -5848252689118980616}
   m_Layer: 9
   m_Name: ArcherTower
   m_TagString: Tower
@@ -50,6 +52,7 @@ MonoBehaviour:
   towerType: 0
   range: 6
   fireRate: 0.6
+  damageBonus: 0
   front: {fileID: 0}
   projectileFactory: {fileID: 0}
   projectilePool: {fileID: 0}
@@ -75,6 +78,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 5, z: 2}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &9115891592541308458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525327178939709712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb043809c6db57b499ac15acd26a1641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerUpgradeComponent
+  damageUpgrade:
+    maxLevel: 3
+    costsPerLevel: 320000006400000096000000
+    valuesPerLevel:
+    - 1
+    - 2
+    - 3
+    currentLevel: 0
+  speedUpgrade:
+    maxLevel: 3
+    costsPerLevel: 4b00000096000000e1000000
+    valuesPerLevel:
+    - 0.1
+    - 0.15
+    - 0.2
+    currentLevel: 0
+  rangeUpgrade:
+    maxLevel: 3
+    costsPerLevel: 3c00000078000000b4000000
+    valuesPerLevel:
+    - 1
+    - 1.5
+    - 2
+    currentLevel: 0
+--- !u!114 &-5848252689118980616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525327178939709712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e2055db0a69074a9bedd07db9b6a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerRangeVisualizer
+  lineRenderer: {fileID: 0}
+  segments: 96
+  yOffset: 0.05
+  lineWidth: 0.05
+  rangeColor: {r: 0, g: 1, b: 1, a: 0.65}
 --- !u!1 &9029362162483580917
 GameObject:
   m_ObjectHideFlags: 0

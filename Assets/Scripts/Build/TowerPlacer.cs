@@ -35,14 +35,11 @@ public class TowerPlacer : MonoBehaviour
         if (cam == null || buildGrid == null || towerFactory == null || invoker == null)
             AutoBind();
 
-        if (Input.GetMouseButtonDown(0))
-            TryPlace();
-
-        if (Input.GetKeyDown(KeyCode.Z)) invoker?.Undo();
-        if (Input.GetKeyDown(KeyCode.Y)) invoker?.Redo();
-
-
-
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (HasSelection) CancelSelection();
+            invoker?.Undo();
+        }
     }
 
     public void SelectTower(TowerId id)
@@ -65,13 +62,13 @@ public class TowerPlacer : MonoBehaviour
         if (invoker == null) invoker = FindObjectOfType<BuildInvoker>(true);
     }
 
-    void ClearSelection()
+    public void CancelSelection()
     {
         HasSelection = false;
         OnSelectionCleared?.Invoke();
     }
 
-    void TryPlace()
+    public void TryPlace()
     {
         if (!HasSelection) return;
 
@@ -106,6 +103,6 @@ public class TowerPlacer : MonoBehaviour
             OnTowerPlaced?.Invoke();
 
         if (!stickySelection && cmd.IsDone)
-            ClearSelection();
+            CancelSelection();
     }
 }

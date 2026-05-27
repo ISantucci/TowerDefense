@@ -1,11 +1,11 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ControlEquipos" at "2026-05-12T18:36:56.3083395Z"
 Built from '6000.4/staging' branch; Version is '6000.4.2f1 (7a4c1aeef971) revision 8014874'; Using compiler version '194234433'; Build Type 'Release'
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ControlEquipos" at "2026-05-08T15:42:10.4064075Z"
 OS: 'Windows 11  (10.0.26200) Professional' Language: 'es' Physical Memory: 16039 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
 System  architecture: x64
 Process architecture: x64
-Date: 2026-05-08T15:42:10Z
+Date: 2026-05-12T18:36:56Z
 
 COMMAND LINE ARGUMENTS:
 C:\Program Files\Unity\Hub\Editor\6000.4.2f1\Editor\Unity.exe
@@ -19,7 +19,7 @@ C:/Users/ControlEquipos/Documents/GitHub/TowerDefense
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-61704
+57688
 -licensingIpc
 LicenseClient-ControlEquipos
 -force-d3d12
@@ -68,16 +68,16 @@ C:/Users/ControlEquipos/Documents/GitHub/TowerDefense
     "memorysetup-job-temp-allocator-block-size=2097152"
     "memorysetup-job-temp-allocator-block-size-background=1048576"
     "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
-Player connection [13452]  Target information:
+Player connection [35988]  Target information:
 
-Player connection [13452]  * "[IP] 172.30.240.1 [Port] 0 [Flags] 2 [Guid] 3800438323 [EditorId] 3800438323 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-28813F4U) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [35988]  * "[IP] 172.30.240.1 [Port] 0 [Flags] 2 [Guid] 35388623 [EditorId] 35388623 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-28813F4U) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [13452]  * "[IP] 100.113.26.14 [Port] 0 [Flags] 2 [Guid] 3800438323 [EditorId] 3800438323 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-28813F4U) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [35988]  * "[IP] 100.113.26.14 [Port] 0 [Flags] 2 [Guid] 35388623 [EditorId] 35388623 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-28813F4U) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [13452]  * "[IP] 172.21.120.181 [Port] 0 [Flags] 2 [Guid] 3800438323 [EditorId] 3800438323 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-28813F4U) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [35988]  * "[IP] 172.21.120.181 [Port] 0 [Flags] 2 [Guid] 35388623 [EditorId] 35388623 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-28813F4U) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [13452] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [13452] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [35988] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [35988] Host joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 3
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
@@ -89,7 +89,7 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 6.73 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 5.49 ms, found 4 plugins.
 Initialize engine version: 6000.4.2f1 (7a4c1aeef971)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.4.2f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path C:/Users/ControlEquipos/Documents/GitHub/TowerDefense/Assets
@@ -109,18 +109,12 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.4.2f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.4.2f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.4.2f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56520
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56508
 CodeReloadManager initialized
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.4.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.003015 seconds.
-[Licensing::Client] Error: HandshakeResponse reported an error:
-	ResponseCode: 505
-	ResponseStatus: Unsupported protocol version '1.18.1'.
-[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-ControlEquipos"
-[Licensing::IpcConnector] LicenseClient-ControlEquipos channel disconnected successfully.
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ControlEquipos-6000.4.2" at "2026-05-08T15:42:12.0634536Z"
+Registered in 0.003232 seconds.
 Native extension for WindowsStandalone target not found
 Package Manager log level set to [2]
 [Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
@@ -128,38 +122,44 @@ Package Manager log level set to [2]
 [Package Manager] Cannot connect to Unity Package Manager local server
 ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.550 seconds
-Domain Reload Profiling: 1198ms
-	BeginReloadAssembly (178ms)
-	RebuildCommonClasses (55ms)
-	RebuildNativeTypeToScriptingClass (17ms)
-	initialDomainReloadingComplete (85ms)
-	LoadAllAssembliesAndSetupDomain (312ms)
-		LoadAssemblies (174ms)
-		AnalyzeDomain (299ms)
-			TypeCache.Refresh (297ms)
-				TypeCache.ScanAssembly (276ms)
-	FinalizeReload (552ms)
+- Finished resetting the current domain, in  0.926 seconds
+Domain Reload Profiling: 1826ms
+	BeginReloadAssembly (250ms)
+	RebuildCommonClasses (71ms)
+	RebuildNativeTypeToScriptingClass (27ms)
+	initialDomainReloadingComplete (114ms)
+	LoadAllAssembliesAndSetupDomain (435ms)
+		LoadAssemblies (243ms)
+		AnalyzeDomain (420ms)
+			TypeCache.Refresh (418ms)
+				TypeCache.ScanAssembly (390ms)
+	FinalizeReload (929ms)
 		SetupLoadedEditorAssemblies (0ms)
-			InitializePlatformSupportModulesInManaged (71ms)
-			BeforeProcessingInitializeOnLoad (132ms)
-			ProcessInitializeOnLoadAttributes (136ms)
-			ProcessInitializeOnLoadMethodAttributes (120ms)
+			InitializePlatformSupportModulesInManaged (116ms)
+			BeforeProcessingInitializeOnLoad (203ms)
+			ProcessInitializeOnLoadAttributes (203ms)
+			ProcessInitializeOnLoadMethodAttributes (229ms)
 ========================================================================
 Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
 [Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.18.1'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-ControlEquipos"
+[Licensing::IpcConnector] LicenseClient-ControlEquipos channel disconnected successfully.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ControlEquipos-6000.4.2" at "2026-05-12T18:37:00.3161214Z"
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.18.1+9fbee8e
-  Session Id:              f08999a1104b4911a68929bb888a5ae0
-  Correlation Id:          d1c5e4ac4760f76228590c4098de704e
-  External correlation Id: 1403444684999444805
+  Session Id:              a2deedd840d44cce8e28402bf02a1940
+  Correlation Id:          1e97b3bf31fb28a9c1ecac5c45f04e17
+  External correlation Id: 7601476742538924160
   Machine Id:              pyI6KMTrxaJvuk5UqnnvTzVygrg=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-ControlEquipos-6000.4.2" (connect: 0.00s, validation: 0.00s, handshake: 1.57s)
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ControlEquipos-6000.4.2-notifications" at "2026-05-08T15:42:13.6446226Z"
-[Licensing::Module] Licensing Background thread has ended after 3.24s
-[Licensing::Module] Licensing is initialized (took 0.43s).
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-ControlEquipos-6000.4.2" (connect: 0.00s, validation: 0.00s, handshake: 3.36s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ControlEquipos-6000.4.2-notifications" at "2026-05-12T18:37:03.674899Z"
+[Licensing::Module] Licensing Background thread has ended after 7.37s
+[Licensing::Module] Licensing is initialized (took 3.84s).
 [Licensing::Client] Successfully resolved entitlement details
 [Licensing::Module] License group:
   Id: 4673659892569-UnityPersXXXX
@@ -185,18 +185,19 @@ Assembly Unity.TextMeshPro.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshP
 Assembly UnityEditor.UI.Common.Tests.dll at Library/ScriptAssemblies/UnityEditor.UI.Common.Tests.dll not valid. Loading of assembly skipped.
 Assembly UnityEditor.UI.EditorTests.dll at Library/ScriptAssemblies/UnityEditor.UI.EditorTests.dll not valid. Loading of assembly skipped.
 Assembly UnityEngine.UI.Tests.dll at Library/ScriptAssemblies/UnityEngine.UI.Tests.dll not valid. Loading of assembly skipped.
+Refreshing native plugins compatible for Editor in 3.64 ms, found 4 plugins.
 Native extension for WindowsStandalone target not found
 [Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Unable to send message (not connected to server process).
 [Package Manager] Cannot connect to Unity Package Manager local server
-<color=#ffaa00>warn:</color> [12:42:16:1470] <color=#B4FF32>[AI]</color> <color=#48C9B0><b>McpManagerClientHub</b></color> ConnectionManager[ec1f1b5a-b3ff-40b6-9d09-45f23e24d442] EnsureConnection Connection not available and auto-reconnect disabled for endpoint: /hub/mcp-server
+<color=#ffaa00>warn:</color> [15:37:07:2675] <color=#B4FF32>[AI]</color> <color=#48C9B0><b>McpManagerClientHub</b></color> ConnectionManager[6143797d-b4ff-4071-9cba-67e74a4d5725] EnsureConnection Connection not available and auto-reconnect disabled for endpoint: /hub/mcp-server
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
 UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
 UnityEngine.Logger:Log (UnityEngine.LogType,object)
 UnityEngine.Debug:LogWarning (object)
-com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Logger/UnityLogger.cs:125)
+com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Logger/UnityLogger.cs:125)
 Microsoft.Extensions.Logging.Logger:<Log>g__LoggerLog|14_0<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.ILogger,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>,System.Collections.Generic.List`1<System.Exception>&,Microsoft.Extensions.Logging.FormattedLogValues&)
 Microsoft.Extensions.Logging.Logger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>)
 Microsoft.Extensions.Logging.Logger`1<com.IvanMurzak.McpPlugin.McpManagerClientHub>:Microsoft.Extensions.Logging.ILogger.Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>)
@@ -220,22 +221,22 @@ R3.ThrottleFirst`1/_ThrottleFirst<R3.Unit>:OnNextCore (R3.Unit)
 R3.Observer`1<R3.Unit>:OnNext (R3.Unit)
 R3.Subject`1<R3.Unit>:OnNext (R3.Unit)
 com.IvanMurzak.McpPlugin.McpToolManager:SetToolEnabled (string,bool)
-com.IvanMurzak.Unity.MCP.UnityMcpPlugin:ApplyConfigToMcpPlugin (com.IvanMurzak.McpPlugin.IMcpPlugin) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/UnityMcpPlugin.Build.cs:202)
-com.IvanMurzak.Unity.MCP.UnityMcpPluginEditor:BuildMcpPluginIfNeeded () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/UnityMcpPluginEditor.Build.cs:41)
-com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/Startup.cs:28)
+com.IvanMurzak.Unity.MCP.UnityMcpPlugin:ApplyConfigToMcpPlugin (com.IvanMurzak.McpPlugin.IMcpPlugin) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/UnityMcpPlugin.Build.cs:202)
+com.IvanMurzak.Unity.MCP.UnityMcpPluginEditor:BuildMcpPluginIfNeeded () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Editor/Scripts/UnityMcpPluginEditor.Build.cs:41)
+com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Editor/Scripts/Startup.cs:28)
 System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
 UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
 
-(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/UnityMcpPlugin.Build.cs Line: 202)
+(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/UnityMcpPlugin.Build.cs Line: 202)
 
-<color=#ffaa00>warn:</color> [12:42:16:1626] <color=#B4FF32>[AI]</color> <color=#48C9B0><b>McpManagerClientHub</b></color> ConnectionManager[ec1f1b5a-b3ff-40b6-9d09-45f23e24d442] EnsureConnection Connection not available and auto-reconnect disabled for endpoint: /hub/mcp-server
+<color=#ffaa00>warn:</color> [15:37:07:2865] <color=#B4FF32>[AI]</color> <color=#48C9B0><b>McpManagerClientHub</b></color> ConnectionManager[6143797d-b4ff-4071-9cba-67e74a4d5725] EnsureConnection Connection not available and auto-reconnect disabled for endpoint: /hub/mcp-server
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
 UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
 UnityEngine.Logger:Log (UnityEngine.LogType,object)
 UnityEngine.Debug:LogWarning (object)
-com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Logger/UnityLogger.cs:125)
+com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Logger/UnityLogger.cs:125)
 Microsoft.Extensions.Logging.Logger:<Log>g__LoggerLog|14_0<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.ILogger,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>,System.Collections.Generic.List`1<System.Exception>&,Microsoft.Extensions.Logging.FormattedLogValues&)
 Microsoft.Extensions.Logging.Logger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>)
 Microsoft.Extensions.Logging.Logger`1<com.IvanMurzak.McpPlugin.McpManagerClientHub>:Microsoft.Extensions.Logging.ILogger.Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>)
@@ -259,22 +260,22 @@ R3.ThrottleFirst`1/_ThrottleFirst<R3.Unit>:OnNextCore (R3.Unit)
 R3.Observer`1<R3.Unit>:OnNext (R3.Unit)
 R3.Subject`1<R3.Unit>:OnNext (R3.Unit)
 com.IvanMurzak.McpPlugin.McpPromptManager:SetPromptEnabled (string,bool)
-com.IvanMurzak.Unity.MCP.UnityMcpPlugin:ApplyConfigToMcpPlugin (com.IvanMurzak.McpPlugin.IMcpPlugin) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/UnityMcpPlugin.Build.cs:217)
-com.IvanMurzak.Unity.MCP.UnityMcpPluginEditor:BuildMcpPluginIfNeeded () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/UnityMcpPluginEditor.Build.cs:41)
-com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/Startup.cs:28)
+com.IvanMurzak.Unity.MCP.UnityMcpPlugin:ApplyConfigToMcpPlugin (com.IvanMurzak.McpPlugin.IMcpPlugin) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/UnityMcpPlugin.Build.cs:217)
+com.IvanMurzak.Unity.MCP.UnityMcpPluginEditor:BuildMcpPluginIfNeeded () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Editor/Scripts/UnityMcpPluginEditor.Build.cs:41)
+com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Editor/Scripts/Startup.cs:28)
 System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
 UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
 
-(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/UnityMcpPlugin.Build.cs Line: 217)
+(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/UnityMcpPlugin.Build.cs Line: 217)
 
-<color=#ffaa00>warn:</color> [12:42:16:1652] <color=#B4FF32>[AI]</color> <color=#48C9B0><b>McpManagerClientHub</b></color> ConnectionManager[ec1f1b5a-b3ff-40b6-9d09-45f23e24d442] EnsureConnection Connection not available and auto-reconnect disabled for endpoint: /hub/mcp-server
+<color=#ffaa00>warn:</color> [15:37:07:2894] <color=#B4FF32>[AI]</color> <color=#48C9B0><b>McpManagerClientHub</b></color> ConnectionManager[6143797d-b4ff-4071-9cba-67e74a4d5725] EnsureConnection Connection not available and auto-reconnect disabled for endpoint: /hub/mcp-server
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
 UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
 UnityEngine.Logger:Log (UnityEngine.LogType,object)
 UnityEngine.Debug:LogWarning (object)
-com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Logger/UnityLogger.cs:125)
+com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Logger/UnityLogger.cs:125)
 Microsoft.Extensions.Logging.Logger:<Log>g__LoggerLog|14_0<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.ILogger,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>,System.Collections.Generic.List`1<System.Exception>&,Microsoft.Extensions.Logging.FormattedLogValues&)
 Microsoft.Extensions.Logging.Logger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>)
 Microsoft.Extensions.Logging.Logger`1<com.IvanMurzak.McpPlugin.McpManagerClientHub>:Microsoft.Extensions.Logging.ILogger.Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>)
@@ -298,167 +299,142 @@ R3.ThrottleFirst`1/_ThrottleFirst<R3.Unit>:OnNextCore (R3.Unit)
 R3.Observer`1<R3.Unit>:OnNext (R3.Unit)
 R3.Subject`1<R3.Unit>:OnNext (R3.Unit)
 com.IvanMurzak.McpPlugin.McpResourceManager:SetResourceEnabled (string,bool)
-com.IvanMurzak.Unity.MCP.UnityMcpPlugin:ApplyConfigToMcpPlugin (com.IvanMurzak.McpPlugin.IMcpPlugin) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/UnityMcpPlugin.Build.cs:231)
-com.IvanMurzak.Unity.MCP.UnityMcpPluginEditor:BuildMcpPluginIfNeeded () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/UnityMcpPluginEditor.Build.cs:41)
-com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/Startup.cs:28)
+com.IvanMurzak.Unity.MCP.UnityMcpPlugin:ApplyConfigToMcpPlugin (com.IvanMurzak.McpPlugin.IMcpPlugin) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/UnityMcpPlugin.Build.cs:231)
+com.IvanMurzak.Unity.MCP.UnityMcpPluginEditor:BuildMcpPluginIfNeeded () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Editor/Scripts/UnityMcpPluginEditor.Build.cs:41)
+com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Editor/Scripts/Startup.cs:28)
 System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
 UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
 
-(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/UnityMcpPlugin.Build.cs Line: 231)
+(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/UnityMcpPlugin.Build.cs Line: 231)
 
 IOException: Sharing violation on path C:\Users\ControlEquipos\Documents\GitHub\TowerDefense\Temp\mcp-server\ai-editor-logs.txt
   at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <f713e1c3c5f545ce9b1df47230f4f853>:0 
   at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.IO.FileOptions options) [0x00000] in <f713e1c3c5f545ce9b1df47230f4f853>:0 
   at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean useAsync) [0x00000] in <f713e1c3c5f545ce9b1df47230f4f853>:0 
   at (wrapper remoting-invoke-with-check) System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int,bool)
-  at com.IvanMurzak.Unity.MCP.FileLogStorage.CreateWriteStream (System.String fileName, System.String& resultFileName, System.String& resultFilePath) [0x00090] in .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Unity\Logs\FileLogStorage.cs:116 
+  at com.IvanMurzak.Unity.MCP.FileLogStorage.CreateWriteStream (System.String fileName, System.String& resultFileName, System.String& resultFilePath) [0x00090] in .\Library\PackageCache\com.ivanmurzak.unity.mcp@cdb0b093a24a\Runtime\Unity\Logs\FileLogStorage.cs:116 
 UnityEngine.DebugLogHandler:Internal_LogException_Injected(Exception, IntPtr)
 UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
 UnityEngine.DebugLogHandler:LogException(Exception, Object)
 UnityEngine.Logger:LogException(Exception, Object)
 UnityEngine.Debug:LogException(Exception)
-com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log(LogLevel, EventId, FormattedLogValues, Exception, Func`3) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Logger\UnityLogger.cs:118)
+com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log(LogLevel, EventId, FormattedLogValues, Exception, Func`3) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@cdb0b093a24a\Runtime\Logger\UnityLogger.cs:118)
 Microsoft.Extensions.Logging.Logger:<Log>g__LoggerLog|14_0(LogLevel, EventId, ILogger, Exception, Func`3, List`1&, FormattedLogValues&)
 Microsoft.Extensions.Logging.Logger:Log(LogLevel, EventId, FormattedLogValues, Exception, Func`3)
 Microsoft.Extensions.Logging.LoggerExtensions:Log(ILogger, LogLevel, EventId, Exception, String, Object[])
 Microsoft.Extensions.Logging.LoggerExtensions:Log(ILogger, LogLevel, Exception, String, Object[])
 Microsoft.Extensions.Logging.LoggerExtensions:LogError(ILogger, Exception, String, Object[])
-com.IvanMurzak.Unity.MCP.FileLogStorage:CreateWriteStream(String, String&, String&) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Unity\Logs\FileLogStorage.cs:126)
-com.IvanMurzak.Unity.MCP.FileLogStorage:.ctor(ILogger, String, String, Int32, Int32, JsonSerializerOptions) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Unity\Logs\FileLogStorage.cs:88)
-com.IvanMurzak.Unity.MCP.BufferedFileLogStorage:.ctor(ILogger, Int32, String, String, Int32, Int32, JsonSerializerOptions) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Unity\Logs\BufferedFileLogStorage.cs:38)
-com.IvanMurzak.Unity.MCP.Editor.<>c:<.cctor>b__8_0() (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Editor\Scripts\Startup.cs:29)
-com.IvanMurzak.Unity.MCP.UnityMcpPlugin:AddUnityLogCollectorIfNeeded(Func`1) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\UnityMcpPlugin.cs:105)
-com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor() (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Editor\Scripts\Startup.cs:29)
+com.IvanMurzak.Unity.MCP.FileLogStorage:CreateWriteStream(String, String&, String&) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@cdb0b093a24a\Runtime\Unity\Logs\FileLogStorage.cs:126)
+com.IvanMurzak.Unity.MCP.FileLogStorage:.ctor(ILogger, String, String, Int32, Int32, JsonSerializerOptions) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@cdb0b093a24a\Runtime\Unity\Logs\FileLogStorage.cs:88)
+com.IvanMurzak.Unity.MCP.BufferedFileLogStorage:.ctor(ILogger, Int32, String, String, Int32, Int32, JsonSerializerOptions) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@cdb0b093a24a\Runtime\Unity\Logs\BufferedFileLogStorage.cs:38)
+com.IvanMurzak.Unity.MCP.Editor.<>c:<.cctor>b__8_0() (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@cdb0b093a24a\Editor\Scripts\Startup.cs:29)
+com.IvanMurzak.Unity.MCP.UnityMcpPlugin:AddUnityLogCollectorIfNeeded(Func`1) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@cdb0b093a24a\Runtime\UnityMcpPlugin.cs:105)
+com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor() (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@cdb0b093a24a\Editor\Scripts\Startup.cs:29)
 System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor(IntPtr)
 System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor(RuntimeTypeHandle)
 UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes(Type[])
 
-(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/FileLogStorage.cs Line: 126)
+(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Unity/Logs/FileLogStorage.cs Line: 126)
 
-<color=#ff6b6b>fail:</color> [12:42:16:1668] <color=#B4FF32>[AI]</color> <color=#85C1E2><b>BufferedFileLogStorage</b></color> Failed to create log file stream for ai-editor-logs.txt. Retrying with a different file name.
+<color=#ff6b6b>fail:</color> [15:37:07:2931] <color=#B4FF32>[AI]</color> <color=#85C1E2><b>BufferedFileLogStorage</b></color> Failed to create log file stream for ai-editor-logs.txt. Retrying with a different file name.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
 UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
 UnityEngine.Logger:Log (UnityEngine.LogType,object)
 UnityEngine.Debug:LogError (object)
-com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Logger/UnityLogger.cs:119)
+com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Logger/UnityLogger.cs:119)
 Microsoft.Extensions.Logging.Logger:<Log>g__LoggerLog|14_0<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.ILogger,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>,System.Collections.Generic.List`1<System.Exception>&,Microsoft.Extensions.Logging.FormattedLogValues&)
 Microsoft.Extensions.Logging.Logger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>)
 Microsoft.Extensions.Logging.LoggerExtensions:Log (Microsoft.Extensions.Logging.ILogger,Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,System.Exception,string,object[])
 Microsoft.Extensions.Logging.LoggerExtensions:Log (Microsoft.Extensions.Logging.ILogger,Microsoft.Extensions.Logging.LogLevel,System.Exception,string,object[])
 Microsoft.Extensions.Logging.LoggerExtensions:LogError (Microsoft.Extensions.Logging.ILogger,System.Exception,string,object[])
-com.IvanMurzak.Unity.MCP.FileLogStorage:CreateWriteStream (string,string&,string&) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/FileLogStorage.cs:126)
-com.IvanMurzak.Unity.MCP.FileLogStorage:.ctor (Microsoft.Extensions.Logging.ILogger,string,string,int,int,System.Text.Json.JsonSerializerOptions) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/FileLogStorage.cs:88)
-com.IvanMurzak.Unity.MCP.BufferedFileLogStorage:.ctor (Microsoft.Extensions.Logging.ILogger,int,string,string,int,int,System.Text.Json.JsonSerializerOptions) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/BufferedFileLogStorage.cs:38)
-com.IvanMurzak.Unity.MCP.Editor.Startup/<>c:<.cctor>b__8_0 () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/Startup.cs:29)
-com.IvanMurzak.Unity.MCP.UnityMcpPlugin:AddUnityLogCollectorIfNeeded (System.Func`1<com.IvanMurzak.Unity.MCP.ILogStorage>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/UnityMcpPlugin.cs:105)
-com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/Startup.cs:29)
+com.IvanMurzak.Unity.MCP.FileLogStorage:CreateWriteStream (string,string&,string&) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Unity/Logs/FileLogStorage.cs:126)
+com.IvanMurzak.Unity.MCP.FileLogStorage:.ctor (Microsoft.Extensions.Logging.ILogger,string,string,int,int,System.Text.Json.JsonSerializerOptions) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Unity/Logs/FileLogStorage.cs:88)
+com.IvanMurzak.Unity.MCP.BufferedFileLogStorage:.ctor (Microsoft.Extensions.Logging.ILogger,int,string,string,int,int,System.Text.Json.JsonSerializerOptions) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Unity/Logs/BufferedFileLogStorage.cs:38)
+com.IvanMurzak.Unity.MCP.Editor.Startup/<>c:<.cctor>b__8_0 () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Editor/Scripts/Startup.cs:29)
+com.IvanMurzak.Unity.MCP.UnityMcpPlugin:AddUnityLogCollectorIfNeeded (System.Func`1<com.IvanMurzak.Unity.MCP.ILogStorage>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/UnityMcpPlugin.cs:105)
+com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Editor/Scripts/Startup.cs:29)
 System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
 UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
 
-(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/FileLogStorage.cs Line: 126)
+(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@cdb0b093a24a/Runtime/Unity/Logs/FileLogStorage.cs Line: 126)
 
-IOException: Sharing violation on path C:\Users\ControlEquipos\Documents\GitHub\TowerDefense\Temp\mcp-server\ai-editor-logs-2.txt
-  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <f713e1c3c5f545ce9b1df47230f4f853>:0 
-  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.IO.FileOptions options) [0x00000] in <f713e1c3c5f545ce9b1df47230f4f853>:0 
-  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean useAsync) [0x00000] in <f713e1c3c5f545ce9b1df47230f4f853>:0 
-  at (wrapper remoting-invoke-with-check) System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int,bool)
-  at com.IvanMurzak.Unity.MCP.FileLogStorage.CreateWriteStream (System.String fileName, System.String& resultFileName, System.String& resultFilePath) [0x00090] in .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Unity\Logs\FileLogStorage.cs:116 
-UnityEngine.DebugLogHandler:Internal_LogException_Injected(Exception, IntPtr)
-UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
-UnityEngine.DebugLogHandler:LogException(Exception, Object)
-UnityEngine.Logger:LogException(Exception, Object)
-UnityEngine.Debug:LogException(Exception)
-com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log(LogLevel, EventId, FormattedLogValues, Exception, Func`3) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Logger\UnityLogger.cs:118)
-Microsoft.Extensions.Logging.Logger:<Log>g__LoggerLog|14_0(LogLevel, EventId, ILogger, Exception, Func`3, List`1&, FormattedLogValues&)
-Microsoft.Extensions.Logging.Logger:Log(LogLevel, EventId, FormattedLogValues, Exception, Func`3)
-Microsoft.Extensions.Logging.LoggerExtensions:Log(ILogger, LogLevel, EventId, Exception, String, Object[])
-Microsoft.Extensions.Logging.LoggerExtensions:Log(ILogger, LogLevel, Exception, String, Object[])
-Microsoft.Extensions.Logging.LoggerExtensions:LogError(ILogger, Exception, String, Object[])
-com.IvanMurzak.Unity.MCP.FileLogStorage:CreateWriteStream(String, String&, String&) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Unity\Logs\FileLogStorage.cs:126)
-com.IvanMurzak.Unity.MCP.FileLogStorage:.ctor(ILogger, String, String, Int32, Int32, JsonSerializerOptions) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Unity\Logs\FileLogStorage.cs:88)
-com.IvanMurzak.Unity.MCP.BufferedFileLogStorage:.ctor(ILogger, Int32, String, String, Int32, Int32, JsonSerializerOptions) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\Unity\Logs\BufferedFileLogStorage.cs:38)
-com.IvanMurzak.Unity.MCP.Editor.<>c:<.cctor>b__8_0() (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Editor\Scripts\Startup.cs:29)
-com.IvanMurzak.Unity.MCP.UnityMcpPlugin:AddUnityLogCollectorIfNeeded(Func`1) (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Runtime\UnityMcpPlugin.cs:105)
-com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor() (at .\Library\PackageCache\com.ivanmurzak.unity.mcp@3d4d4707112d\Editor\Scripts\Startup.cs:29)
-System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor(IntPtr)
-System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor(RuntimeTypeHandle)
-UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes(Type[])
-
-(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/FileLogStorage.cs Line: 126)
-
-<color=#ff6b6b>fail:</color> [12:42:16:1787] <color=#B4FF32>[AI]</color> <color=#85C1E2><b>BufferedFileLogStorage</b></color> Failed to create log file stream for ai-editor-logs-2.txt. Retrying with a different file name.
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace ()
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-com.IvanMurzak.Unity.MCP.Utils.UnityLogger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Logger/UnityLogger.cs:119)
-Microsoft.Extensions.Logging.Logger:<Log>g__LoggerLog|14_0<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.ILogger,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>,System.Collections.Generic.List`1<System.Exception>&,Microsoft.Extensions.Logging.FormattedLogValues&)
-Microsoft.Extensions.Logging.Logger:Log<Microsoft.Extensions.Logging.FormattedLogValues> (Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,Microsoft.Extensions.Logging.FormattedLogValues,System.Exception,System.Func`3<Microsoft.Extensions.Logging.FormattedLogValues, System.Exception, string>)
-Microsoft.Extensions.Logging.LoggerExtensions:Log (Microsoft.Extensions.Logging.ILogger,Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,System.Exception,string,object[])
-Microsoft.Extensions.Logging.LoggerExtensions:Log (Microsoft.Extensions.Logging.ILogger,Microsoft.Extensions.Logging.LogLevel,System.Exception,string,object[])
-Microsoft.Extensions.Logging.LoggerExtensions:LogError (Microsoft.Extensions.Logging.ILogger,System.Exception,string,object[])
-com.IvanMurzak.Unity.MCP.FileLogStorage:CreateWriteStream (string,string&,string&) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/FileLogStorage.cs:126)
-com.IvanMurzak.Unity.MCP.FileLogStorage:.ctor (Microsoft.Extensions.Logging.ILogger,string,string,int,int,System.Text.Json.JsonSerializerOptions) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/FileLogStorage.cs:88)
-com.IvanMurzak.Unity.MCP.BufferedFileLogStorage:.ctor (Microsoft.Extensions.Logging.ILogger,int,string,string,int,int,System.Text.Json.JsonSerializerOptions) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/BufferedFileLogStorage.cs:38)
-com.IvanMurzak.Unity.MCP.Editor.Startup/<>c:<.cctor>b__8_0 () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/Startup.cs:29)
-com.IvanMurzak.Unity.MCP.UnityMcpPlugin:AddUnityLogCollectorIfNeeded (System.Func`1<com.IvanMurzak.Unity.MCP.ILogStorage>) (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/UnityMcpPlugin.cs:105)
-com.IvanMurzak.Unity.MCP.Editor.Startup:.cctor () (at ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Editor/Scripts/Startup.cs:29)
-System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
-UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
-
-(Filename: ./Library/PackageCache/com.ivanmurzak.unity.mcp@3d4d4707112d/Runtime/Unity/Logs/FileLogStorage.cs Line: 126)
-
-Refreshing native plugins compatible for Editor in 2.62 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 3.61 ms, found 4 plugins.
 [Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Unable to send message (not connected to server process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.380 seconds
-Domain Reload Profiling: 3043ms
-	BeginReloadAssembly (647ms)
+- Finished resetting the current domain, in  2.140 seconds
+Domain Reload Profiling: 7536ms
+	BeginReloadAssembly (4140ms)
 		DisableScriptedObjects (10ms)
-		CreateAndSetChildDomain (31ms)
-	RebuildCommonClasses (48ms)
-	RebuildNativeTypeToScriptingClass (16ms)
-	initialDomainReloadingComplete (129ms)
-	LoadAllAssembliesAndSetupDomain (822ms)
-		LoadAssemblies (585ms)
-		AnalyzeDomain (358ms)
-			TypeCache.Refresh (308ms)
-				TypeCache.ScanAssembly (287ms)
-			BuildScriptInfoCaches (44ms)
-			ResolveRequiredComponents (5ms)
-	FinalizeReload (1381ms)
+		CreateAndSetChildDomain (52ms)
+	RebuildCommonClasses (81ms)
+	RebuildNativeTypeToScriptingClass (23ms)
+	initialDomainReloadingComplete (139ms)
+	LoadAllAssembliesAndSetupDomain (1012ms)
+		LoadAssemblies (586ms)
+		AnalyzeDomain (564ms)
+			TypeCache.Refresh (469ms)
+				TypeCache.ScanAssembly (437ms)
+			BuildScriptInfoCaches (78ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (2140ms)
 		SetupLoadedEditorAssemblies (0ms)
-			BeforeProcessingInitializeOnLoad (141ms)
-			ProcessInitializeOnLoadAttributes (951ms)
-			ProcessInitializeOnLoadMethodAttributes (54ms)
-			AfterProcessingInitializeOnLoad (6ms)
-		AwakeInstancesAfterBackupRestoration (7ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
+			BeforeProcessingInitializeOnLoad (248ms)
+			ProcessInitializeOnLoadAttributes (1419ms)
+			ProcessInitializeOnLoadMethodAttributes (86ms)
+			AfterProcessingInitializeOnLoad (8ms)
+		AwakeInstancesAfterBackupRestoration (11ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 4389 unused Assets / (1.3 MB). Loaded Objects now: 4948.
-Memory consumption went from 102.7 MB to 101.4 MB.
-Total: 86.009700 ms (FindLiveObjects: 1.028300 ms CreateObjectMapping: 0.602000 ms MarkObjects: 82.842600 ms  DeleteObjects: 1.531800 ms)
+Unloading 4399 unused Assets / (1.1 MB). Loaded Objects now: 4958.
+Memory consumption went from 101.0 MB to 99.9 MB.
+Total: 124.065300 ms (FindLiveObjects: 0.544700 ms CreateObjectMapping: 0.440800 ms MarkObjects: 121.589600 ms  DeleteObjects: 1.487400 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 466010.131517 seconds.
-  path: Assets
-  importAddress: Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets using Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: 'ba3d99d3e6455b7d738cc313a5658c64') in 0.0128746 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a7ba422695a8aa3da15a65ed13cf7f8c DependenciesID=aacbd2d46c4ccb757ffc405dc59c5e9b StaticDependenciesID=09d262387b384c67fbae9f36a9075c34 
+  Time since last request: 822041.666328 seconds.
+  path: Assets/Scripts/Build/TowerSelectUI.cs
+  importAddress: Guid(4e6c0b6f823ac6649825915ff8da0021) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Build/TowerSelectUI.cs using Guid(4e6c0b6f823ac6649825915ff8da0021) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '6d7b9db1326162b338d0eea6c9d65a72') in 0.1261598 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ad4bf95471c2d709b87fd5107c49c515 DependenciesID=eec76c3971511d3288bef432803c786e StaticDependenciesID=90ceb03502793fbb224290efb1b0db5b 
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
 ========================================================================
 Received Import Request.
-  Time since last request: 14.747987 seconds.
-  path: Assets/prefabs
-  importAddress: Guid(c617f201f02877e479bfc2ee699cac71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/prefabs using Guid(c617f201f02877e479bfc2ee699cac71) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: '67008b29c1f61b13afc79dab3d436c5d') in 0.0177395 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=02ebb6d0b4be335edb178bc2eab45c71 DependenciesID=c1a140cbe39e60cdd33c84cebf74ec3b StaticDependenciesID=b6947608d2bbde3bf0ae438d371cac8d 
+  Time since last request: 0.000037 seconds.
+  path: Assets/prefabs/Towers/ArcherTower/ArcherTowerData.asset
+  importAddress: Guid(363696c11bc00da40b3c0f9fd26d902e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/prefabs/Towers/ArcherTower/ArcherTowerData.asset using Guid(363696c11bc00da40b3c0f9fd26d902e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'b94ffe5a1653adc916dd2a24e9cf380a') in 0.0837641 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b3498708bc4c14b89b691b0715644c30 DependenciesID=dbd7a5404fd7726de154562473382613 StaticDependenciesID=a222ba5e0021a967c6784f91e7f4623c 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Scenes/LevelSelectorScene.unity
+  importAddress: Guid(4ec5411597cc94d459f3c0903c8b2c53) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scenes/LevelSelectorScene.unity using Guid(4ec5411597cc94d459f3c0903c8b2c53) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '9f6b3dec79d982196ec27255660af4cb') in 0.0304089 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=877847260fd7e69bb0e188d67ae84d6d DependenciesID=3d6f58a1f5c25d0959cd4b9cf21a210b StaticDependenciesID=d4595101ceee779760fba8adf77ac9a5 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Scripts/UI/MainMenuUI.cs
+  importAddress: Guid(7d05533401a10f949a63a7724ed14def) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/UI/MainMenuUI.cs using Guid(7d05533401a10f949a63a7724ed14def) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '699d3b264d9793f3e55cb88f5f9a0497') in 0.018569 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2d92cc360efc6226b3462dbfe798aa1f DependenciesID=f360f5acd7793e932a1ab17abb645d18 StaticDependenciesID=0356b79d55ac35aedb57c9cd7abb3d50 
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000107 seconds.
+  path: Assets/Scripts/Build/TowerPlacer.cs
+  importAddress: Guid(c9fd476eeaf788345a78ca00f7ef6774) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Build/TowerPlacer.cs using Guid(c9fd476eeaf788345a78ca00f7ef6774) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '04bc05193af0fbf95802072ec0a2c32a') in 0.0173763 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bdc23d85857c497b9459c34ea9c40d3f DependenciesID=775babbd786d93c3b49154f349529abb StaticDependenciesID=1522a2bf225dae385bf984fdbd27af41 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

@@ -29,7 +29,7 @@ public class BuildInvoker : MonoBehaviour
 
         cmd.Execute();
 
-        if (cmd is PlaceTowerCommand ptc && !ptc.IsDone)
+        if (cmd is ICostCommand cc && !cc.IsDone)
         {
             if (cost > 0)
                 EventQueueManager.Enqueue(GameplayEvent.AddMoney(cost));
@@ -49,43 +49,24 @@ public class BuildInvoker : MonoBehaviour
 
         cmd.Undo();
 
-        int cost = GetCost(cmd);
-        if (cost > 0)
-            EventQueueManager.Enqueue(GameplayEvent.AddMoney(cost));
+        if (cmd is ICostCommand cc)
+        {
+            if (cc.IsDone)
+            {
+                // Undo falló — IsDone sigue true; no reembolsar, restaurar al stack
+                undoStack.Push(cmd);
+                return;
+            }
+            if (cc.Cost > 0)
+                EventQueueManager.Enqueue(GameplayEvent.AddMoney(cc.Cost));
+        }
 
         redoStack.Push(cmd);
     }
 
     public void Redo()
     {
-        if (redoStack.IsEmpty()) return;
-
-        ICommand cmd = redoStack.Pop();
-        if (cmd == null) return;
-
-        int cost = GetCost(cmd);
-
-        if (cost > 0)
-        {
-            if (GameManager.I == null) return;
-            if (GameManager.I.Money < cost)
-            {
-                redoStack.Push(cmd);
-                return;
-            }
-            EventQueueManager.Enqueue(GameplayEvent.AddMoney(-cost));
-        }
-
-        cmd.Execute();
-
-        if (cmd is PlaceTowerCommand ptc && !ptc.IsDone)
-        {
-            if (cost > 0)
-                EventQueueManager.Enqueue(GameplayEvent.AddMoney(cost));
-            return;
-        }
-
-        undoStack.Push(cmd);
+        // Redo deshabilitado — solo existe para no romper referencias existentes
     }
 
     public void ClearHistory()
@@ -94,11 +75,7 @@ public class BuildInvoker : MonoBehaviour
         redoStack.Clear();
     }
 
-    int GetCost(ICommand cmd)
-    {
-        if (cmd is PlaceTowerCommand ptc) return ptc.Cost;
-        return 0;
-    }
+    int GetCost(ICommand cmd) => cmd is ICostCommand cc ? cc.Cost : 0;
 
 
 

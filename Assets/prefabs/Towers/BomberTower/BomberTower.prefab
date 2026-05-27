@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 357725205312885730}
   - component: {fileID: 8999139042907420188}
   - component: {fileID: 266893974118108912}
+  - component: {fileID: 3800892128909279002}
+  - component: {fileID: -5783598642286836562}
   m_Layer: 9
   m_Name: BomberTower
   m_TagString: Tower
@@ -82,6 +84,7 @@ MonoBehaviour:
   towerType: 1
   range: 6
   fireRate: 0.6
+  currentDamage: 0
   front: {fileID: 9184845794531624582}
   projectileFactory: {fileID: 0}
   projectilePool: {fileID: 0}
@@ -107,6 +110,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.681715, y: 3.7266147, z: 2.4751825}
   m_Center: {x: -3.6870112, y: 1.3633074, z: -3.1174984}
+--- !u!114 &3800892128909279002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413121951271707524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb043809c6db57b499ac15acd26a1641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerUpgradeComponent
+  damageUpgrade:
+    maxLevel: 3
+    costsPerLevel: 320000006400000064000000
+    growthPerLevel:
+    - 1
+    - 2
+    - 2
+    currentLevel: 0
+  speedUpgrade:
+    maxLevel: 3
+    costsPerLevel: 140000001e0000001e000000
+    growthPerLevel:
+    - 3
+    - 3
+    - 3
+    currentLevel: 0
+  rangeUpgrade:
+    maxLevel: 3
+    costsPerLevel: 010000000100000001000000
+    growthPerLevel:
+    - 0.1
+    - 0.1
+    - 0.1
+    currentLevel: 0
+--- !u!114 &-5783598642286836562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413121951271707524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e2055db0a69074a9bedd07db9b6a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerRangeVisualizer
+  lineRenderer: {fileID: 0}
+  segments: 96
+  yOffset: 0.05
+  lineWidth: 0.05
+  rangeColor: {r: 1, g: 0.0460961, b: 0, a: 0.65}
 --- !u!1001 &8096480707017320888
 PrefabInstance:
   m_ObjectHideFlags: 0

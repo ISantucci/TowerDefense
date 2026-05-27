@@ -9,7 +9,8 @@
       "mcp__ai-game-developer__gameobject-find",
       "mcp__ai-game-developer__gameobject-component-get",
       "mcp__ai-game-developer__console-get-logs",
-      "mcp__ai-game-developer__script-execute"
+      "mcp__ai-game-developer__script-execute",
+      "mcp__ai-game-developer__scene-list-opened"
     ]
   },
   "enableAllProjectMcpServers": true,

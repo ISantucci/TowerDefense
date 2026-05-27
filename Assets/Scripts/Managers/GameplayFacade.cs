@@ -35,10 +35,12 @@ public class GameplayFacade : MonoBehaviour
 
   
     public bool CanUndoBuild => buildInvoker && buildInvoker.CanUndo;
-    public bool CanRedoBuild => buildInvoker && buildInvoker.CanRedo;
+    public bool CanRedoBuild => false;
 
     public void UndoBuild()
     {
+        if (towerPlacer != null && towerPlacer.HasSelection)
+            towerPlacer.CancelSelection();
         buildInvoker?.Undo();
     }
 
@@ -69,5 +71,34 @@ public class GameplayFacade : MonoBehaviour
     // ─────────────────────────────
     public TowerPlacer GetTowerPlacer() => towerPlacer;
 
-    
+    public bool BuyUpgrade(TowerUpgradeComponent upgradeComp, UpgradeStat stat)
+    {
+        if (upgradeComp == null) return false;
+        if (buildInvoker == null) return false;
+
+        int cost = upgradeComp.GetNextCost(stat);
+        var cmd  = new UpgradeTowerCommand(upgradeComp, stat, cost);
+        buildInvoker.Do(cmd);
+        return cmd.IsDone;
+    }
+
+    public bool SellTower(TowerUpgradeComponent upgradeComp)
+    {
+        if (upgradeComp == null) return false;
+        var tower = upgradeComp.GetComponent<Tower>();
+        if (tower == null) return false;
+        if (buildInvoker == null) return false;
+
+        int   baseCost = tower.data != null ? tower.data.cost : 0;
+        int   spent    = upgradeComp.GetTotalSpentOnUpgrades();
+        float pct      = gameManager != null ? gameManager.TowerSellRefundPercent : 0.5f;
+        int   refund   = Mathf.RoundToInt((baseCost + spent) * pct);
+
+        TowerFactoryTD factory = towerPlacer != null ? towerPlacer.towerFactory : null;
+        if (factory == null) factory = FindObjectOfType<TowerFactoryTD>();
+        if (factory == null) return false;
+
+        buildInvoker.Do(new SellTowerCommand(tower, upgradeComp, factory, refund));
+        return true;
+    }
 }

@@ -14,21 +14,21 @@ public class BuildHUDActions : MonoBehaviour
 
     void Start()
     {
-        // Start es más seguro que Awake para agarrar singletons
+        // Start es mï¿½s seguro que Awake para agarrar singletons
         if (!facade)
             facade = GameplayFacade.I;
     }
 
     void Update()
     {
-        // Si por orden de ejecución quedó null, lo intentamos recuperar
+        // Si por orden de ejecuciï¿½n quedï¿½ null, lo intentamos recuperar
         if (!facade)
             facade = GameplayFacade.I;
 
         if (!facade) return;
 
         if (btnUndo != null) btnUndo.interactable = facade.CanUndoBuild;
-        if (btnRedo != null) btnRedo.interactable = facade.CanRedoBuild;
+        if (btnRedo != null) btnRedo.interactable = false;
         if (btnLoad != null) btnLoad.interactable = facade.CanLoadSnapshot;
         if (btnSave != null) btnSave.interactable = true;
     }

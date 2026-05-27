@@ -12,6 +12,7 @@ public class Tower : MonoBehaviour
     [Header("Targeting")]
     public float range = 6f;
     public float fireRate = 0.6f;
+    [HideInInspector] public int currentDamage = 0;
 
     [Header("Shoot point")]
     public Transform front;
@@ -39,9 +40,10 @@ public class Tower : MonoBehaviour
         data = d;
         if (d == null) return;
 
-        towerType = d.id;
-        range = d.range;
-        fireRate = d.fireRate;
+        towerType      = d.id;
+        currentDamage  = d.damage;
+        range          = d.range;
+        fireRate       = d.fireRate;
         projectileType = d.projectileId;    // ← usa projectileId del Type Object
     }
 
@@ -105,6 +107,7 @@ public class Tower : MonoBehaviour
 
         // 4) le aplico los datos del Type Object
         proj.ApplyData(projData);
+        if (currentDamage > 0) proj.damage = currentDamage;
 
         // 5) oriento y disparo
         proj.transform.rotation = rot;
