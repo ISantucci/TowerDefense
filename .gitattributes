@@ -1,0 +1,22 @@
+
+# Assets binarios de Unity
+*.cubemap  binary
+*.unitypackage binary
+*.psd binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.tga binary
+*.tif binary
+*.fbx binary
+*.obj binary
+*.blend binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.ttf binary
+*.otf binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.a binary
