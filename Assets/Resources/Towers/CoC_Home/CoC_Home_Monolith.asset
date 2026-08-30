@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: CoC_Home_Monolith
+  m_EditorClassIdentifier:
+  id: 16
+  displayName: 'Monolith'
+  description: 'each shot adds bonus damage equal to 11-13% of the target''s max HP, so it hits harder vs tankier troops'
+  source: 1
+  kind: 0
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 225
+  range: 11
+  fireRate: 1.5
+  targets: 3
+  attackType: 0
+  minRange: 0
+  splashRadius: 0
+  multiTargetCount: 1
+  burstCount: 1
+  burstInterval: 0.1
+  beamRampSeconds: 5
+  beamMaxMultiplier: 3
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 0
+  cost: 600
+  hitpoints: 500
+  maxLevelReference: 3
+  dpsLevel1Reference: 150
+  dpsMaxReference: 193
+  unlockLevel: 15
+  referenceBuildCost: 255000
+  referenceCurrency: 'dark elixir'
+  special: 'each shot adds bonus damage equal to 11-13% of the target''s max HP, so it hits harder vs tankier troops'
+  statsVerified: 1
+  levels: []

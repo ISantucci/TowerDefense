@@ -4,17 +4,21 @@ using UnityEngine;
 public class BuildGrid : MonoBehaviour
 {
     [Header("Grid")]
-    [Tooltip("TamaÒo de celda para el snap")]
+    [Tooltip("Tama√±o de celda para el snap")]
     public float cellSize = 1f;
 
     [Header("Bloqueos")]
-    [Tooltip("Layers donde NO se puede construir (EnemyPath, Torres, Obst·culos)")]
+    [Tooltip("Layers donde NO se puede construir (EnemyPath, Torres, Obst√°culos)")]
     public LayerMask blockedMask;
 
-    [Tooltip("Radio de chequeo para validar construcciÛn")]
+    [Tooltip("Radio de chequeo para validar construcci√≥n")]
     public float checkRadius = 0.45f;
 
-    /// Snap X/Z al tamaÒo de celda. Mantiene Y tal como viene.
+    [Header("Modo spots (lo setea el nivel)")]
+    [Tooltip("Si est√° activo, s√≥lo se construye sobre BuildSpot libres del LevelController actual.")]
+    public bool spotMode = false;
+
+    /// Snap X/Z al tama√±o de celda. Mantiene Y tal como viene.
     public Vector3 Snap(Vector3 worldPos)
     {
         float x = Mathf.Round(worldPos.x / cellSize) * cellSize;
@@ -22,18 +26,22 @@ public class BuildGrid : MonoBehaviour
         return new Vector3(x, worldPos.y, z);
     }
 
-    /// True si NO colisiona con layers bloqueados alrededor del punto
+    /// True si se puede construir en el punto: en modo spots, que haya un spot libre; si no, que no colisione con layers bloqueados.
     public bool CanBuildAt(Vector3 worldPos)
     {
+        var rt = LevelController.Current;
+        if (spotMode && rt != null && rt.UsesSpots)
+            return rt.IsSpotFree(worldPos);
+
         return !Physics.CheckSphere(
             worldPos,
             checkRadius,
-            blockedMask.value,                  // Unity 2021.3 friendly
+            blockedMask.value,
             QueryTriggerInteraction.Ignore
         );
     }
 
-    /// Opcional: ajustar Y al suelo si tu piso no est· plano
+    /// Opcional: ajustar Y al suelo si tu piso no est√° plano
     public Vector3 SnapToGroundY(Vector3 snappedXZ, float maxDowncast = 10f, LayerMask groundMask = default)
     {
         Vector3 p = snappedXZ + Vector3.up * maxDowncast;

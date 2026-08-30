@@ -61,6 +61,9 @@ public class TowerRangeVisualizer : MonoBehaviour
 
     void DrawCircle(float radius)
     {
+        // El LineRenderer es local: si TowerVisual escaló la torre, el círculo se compensa.
+        float s = transform.lossyScale.x;
+        if (Mathf.Abs(s) > 0.0001f) radius /= s;
         lineRenderer.positionCount = segments + 1;
         for (int i = 0; i <= segments; i++)
         {

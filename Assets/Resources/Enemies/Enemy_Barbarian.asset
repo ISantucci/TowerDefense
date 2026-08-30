@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a00432b5de58c940b19615775d43108, type: 3}
+  m_Name: Enemy_Barbarian
+  m_EditorClassIdentifier:
+  id: 2
+  displayName: 'Bárbaro'
+  description: 'El soldado estándar: aguanta un poco más que el goblin.'
+  maxHealth: 26
+  moveSpeed: 2.4
+  bounty: 7
+  scoreReward: 1
+  damageToBase: 4
+  isFlying: 0
+  armor: 0
+  tint: {r: 0.95, g: 0.75, b: 0.35, a: 1}
+  scale: 1.05
+  heightOffset: 1.05
+  bobAmplitude: 0
+  prefab: {fileID: 8934162589441819570, guid: 3cae3f0e8fdd34f44b586d719bdc72d4, type: 3}

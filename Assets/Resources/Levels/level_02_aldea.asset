@@ -1,0 +1,221 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3a9f1c2b4e4c8fa1b2c3d4e5f60718, type: 3}
+  m_Name: level_02_aldea
+  m_EditorClassIdentifier:
+  levelId: level_02_aldea
+  sceneName: Level02_Aldea
+  displayName: 'Aldea Principal'
+  subtitle: 'Cañones, morteros y la primera Defensa Aérea.'
+  description: 'Roster de Clash of Clans (Aldea). El río sólo se cruza por el puente. Aparecen esbirros y globos: sin antiaéreo, no hay nada que hacer.'
+  order: 2
+  family: 1
+  width: 22
+  height: 14
+  cellSize: 1
+  paths:
+  - name: 'Serpiente'
+    waypoints:
+    - {x: 11, y: 13}
+    - {x: 11, y: 9}
+    - {x: 4, y: 9}
+    - {x: 4, y: 4}
+    - {x: 17, y: 4}
+    - {x: 17, y: 9}
+    - {x: 21, y: 9}
+  buildMode: 1
+  spots: []
+  autoSpots: 1
+  autoSpotMaxDistance: 2
+  spotExclusions: []
+  decor:
+  - cell: {x: 8, y: 0}
+    kind: 2
+  - cell: {x: 8, y: 1}
+    kind: 2
+  - cell: {x: 8, y: 2}
+    kind: 2
+  - cell: {x: 8, y: 3}
+    kind: 2
+  - cell: {x: 8, y: 4}
+    kind: 2
+  - cell: {x: 8, y: 5}
+    kind: 2
+  - cell: {x: 8, y: 6}
+    kind: 2
+  - cell: {x: 8, y: 7}
+    kind: 2
+  - cell: {x: 8, y: 8}
+    kind: 2
+  - cell: {x: 8, y: 10}
+    kind: 2
+  - cell: {x: 8, y: 11}
+    kind: 2
+  - cell: {x: 8, y: 12}
+    kind: 2
+  - cell: {x: 8, y: 13}
+    kind: 2
+  - cell: {x: 0, y: 0}
+    kind: 3
+  - cell: {x: 1, y: 1}
+    kind: 3
+  - cell: {x: 0, y: 12}
+    kind: 3
+  - cell: {x: 1, y: 13}
+    kind: 3
+  - cell: {x: 21, y: 0}
+    kind: 4
+  - cell: {x: 20, y: 1}
+    kind: 3
+  - cell: {x: 21, y: 13}
+    kind: 3
+  - cell: {x: 14, y: 13}
+    kind: 5
+  - cell: {x: 6, y: 13}
+    kind: 6
+  - cell: {x: 15, y: 0}
+    kind: 6
+  decorSeed: 22
+  decorDensity: 0.11
+  startMoney: 300
+  startLives: 20
+  sellRefund: 0.6
+  roster:
+  - 2
+  - 3
+  - 4
+  - 6
+  - 5
+  - 8
+  - 9
+  waves:
+  - enemyType: 0
+    count: 10
+    spawnInterval: 0.66
+    pathIndex: 0
+    prepTime: 0
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 2
+    count: 13
+    spawnInterval: 0.55
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 3
+    count: 16
+    spawnInterval: 0.44
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 12
+    count: 10
+    spawnInterval: 0.5
+    pathIndex: 0
+    prepTime: 12
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 2
+    count: 16
+    spawnInterval: 0.44
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 12
+    count: 8
+    spawnInterval: 0.55
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 4
+    count: 3
+    spawnInterval: 1.65
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 3
+    count: 13
+    spawnInterval: 0.39
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 13
+    count: 5
+    spawnInterval: 1.38
+    pathIndex: 0
+    prepTime: 12
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 6
+    count: 10
+    spawnInterval: 0.55
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 12
+    count: 18
+    spawnInterval: 0.33
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 4
+    count: 3
+    spawnInterval: 2.2
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 13
+    count: 8
+    spawnInterval: 1.1
+    pathIndex: 0
+    prepTime: 12
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 6
+    count: 13
+    spawnInterval: 0.44
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  firstWaveDelay: 12
+  waveClearBonus: 25
+  theme:
+    ground: {r: 0.36, g: 0.66, b: 0.3, a: 1}
+    groundAlt: {r: 0.32, g: 0.6, b: 0.27, a: 1}
+    path: {r: 0.7, g: 0.6, b: 0.45, a: 1}
+    pathEdge: {r: 0.52, g: 0.44, b: 0.33, a: 1}
+    water: {r: 0.2, g: 0.45, b: 0.85, a: 1}
+    spot: {r: 0.33, g: 0.3, b: 0.28, a: 1}
+    spotRing: {r: 1, g: 0.85, b: 0.25, a: 1}
+    trunk: {r: 0.4, g: 0.26, b: 0.13, a: 1}
+    foliage: {r: 0.16, g: 0.45, b: 0.18, a: 1}
+    foliageAlt: {r: 0.22, g: 0.55, b: 0.2, a: 1}
+    rock: {r: 0.55, g: 0.55, b: 0.58, a: 1}
+    flower: {r: 0.95, g: 0.35, b: 0.45, a: 1}
+    baseWall: {r: 0.8, g: 0.78, b: 0.72, a: 1}
+    baseRoof: {r: 0.75, g: 0.2, b: 0.2, a: 1}
+    portal: {r: 0.55, g: 0.15, b: 0.75, a: 1}
+    sky: {r: 0.36, g: 0.58, b: 0.85, a: 1}
+    fog: {r: 0.62, g: 0.78, b: 0.95, a: 1}
+    groundHeightNoise: 0.06
+  cameraPitch: 58
+  cameraDistanceFactor: 1.05

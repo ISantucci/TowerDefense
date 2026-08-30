@@ -12,7 +12,7 @@ public class BuildMementoManager : MonoBehaviour
     void Awake()
     {
         if (towerFactory == null)
-            towerFactory = FindObjectOfType<TowerFactoryTD>();
+            towerFactory = FindFirstObjectByType<TowerFactoryTD>();
     }
 
     public void SaveCurrent()
@@ -41,7 +41,7 @@ public class BuildMementoManager : MonoBehaviour
         if (snapshots.IsEmpty()) return;
 
         if (towerFactory == null)
-            towerFactory = FindObjectOfType<TowerFactoryTD>();
+            towerFactory = FindFirstObjectByType<TowerFactoryTD>();
 
         if (towerFactory == null) return;
 

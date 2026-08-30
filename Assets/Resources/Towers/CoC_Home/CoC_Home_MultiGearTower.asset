@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: CoC_Home_MultiGearTower
+  m_EditorClassIdentifier:
+  id: 19
+  displayName: 'Multi-Gear Tower'
+  description: 'switchable between Long Range mode (range 12, 1 hit/s, single high-damage shot) and Fast Attack mode (range 8, 4-shot burst, ~607-644 dps, better vs swarms)'
+  source: 1
+  kind: 0
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 300
+  range: 12
+  fireRate: 1
+  targets: 3
+  attackType: 2
+  minRange: 0
+  splashRadius: 0
+  multiTargetCount: 1
+  burstCount: 4
+  burstInterval: 0.1
+  beamRampSeconds: 5
+  beamMaxMultiplier: 3
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 0
+  cost: 600
+  hitpoints: 500
+  maxLevelReference: 2
+  dpsLevel1Reference: 300
+  dpsMaxReference: 320
+  unlockLevel: 17
+  referenceBuildCost: 22500000
+  referenceCurrency: 'gold'
+  special: 'switchable between Long Range mode (range 12, 1 hit/s, single high-damage shot) and Fast Attack mode (range 8, 4-shot burst, ~607-644 dps, better vs swarms)'
+  statsVerified: 1
+  levels: []

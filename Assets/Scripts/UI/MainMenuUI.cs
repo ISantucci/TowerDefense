@@ -29,7 +29,8 @@ public class MainMenuUI : MonoBehaviour
 
     void OnPlay()
     {
-        stateMachine.ChangeState(new LevelSelectorState());
+        if (stateMachine != null) stateMachine.ChangeState(new LevelSelectorState());
+        else GameFlow.GoToLevelSelector();
     }
 
     void OnOptions()

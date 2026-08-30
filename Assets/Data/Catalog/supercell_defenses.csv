@@ -1,0 +1,119 @@
+id,name,source,kind,targets,attackType,rangeMin,rangeMax,attackSpeedSeconds,dpsLevel1,dpsMax,damagePerHitLevel1,damagePerHitMax,hitpointsLevel1,hitpointsMax,maxLevel,unlockLevel,buildCostLevel1,buildCurrency,splashRadius,multiTargetCount,burstCount,special,verified
+CoC_Home_Cannon,Cannon,CoC_Home,defense,ground,single,0,9,0.8,7,211,5.6,168.8,420,1900,21,1,250,gold,0,1,1,"basic single-target ground defense, cheapest and earliest defense",False
+CoC_Home_ArcherTower,Archer Tower,CoC_Home,defense,both,single,0,10,0.5,9,244,4.5,122,380,2100,21,2,1000,gold,0,1,1,"hits ground and air, longest base range of early defenses",False
+CoC_Home_Mortar,Mortar,CoC_Home,defense,ground,splash,4,11,5,4,76,20,380,400,1500,17,3,3500,gold,1.5,1,1,"blind spot within 4 tiles, slow arcing projectile",False
+CoC_Home_AirDefense,Air Defense,CoC_Home,defense,air,single,0,10,1,55,360,55,360,450,2200,15,4,15000,gold,0,1,1,highest single-target DPS vs air of the early defenses,False
+CoC_Home_WizardTower,Wizard Tower,CoC_Home,defense,both,splash,0,7,1.4,26,230,36,322,620,2450,16,5,30000,gold,1.5,1,1,short range splash hitting ground and air,False
+CoC_Home_AirSweeper,Air Sweeper,CoC_Home,defense,air,push,0,12,2,,,0,0,400,800,6,6,60000,gold,0,1,1,"deals no damage, knocks air troops backward along a rotatable cone; can be aimed at ground for a lesser push",False
+CoC_Home_HiddenTesla,Hidden Tesla,CoC_Home,defense,both,single,0,7,0.8,68,285,54.4,228,650,2400,14,7,100000,gold,0,1,1,"hidden underground until an enemy enters range, then rises to attack",False
+CoC_Home_BombTower,Bomb Tower,CoC_Home,defense,ground,splash,0,9,1.5,22,130,33,195,800,3000,9,7,180000,gold,1.5,1,1,explodes on destruction dealing a large area death-damage burst,False
+CoC_Home_XBow,X-Bow,CoC_Home,defense,both,single,0,11,0.4,94,320,37.6,128,1000,3400,11,9,1500000,gold,0,1,1,"can be set to target air, consumes elixir while active, can be buried/hidden",False
+CoC_Home_InfernoTower,Inferno Tower,CoC_Home,defense,both,beam,0,7,0.25,100,1666,25,416.5,1600,4200,10,10,2000000,gold,0,5,1,single-target mode ramps damage the longer it locks one target (resets if it switches); multi-target mode hits up to 5 with flat lower damage,False
+CoC_Home_EagleArtillery,Eagle Artillery,CoC_Home,defense,both,splash,7,22,11,48,70,135,195,3200,4800,5,11,5000000,gold,4.5,1,4,fires a 4-shell volley at whichever enemy has the highest housing space in range; long blind spot,False
+CoC_Home_Scattershot,Scattershot,CoC_Home,defense,air,splash,4,11,3,90,140,270,420,3400,4200,5,13,10000000,gold,3,1,1,"huge splash radius vs air only, rock projectile arcs and can hit multiple clustered air units",False
+CoC_Home_BuildersHut,Builder's Hut,CoC_Home,building,,,0,,,,,,,,,,1,,,0,1,1,"non-combat utility building showing an idle/working builder; not a combat defense, included for completeness per request",False
+CoC_Home_SpellTower,Spell Tower,CoC_Home,defense,both,support,0,9,,,60,,,,,3,15,14000000,gold,0,1,1,cycles Rage / Poison / Invisibility spell effects over its radius instead of attacking directly; Poison tick ~60 dps at max,True
+CoC_Home_Monolith,Monolith,CoC_Home,defense,both,single,0,11,1.5,150,193,225,289.5,,,3,15,255000,dark elixir,0,1,1,"each shot adds bonus damage equal to 11-13% of the target's max HP, so it hits harder vs tankier troops",True
+CoC_Home_MultiArcherTower,Multi-Archer Tower,CoC_Home,defense,both,multi,0,10,0.5,120,130,60,65,,,2,16,20000000,gold,0,3,1,"three archers each pick a separate target (up to 3); if fewer targets present, archers concentrate fire on same target",True
+CoC_Home_RicochetCannon,Ricochet Cannon,CoC_Home,defense,ground,chain,0,9,0.8,360,390,288,312,,,2,16,20000000,gold,0,2,1,"shot ricochets to a second target within 4 tiles of the first, dealing identical damage to both",True
+CoC_Home_MultiGearTower,Multi-Gear Tower,CoC_Home,defense,both,multi,0,12,1,300,320,300,320,,,2,17,22500000,gold,0,1,4,"switchable between Long Range mode (range 12, 1 hit/s, single high-damage shot) and Fast Attack mode (range 8, 4-shot burst, ~607-644 dps, better vs swarms)",True
+CoC_Home_Firespitter,Firespitter,CoC_Home,defense,both,burst,0,16,0.0625,399,425,46,49,4500,5000,2,17,17000000,gold,0,2,20,"fires a 20-shot burst per volley in a straight piercing line, hitting up to 2 units per shot; longest range in Home Village but has a blind spot and only rotates in 90-degree steps",True
+CoC_Home_GigaTesla,Giga Tesla,CoC_Home,hall_weapon,both,single,0,6,0.5,130,130,65,65,,,1,12,,,0,1,1,Town Hall 12's built-in weapon; activates and attacks the nearest enemy once the Town Hall itself is destroyed,False
+CoC_Home_GigaInferno,Giga Inferno,CoC_Home,hall_weapon,both,beam,0,7,0.25,200,650,50,162.5,,,4,13,,,0,1,1,replaces Giga Tesla from TH13-16; ramping-damage beam that activates once the Town Hall is destroyed; exact TH16/17 merge behavior with Inferno Tower unconfirmed,False
+CoC_Home_Bomb,Bomb,CoC_Home,trap,ground,trap,0,1.5,,,,60,280,,,11,1,400,gold,1.5,1,1,"one-time hidden explosive, ground troops only",False
+CoC_Home_SpringTrap,Spring Trap,CoC_Home,trap,ground,push,0,1.5,,,,0,0,,,6,5,25000,gold,1.5,1,1,"launches ground troops in the blast radius into the air and away, no direct damage",False
+CoC_Home_AirBomb,Air Bomb,CoC_Home,trap,air,trap,0,1.5,,,,170,650,,,9,6,60000,gold,1.5,1,1,"one-time hidden explosive, air troops only",False
+CoC_Home_GiantBomb,Giant Bomb,CoC_Home,trap,ground,trap,0,2.5,,,,240,760,,,9,8,200000,gold,2.5,1,1,bigger blast radius and damage than the basic Bomb,False
+CoC_Home_SeekingAirMine,Seeking Air Mine,CoC_Home,trap,air,trap,0,5,,,,300,1000,,,8,10,750000,gold,0,1,1,homes in and flies toward the nearest air unit before detonating on a single target,False
+CoC_Home_SkeletonTrap,Skeleton Trap,CoC_Home,trap,ground,spawner,0,1.5,,,,,,,,4,5,12500,gold,0,1,1,spawns 3-6 Skeletons to fight when triggered instead of dealing direct damage,False
+CoC_Home_TornadoTrap,Tornado Trap,CoC_Home,trap,both,pull,0,3,,,,39,55,,,3,11,1800000,gold,3,1,1,pulls nearby troops toward its center over several seconds (small troops pulled harder); excludes Miner-type units,True
+CoC_Home_GigaBomb,Giga Bomb,CoC_Home,trap,both,trap,0,3.5,,,,1100,1300,,,3,17,5000000,gold,4.5,1,1,requires 18 total housing space within its 3.5-tile trigger radius to arm; heavy knockback hitting ground and air together,True
+CoC_Builder_Cannon,Cannon,CoC_Builder,defense,ground,single,0,8,0.7,10,145,7,101.5,440,1600,13,2,1000,gold,0,1,1,Builder Base starter ground defense,False
+CoC_Builder_DoubleCannon,Double Cannon,CoC_Builder,defense,ground,single,0,6,1.3,45,190,58.5,247,700,2000,10,4,100000,gold,0,1,1,"short range, twin-barrel heavy hitter; switches to a faster single barrel once heavily damaged",False
+CoC_Builder_ArcherTower,Archer Tower,CoC_Builder,defense,both,single,0,9,0.5,11,160,5.5,80,380,1700,13,3,25000,gold,0,1,1,ground and air single-target tower,False
+CoC_Builder_HiddenTesla,Hidden Tesla,CoC_Builder,defense,both,single,0,6,0.8,60,210,48,168,600,1900,10,5,150000,gold,0,1,1,hidden until an enemy is in range,False
+CoC_Builder_Firecrackers,Firecrackers,CoC_Builder,defense,air,burst,0,6,1.6,35,140,19,75,300,1200,10,2,40000,gold,0,1,3,fires a 3-shell burst at air troops,False
+CoC_Builder_Mortar,Mortar,CoC_Builder,defense,ground,splash,3.5,9,4,9,55,36,220,450,1600,9,3,60000,gold,1.5,1,1,"blind spot, arcing ground splash",False
+CoC_Builder_Crusher,Crusher,CoC_Builder,defense,ground,splash,0,5,2.5,45,170,112.5,425,900,2600,8,6,400000,gold,1.5,1,1,slow heavy slam that splashes and briefly slows survivors,False
+CoC_Builder_GuardPost,Guard Post,CoC_Builder,defense,ground,spawner,0,8,,,,,,650,2100,9,4,120000,gold,0,1,1,houses 2 Raged Barbarians (or Sneaky Archers at higher levels) that pop out to fight,False
+CoC_Builder_AirBombs,Air Bombs,CoC_Builder,defense,air,splash,0,7,2.2,30,110,66,242,350,1300,8,2,60000,gold,1.5,1,1,reusable defense (not a one-time trap) lobbing explosives at air units,False
+CoC_Builder_MultiMortar,Multi Mortar,CoC_Builder,defense,ground,splash,3.5,9,1.6,60,190,96,304,1000,2600,8,7,750000,gold,1.5,1,1,faster-firing four-barrel Mortar upgrade,False
+CoC_Builder_Roaster,Roaster,CoC_Builder,defense,ground,beam,0,6,0.25,60,170,15,42.5,1000,2400,6,8,1000000,gold,0,1,1,"continuous ramping beam vs ground, similar concept to Inferno Tower",False
+CoC_Builder_GiantCannon,Giant Cannon,CoC_Builder,defense,ground,single,0,9,1.8,120,260,216,468,1300,2800,6,9,1600000,gold,0,1,1,occasionally fires a much heavier 'giant' cannonball for bonus damage,False
+CoC_Builder_MegaTesla,Mega Tesla,CoC_Builder,defense,both,chain,0,6.5,1.7,100,230,170,391,1200,2700,6,9,1700000,gold,0,4,1,hidden Tesla that chain-arcs lightning to nearby extra targets,False
+CoC_Builder_LavaLauncher,Lava Launcher,CoC_Builder,defense,both,splash,0,9,3,55,130,165,390,1400,3000,5,8,1400000,gold,1.5,1,1,on destruction releases a Lava Pup that keeps fighting for the defense,False
+CoC_Builder_XBow,X-Bow,CoC_Builder,defense,both,single,0,10,0.5,80,180,40,90,1200,2600,5,9,2000000,gold,0,1,1,Builder Base long-range automatic crossbow added in a later Builder Base revamp; exact numbers unconfirmed,False
+CoC_Builder_PushTrap,Push Trap,CoC_Builder,trap,ground,push,0,1.5,,,,0,0,,,5,3,20000,gold,1.5,1,1,"knocks ground troops backward, no direct damage",False
+CoC_Builder_SpringTrap,Spring Trap,CoC_Builder,trap,ground,push,0,1.5,,,,0,0,,,5,5,35000,gold,1.5,1,1,"launches troops into the air and away, no direct damage",False
+CoC_Builder_Mine,Mine,CoC_Builder,trap,ground,trap,0,1.5,,,,110,350,,,8,4,30000,gold,1.5,1,1,one-time hidden explosive vs ground troops,False
+CoC_Builder_MegaMine,Mega Mine,CoC_Builder,trap,both,trap,0,2.5,,,,260,560,,,5,7,400000,gold,2.5,1,1,"bigger blast, hits ground and air troops",False
+CoC_Capital_Cannon,Cannon,CoC_Capital,defense,ground,single,0,9,0.8,30,90,24,72,700,1800,6,1,1000,capital gold,0,1,1,basic Capital ground defense,False
+CoC_Capital_ArcherTower,Archer Tower,CoC_Capital,defense,both,single,0,10,0.6,35,100,21,60,650,1700,6,1,1200,capital gold,0,1,1,basic Capital ground/air defense,False
+CoC_Capital_AirDefense,Air Defense,CoC_Capital,defense,air,single,0,10,1,80,220,80,220,750,1900,6,2,2000,capital gold,0,1,1,single-target anti-air,False
+CoC_Capital_RapidCannon,Rapid Cannon,CoC_Capital,defense,ground,burst,0,8,0.2,90,220,18,44,900,2100,6,3,3000,capital gold,0,1,5,very fast multi-shot burst vs ground swarms,False
+CoC_Capital_Mortar,Mortar,CoC_Capital,defense,ground,splash,4,11,4.5,18,55,81,248,800,1900,6,2,2500,capital gold,1.5,1,1,blind spot arcing ground splash,False
+CoC_Capital_BombTower,Bomb Tower,CoC_Capital,defense,ground,splash,0,9,1.5,40,110,60,165,950,2200,5,4,4000,capital gold,1.5,1,1,explodes on death for extra area damage,False
+CoC_Capital_BlastBow,Blast Bow,CoC_Capital,defense,both,splash,0,9,1.2,50,130,60,156,850,2000,5,3,3500,capital gold,1.5,1,1,"arrow volley that splashes on impact, hits ground and air",False
+CoC_Capital_SpearThrower,Spear Thrower,CoC_Capital,defense,both,splash,0,8,1,45,120,45,120,800,1900,5,2,3000,capital gold,1,1,1,throws piercing spears that hit ground and air with minor splash,False
+CoC_Capital_SuperWizardTower,Super Wizard Tower,CoC_Capital,defense,both,splash,0,7,1.4,90,210,126,294,1100,2400,5,5,6000,capital gold,2,1,1,"Capital's upgraded Wizard Tower, bigger splash and damage",False
+CoC_Capital_MultiCannon,Multi Cannon,CoC_Capital,defense,ground,multi,0,9,0.9,70,170,63,153,1000,2300,5,4,5000,capital gold,0,3,1,fires at up to 3 ground targets simultaneously,False
+CoC_Capital_SuperDragonPost,Super Dragon Post,CoC_Capital,defense,both,spawner,0,9,,,,,,1200,2600,5,6,8000,capital gold,0,1,1,houses a defending Super Dragon that flies out to fight intruders,False
+CoC_Capital_RocketArtillery,Rocket Artillery,CoC_Capital,defense,both,splash,6,20,9,40,90,360,810,1500,3000,4,7,12000,capital gold,4,1,1,Capital's Eagle-Artillery-like long range siege weapon with a large blind spot,False
+CoC_Capital_HiddenMegaTesla,Hidden Mega Tesla,CoC_Capital,defense,both,single,0,7,0.8,110,250,88,200,1300,2700,5,6,9000,capital gold,0,1,1,"hidden until triggered, high single-target damage",False
+CoC_Capital_GiantCannon,Giant Cannon,CoC_Capital,defense,ground,single,0,9,2,140,300,280,600,1600,3200,4,8,14000,capital gold,0,1,1,slow but very heavy single-target ground damage,False
+CoC_Capital_MultiMortar,Multi Mortar,CoC_Capital,defense,ground,splash,4,11,2,70,160,140,320,1400,2900,4,7,11000,capital gold,1.5,1,1,faster multi-barrel Mortar with a blind spot,False
+CoC_Capital_InfernoTower,Inferno Tower,CoC_Capital,defense,both,beam,0,7,0.25,150,400,37.5,100,1700,3300,4,8,16000,capital gold,0,1,1,continuous beam that ramps damage the longer it locks the same target,False
+CoC_Capital_Crusher,Crusher,CoC_Capital,defense,ground,splash,0,5,2.5,80,190,200,475,1500,3000,4,7,13000,capital gold,1.5,1,1,heavy slow ground slam with splash,False
+CoC_Capital_AirBlaster,Air Blaster,CoC_Capital,defense,air,push,0,10,1.5,60,140,90,210,900,2100,4,5,7000,capital gold,0,1,1,"damages air troops and also pushes them back, hybrid of Air Defense and Air Sweeper",False
+CoC_Capital_MiniMinionHive,Mini Minion Hive,CoC_Capital,defense,air,spawner,0,9,,,,,,850,1900,4,5,6000,capital gold,0,1,1,spawns a swarm of Minions to intercept attackers,False
+CoC_Capital_SuperGiantPost,Super Giant Post,CoC_Capital,defense,ground,spawner,0,8,,,,,,1300,2700,4,6,10000,capital gold,0,1,1,houses a defending Super Giant that emerges to tank and fight,False
+CoC_Capital_Reflector,Reflector,CoC_Capital,defense,both,support,0,6,,,,,,800,1800,4,6,8000,capital gold,0,1,1,approximate/unconfirmed mechanic: believed to redirect or reflect a portion of incoming ranged damage back at attackers,False
+CoC_Capital_GoblinThrower,Goblin Thrower,CoC_Capital,defense,ground,splash,0,8,1.1,50,120,55,132,850,1900,4,4,5000,capital gold,1,1,1,lobs explosive spears at ground troops with light splash,False
+CoC_Capital_FlameSpinner,Flame Spinner,CoC_Capital,defense,both,beam,0,6,0.5,70,170,35,85,1000,2200,4,6,9000,capital gold,1.5,1,1,rotating continuous flame that damages ground and air in an arc,False
+CoC_Capital_Mine,Mine,CoC_Capital,trap,ground,trap,0,1.5,,,,120,300,,,4,1,500,capital gold,1,1,1,one-time hidden explosive vs ground troops,False
+CoC_Capital_MegaMine,Mega Mine,CoC_Capital,trap,both,trap,0,2.5,,,,300,650,,,4,4,2500,capital gold,2,1,1,bigger blast hitting ground and air,False
+CoC_Capital_LogTrap,Log Trap,CoC_Capital,trap,ground,push,0,9,,,,80,200,,,4,3,1500,capital gold,1,1,1,"rolls a log in a straight line, damaging and knocking back every ground troop it passes through",False
+CoC_Capital_ZapTrap,Zap Trap,CoC_Capital,trap,both,chain,0,3,,,,150,350,,,4,5,2000,capital gold,2.5,1,1,chain-lightning burst that jumps between several nearby troops,False
+CoC_Capital_SpearTrap,Spear Trap,CoC_Capital,trap,ground,trap,0,1.5,,,,200,450,,,4,2,1000,capital gold,0.5,1,1,single big hidden spike-damage trap vs one ground unit,False
+CR_Cannon,Cannon,CR,building,ground,single,0,5.5,0.8,26,40,21,136,824,890,14,,3,elixir,0,1,1,"Defensa barata de un objetivo terrestre. Escala CR /6 (nivel torneo 11: 127 de daño, 159 DPS).",False
+CR_Tesla,Tesla,CR,building,both,single,0,5.5,1.0,25,38,25,157,954,750,14,,4,elixir,0,1,1,Oculta hasta que se acercan; inmune a hechizos mientras está enterrada. Escala CR /6.,False
+CR_InfernoTower,Inferno Tower,CR,building,both,beam,0,6,0.4,20,180,8,,1400,640,14,,5,elixir,0,1,1,Rayo que rampea daño contra un solo objetivo (en CR ×30 en 3 etapas); acá rampa ×6 en 4 s.,False
+CR_BombTower,Bomb Tower,CR,building,ground,splash,0,5.5,1.6,19,28,30,221,1030,880,14,,4,elixir,1.5,1,1,Daño en área; al morir suelta una bomba (210 de daño en CR). Escala CR /6.,False
+CR_Mortar,Mortar,CR,building,ground,splash,3.5,11,5.0,12,18,60,312,1004,750,14,,4,elixir,1.5,1,1,Largo alcance con punto ciego; pega fuerte pero lento. Escala CR /6.,False
+CR_XBow,X-Bow,CR,building,ground,single,0,11.5,0.3,20,30,6,17,1000,950,14,,6,elixir,0,1,1,"Ametralla a distancia (en CR 0.25 s de cadencia, 11.5 de alcance). Escala CR /6.",False
+CR_GoblinCage,Goblin Cage,CR,building,,trap,0,,,,,,,,600,14,,4,elixir,0,1,1,deals no damage itself; releases a Goblin Brawler to attack when destroyed,False
+CR_GoblinDrill,Goblin Drill,CR,building,ground,spawner,0,,,,,,,,400,14,,3,elixir,0,1,1,burrows in anywhere on the map and continuously spawns Goblins until destroyed,False
+CR_Tombstone,Tombstone,CR,building,,spawner,0,,,,,,,,445,14,,3,elixir,0,1,1,periodically spits out a Skeleton and releases a squad of Skeletons on death,False
+CR_Furnace,Furnace,CR,building,,spawner,0,,,,,,,,520,14,,4,elixir,0,1,1,periodically launches a pair of Fire Spirits at the nearest target,False
+CR_GoblinHut,Goblin Hut,CR,building,,spawner,0,,,,,,,,360,14,,5,elixir,0,1,1,periodically spawns a Spear Goblin,False
+CR_BarbarianHut,Barbarian Hut,CR,building,,spawner,0,,,,,,,,700,14,,6,elixir,0,1,1,periodically spawns a pair of Barbarians,False
+CR_ElixirCollector,Elixir Collector,CR,building,,,0,0,,,,,,,530,14,,6,elixir,0,1,1,"non-defensive; generates bonus elixir over its lifetime, has no attack",False
+CR_KingTower,King Tower,CR,building,both,single,0,7,1.0,18,27,18,109,4008,2568,14,,,,0,1,1,Torre del rey: se activa cuando lo atacan. Escala CR /6.,False
+CR_PrincessTower,Princess Tower,CR,building,both,single,0,7.5,0.8,19,28,15,87,2534,1512,14,,,,0,1,1,Torre de princesa: arquera de largo alcance. Escala CR /6.,False
+CR_TowerPrincess,Tower Princess,CR,tower_troop,both,single,0,7.5,0.8,19,28,15,87,,1512,14,,,,0,1,1,Tropa de torre por defecto. Escala CR /6.,False
+CR_Cannoneer,Cannoneer,CR,tower_troop,ground,splash,0,7.5,2.4,18,27,43,126,,1512,14,,,,1.0,1,1,Cañonazos lentos con pequeña área. Escala CR /6.,False
+CR_DaggerDuchess,Dagger Duchess,CR,tower_troop,both,burst,0,7.5,1.05,17,25,6,105,,1512,14,,,,0,2,3,Ráfagas de dagas; se recarga cuando no ataca. Escala CR /6.,False
+CR_RoyalChef,Royal Chef,CR,tower_troop,both,single,0,7.5,0.9,18,27,16,126,,1512,14,,,,1.5,1,1,Cocina mejoras para las tropas aliadas mientras defiende. Escala CR /6.,False
+BoomBeach_SniperTower,Sniper Tower,BoomBeach,defense,ground,single,0,19,2,30,110,60,220,250,900,20,3,1200,gold,0,1,1,"very long range, low HP, one of the earliest defenses",False
+BoomBeach_MachineGun,Machine Gun,BoomBeach,defense,ground,multi,0,9,0.2,25,140,5,28,300,1100,20,1,500,gold,0,1,1,"very rapid fire, good vs Zookas/troops in the open, short range",False
+BoomBeach_Mortar,Mortar,BoomBeach,defense,ground,splash,7,17,6,15,65,90,390,280,1000,20,4,2000,gold,2,1,1,indirect arcing fire with a blind spot near itself,False
+BoomBeach_Cannon,Cannon,BoomBeach,defense,ground,single,0,11,1.2,28,120,34,144,350,1300,20,1,800,gold,0,1,1,reliable medium-range single-target defense,False
+BoomBeach_Flamethrower,Flamethrower,BoomBeach,defense,ground,splash,0,7,0.1,40,190,4,19,400,1500,20,6,4000,gold,1,1,1,"short range continuous flame stream, devastating vs grouped troops up close",False
+BoomBeach_BoomCannon,Boom Cannon,BoomBeach,defense,ground,splash,0,14,3,35,150,105,450,450,1600,20,8,6000,gold,2,1,1,big splash shells at medium-long range,False
+BoomBeach_RocketLauncher,Rocket Launcher,BoomBeach,defense,ground,splash,0,15,2.5,32,140,80,350,420,1500,20,10,8000,gold,1.5,1,1,fires homing-ish rockets with moderate splash,False
+BoomBeach_ShockLauncher,Shock Launcher,BoomBeach,defense,ground,support,0,12,4,0,0,0,0,400,1400,15,12,10000,gold,0,1,1,deals no damage but stuns/disables a landing troop for several seconds,False
+BoomBeach_LazorBeam,Lazor Beam,BoomBeach,defense,ground,beam,0,17,0.1,60,260,6,26,500,1700,20,15,20000,gold,0,1,1,"iconic long-range continuous beam, one of the strongest single-target defenses",False
+BoomBeach_DoomCannon,Doom Cannon,BoomBeach,defense,ground,splash,0,13,8,40,95,320,760,600,1900,15,18,30000,gold,2.5,1,1,very slow reload but devastating splash damage per shot,False
+BoomBeach_ShockBlaster,Shock Blaster,BoomBeach,defense,ground,chain,0,10,1.5,45,100,67.5,150,500,1300,10,20,40000,gold,0,3,1,Prototype defense: electric attack that chains between several nearby troops,False
+BoomBeach_SIMO,S.I.M.O.,BoomBeach,defense,ground,multi,0,14,2,50,120,100,240,550,1400,10,20,45000,gold,0,2,1,Prototype defense: splits its rockets to strike two separate targets at once,False
+BoomBeach_HotPot,Hot Pot,BoomBeach,defense,ground,splash,0,9,3.5,35,90,122.5,315,520,1350,10,20,40000,gold,2,1,1,Prototype defense: splash impact plus a lingering burn/DoT zone,False
+BoomBeach_Grappler,Grappler,BoomBeach,defense,ground,pull,0,12,5,20,60,,,500,1300,10,20,40000,gold,0,1,1,"Prototype defense: hooks and drags a landing craft or troop toward itself, disrupting the push",False
+BoomBeach_Microwavr,Microwav'r,BoomBeach,defense,ground,beam,0,10,0.25,30,220,7.5,55,520,1350,10,20,42000,gold,0,1,1,Prototype defense: continuous beam whose damage ramps up the longer it stays locked on one target,False
+BoomBeach_SkyShield,Sky Shield,BoomBeach,building,,support,0,6,,,,,,550,1400,10,20,40000,gold,0,1,1,Prototype support building: projects a shield that reduces incoming Warship/artillery damage to nearby defenses,False
+BoomBeach_FlotsamCannon,Flotsam Cannon,BoomBeach,defense,ground,single,0,16,1.5,40,130,60,195,500,1300,10,20,38000,gold,0,1,1,Prototype defense: targets incoming landing craft on the water at long range before troops disembark,False
+BoomBeach_BoomSurprise,Boom Surprise,BoomBeach,defense,ground,trap,0,4,,,,200,500,500,1300,10,20,38000,gold,2,1,1,Prototype hybrid defense/trap: stays hidden then ambushes nearby troops with a sudden burst attack,False
+BoomBeach_DamageAmplifier,Damage Amplifier,BoomBeach,building,,support,0,6,,,,,,500,1300,10,20,40000,gold,0,1,1,Prototype support building: boosts the damage output of nearby defenses,False
+BoomBeach_ShieldGenerator,Shield Generator,BoomBeach,building,,support,0,6,,,,,,500,1300,10,20,40000,gold,0,1,1,Prototype support building: grants a regenerating shield/bonus HP to nearby defenses,False
+BoomBeach_Mine,Mine,BoomBeach,trap,ground,trap,0,1.5,,,,90,300,,,10,2,500,gold,1,1,1,one-time hidden explosive vs a single landing troop,False
+BoomBeach_BoomMine,Boom Mine,BoomBeach,trap,ground,trap,0,2.5,,,,200,650,,,10,9,3000,gold,2,1,1,bigger-radius hidden explosive affecting several troops,False
+BoomBeach_ShockMine,Shock Mine,BoomBeach,trap,ground,trap,0,1.5,,,,0,0,,,8,13,6000,gold,1.5,1,1,deals no damage; stuns/disables nearby troops for a few seconds instead,False

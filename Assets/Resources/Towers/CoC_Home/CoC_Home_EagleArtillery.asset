@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: CoC_Home_EagleArtillery
+  m_EditorClassIdentifier:
+  id: 12
+  displayName: 'Eagle Artillery'
+  description: 'fires a 4-shell volley at whichever enemy has the highest housing space in range; long blind spot'
+  source: 1
+  kind: 0
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 135
+  range: 22
+  fireRate: 11
+  targets: 3
+  attackType: 1
+  minRange: 7
+  splashRadius: 4.5
+  multiTargetCount: 1
+  burstCount: 4
+  burstInterval: 0.1
+  beamRampSeconds: 5
+  beamMaxMultiplier: 3
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 1
+  cost: 330
+  hitpoints: 3200
+  maxLevelReference: 5
+  dpsLevel1Reference: 48
+  dpsMaxReference: 70
+  unlockLevel: 11
+  referenceBuildCost: 5000000
+  referenceCurrency: 'gold'
+  special: 'fires a 4-shell volley at whichever enemy has the highest housing space in range; long blind spot'
+  statsVerified: 0
+  levels: []

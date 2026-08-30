@@ -1,0 +1,253 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3a9f1c2b4e4c8fa1b2c3d4e5f60718, type: 3}
+  m_Name: level_04_capital
+  m_EditorClassIdentifier:
+  levelId: level_04_capital
+  sceneName: Level04_Capital
+  displayName: 'Capital del Clan'
+  subtitle: 'Una espiral hasta el Ayuntamiento de la Capital.'
+  description: 'Roster de la Capital del Clan: artillería de cohetes, arco explosivo y torre infernal. El camino da la vuelta entera al mapa: aprovechá los spots que ven dos tramos.'
+  order: 4
+  family: 3
+  width: 22
+  height: 14
+  cellSize: 1
+  paths:
+  - name: 'Espiral'
+    waypoints:
+    - {x: 0, y: 12}
+    - {x: 20, y: 12}
+    - {x: 20, y: 0}
+    - {x: 0, y: 0}
+    - {x: 0, y: 9}
+    - {x: 17, y: 9}
+    - {x: 17, y: 3}
+    - {x: 3, y: 3}
+    - {x: 3, y: 6}
+    - {x: 14, y: 6}
+  buildMode: 1
+  spots: []
+  autoSpots: 1
+  autoSpotMaxDistance: 2
+  spotExclusions: []
+  decor:
+  - cell: {x: 10, y: 13}
+    kind: 10
+  - cell: {x: 21, y: 13}
+    kind: 10
+  - cell: {x: 21, y: 1}
+    kind: 10
+  - cell: {x: 1, y: 13}
+    kind: 4
+  - cell: {x: 9, y: 13}
+    kind: 4
+  decorSeed: 44
+  decorDensity: 0.08
+  startMoney: 420
+  startLives: 20
+  sellRefund: 0.6
+  roster:
+  - 50
+  - 51
+  - 53
+  - 56
+  - 58
+  - 59
+  - 61
+  - 67
+  - 65
+  waves:
+  - enemyType: 2
+    count: 29
+    spawnInterval: 0.4
+    pathIndex: 0
+    prepTime: 0
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 6
+    count: 19
+    spawnInterval: 0.5
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 4
+    count: 10
+    spawnInterval: 1
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 3
+    count: 29
+    spawnInterval: 0.3
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 12
+    count: 34
+    spawnInterval: 0.3
+    pathIndex: 0
+    prepTime: 12
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 14
+    count: 10
+    spawnInterval: 0.75
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 7
+    count: 5
+    spawnInterval: 2
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 2
+    count: 38
+    spawnInterval: 0.25
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 13
+    count: 19
+    spawnInterval: 0.8
+    pathIndex: 0
+    prepTime: 12
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 6
+    count: 38
+    spawnInterval: 0.3
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 5
+    count: 24
+    spawnInterval: 0.25
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 15
+    count: 7
+    spawnInterval: 1.5
+    pathIndex: 0
+    prepTime: 14
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 12
+    count: 29
+    spawnInterval: 0.3
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 8
+    count: 2
+    spawnInterval: 0.5
+    pathIndex: 0
+    prepTime: 16
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 4
+    count: 10
+    spawnInterval: 1
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 7
+    count: 10
+    spawnInterval: 1.5
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 3
+    count: 48
+    spawnInterval: 0.25
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 16
+    count: 2
+    spawnInterval: 0.5
+    pathIndex: 0
+    prepTime: 16
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 13
+    count: 14
+    spawnInterval: 0.75
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 12
+    count: 38
+    spawnInterval: 0.25
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 8
+    count: 5
+    spawnInterval: 4
+    pathIndex: 0
+    prepTime: 18
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 7
+    count: 7
+    spawnInterval: 2
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 6
+    count: 38
+    spawnInterval: 0.3
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  firstWaveDelay: 14
+  waveClearBonus: 40
+  theme:
+    ground: {r: 0.33, g: 0.5, b: 0.4, a: 1}
+    groundAlt: {r: 0.29, g: 0.45, b: 0.37, a: 1}
+    path: {r: 0.55, g: 0.5, b: 0.6, a: 1}
+    pathEdge: {r: 0.4, g: 0.36, b: 0.48, a: 1}
+    water: {r: 0.2, g: 0.45, b: 0.85, a: 1}
+    spot: {r: 0.33, g: 0.3, b: 0.28, a: 1}
+    spotRing: {r: 1, g: 0.85, b: 0.25, a: 1}
+    trunk: {r: 0.4, g: 0.26, b: 0.13, a: 1}
+    foliage: {r: 0.25, g: 0.35, b: 0.55, a: 1}
+    foliageAlt: {r: 0.4, g: 0.3, b: 0.65, a: 1}
+    rock: {r: 0.45, g: 0.42, b: 0.55, a: 1}
+    flower: {r: 0.75, g: 0.45, b: 0.95, a: 1}
+    baseWall: {r: 0.75, g: 0.72, b: 0.85, a: 1}
+    baseRoof: {r: 0.45, g: 0.2, b: 0.65, a: 1}
+    portal: {r: 0.35, g: 0.85, b: 0.95, a: 1}
+    sky: {r: 0.16, g: 0.12, b: 0.3, a: 1}
+    fog: {r: 0.45, g: 0.35, b: 0.6, a: 1}
+    groundHeightNoise: 0.06
+  cameraPitch: 62
+  cameraDistanceFactor: 1.05

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: CoC_Capital_RocketArtillery
+  m_EditorClassIdentifier:
+  id: 61
+  displayName: 'Rocket Artillery'
+  description: 'Capital''s Eagle-Artillery-like long range siege weapon with a large blind spot'
+  source: 3
+  kind: 0
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 360
+  range: 20
+  fireRate: 9
+  targets: 3
+  attackType: 1
+  minRange: 6
+  splashRadius: 4
+  multiTargetCount: 1
+  burstCount: 1
+  burstInterval: 0.1
+  beamRampSeconds: 5
+  beamMaxMultiplier: 3
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 1
+  cost: 280
+  hitpoints: 1500
+  maxLevelReference: 4
+  dpsLevel1Reference: 40
+  dpsMaxReference: 90
+  unlockLevel: 7
+  referenceBuildCost: 12000
+  referenceCurrency: 'capital gold'
+  special: 'Capital''s Eagle-Artillery-like long range siege weapon with a large blind spot'
+  statsVerified: 0
+  levels: []

@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: ArcherTowerData
   m_EditorClassIdentifier: 
   id: 0
-  prefab: {fileID: 1525327178939709713, guid: 4f4e2c4b42bea0d46bbf9b41cee51b91, type: 3}
+  displayName: 'Torre de arqueras'
+  description: 'La torre original del proyecto: un objetivo, cadencia 1 s.'
+  source: 0
+  kind: 0
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 10
   range: 6
   fireRate: 1
+  targets: 3
+  attackType: 0
+  minRange: 0
   projectileId: 0
   cost: 100

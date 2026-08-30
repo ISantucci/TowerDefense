@@ -5,6 +5,7 @@ public class EventQueueManager : MonoBehaviour
     public static EventQueueManager I { get; private set; }
 
     QueueTF<GameplayEvent> queue = new QueueTF<GameplayEvent>();
+    bool levelLostSent;
 
     void Awake()
     {
@@ -33,6 +34,7 @@ public class EventQueueManager : MonoBehaviour
         switch (evt.type)
         {
             case GameplayEventType.SetStats:
+                levelLostSent = false;
                 GameManager.I.SetMoneyLivesScore(evt.intParam1, evt.intParam2, evt.intParam3);
                 GameEvents.RaiseMoneyChanged(GameManager.I.Money);
                 GameEvents.RaiseLivesChanged(GameManager.I.Lives);
@@ -54,7 +56,11 @@ public class EventQueueManager : MonoBehaviour
                     int dmg = evt.intParam1 <= 0 ? 1 : evt.intParam1;
                     bool lost = GameManager.I.LoseLife(dmg);
                     GameEvents.RaiseLivesChanged(GameManager.I.Lives);
-                    if (lost) Enqueue(new GameplayEvent(GameplayEventType.LevelLost));
+                    if (lost && !levelLostSent)
+                    {
+                        levelLostSent = true;
+                        Enqueue(new GameplayEvent(GameplayEventType.LevelLost));
+                    }
                 }
                 break;
 

@@ -64,6 +64,7 @@ public class TowerUpgradeComponent : MonoBehaviour
         upg.currentLevel++;
         ApplyUpgrade(stat, upg);
         LevelChanged?.Invoke(this);
+        CombatEvents.RaiseTowerUpgraded(tower, stat);
         return true;
     }
 

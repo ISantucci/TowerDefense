@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: BomberTowerData
   m_EditorClassIdentifier: 
   id: 1
-  prefab: {fileID: 8999139042907420188, guid: 59dbcc56f531145468a7fd521b110e81, type: 3}
+  displayName: 'Torre bombardera'
+  description: 'La torre original del proyecto: bomba de area.'
+  attackType: 1
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
   range: 6
   fireRate: 1
   projectileId: 1
-  cost: 50
+  cost: 85

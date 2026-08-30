@@ -14,7 +14,7 @@ public class EnemyProgress : MonoBehaviour
     {
         movement = GetComponent<EnemyMovement>();
 
-        var route = movement.Route;
+        var route = movement != null ? movement.Route : null;
         if (movement == null || route == null || route.Count < 2)
         {
             enabled = false;
@@ -46,7 +46,13 @@ public class EnemyProgress : MonoBehaviour
 
     void Update()
     {
-        if (movement == null) return;
+        Recalculate();
+    }
+
+    /// <summary>Recalcula progressValue y lo reubica en el ABB. Seguro de llamar fuera de Update (p.ej. tras un Knockback).</summary>
+    public void Recalculate()
+    {
+        if (movement == null || prefixDistances == null) return;
 
         var route = movement.Route;
         if (route == null || route.Count == 0) return;

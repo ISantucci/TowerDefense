@@ -17,8 +17,14 @@ public class TowerPlacer : MonoBehaviour
     TowerId selectedTower;
     int selectedCost;
 
+    public TowerId SelectedTowerId => selectedTower;
+    public int SelectedCost => selectedCost;
+    public TowerData SelectedData => (HasSelection && towerFactory != null) ? towerFactory.GetData(selectedTower) : null;
+
     public System.Action OnSelectionCleared;
     public System.Action OnTowerPlaced;
+    public System.Action<TowerId> OnTowerSelected;
+    public System.Action<Vector3> OnPlacementRejected;
 
     void Awake()
     {
@@ -50,16 +56,15 @@ public class TowerPlacer : MonoBehaviour
         if (towerFactory == null) AutoBind();
         selectedCost = towerFactory != null ? towerFactory.GetCost(id) : 0;
 
-        Debug.Log($"[TowerPlacer] Seleccionaste {id}");
-
+        OnTowerSelected?.Invoke(id);
     }
 
     void AutoBind()
     {
         if (cam == null) cam = Camera.main;
-        if (buildGrid == null) buildGrid = FindObjectOfType<BuildGrid>(true);
-        if (towerFactory == null) towerFactory = FindObjectOfType<TowerFactoryTD>(true);
-        if (invoker == null) invoker = FindObjectOfType<BuildInvoker>(true);
+        if (buildGrid == null) buildGrid = FindFirstObjectByType<BuildGrid>(FindObjectsInactive.Include);
+        if (towerFactory == null) towerFactory = FindFirstObjectByType<TowerFactoryTD>(FindObjectsInactive.Include);
+        if (invoker == null) invoker = FindFirstObjectByType<BuildInvoker>(FindObjectsInactive.Include);
     }
 
     public void CancelSelection()
@@ -73,10 +78,7 @@ public class TowerPlacer : MonoBehaviour
         if (!HasSelection) return;
 
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-        {
-            Debug.Log("[TowerPlacer] Click bloqueado por UI (IsPointerOverGameObject = true)");
             return;
-        }
 
         if (cam == null || buildGrid == null || towerFactory == null || invoker == null)
         {
@@ -91,7 +93,23 @@ public class TowerPlacer : MonoBehaviour
         var p = buildGrid.Snap(hit.point);
         p = buildGrid.SnapToGroundY(p, 10f, groundMask);
 
-        if (!buildGrid.CanBuildAt(p)) return;
+        // En modo spots la torre se apoya exactamente en el centro del spot (y = 0).
+        var rt = LevelController.Current;
+        if (rt != null && rt.UsesSpots)
+        {
+            var spot = rt.SpotAt(p);
+            if (spot == null || spot.IsOccupied)
+            {
+                OnPlacementRejected?.Invoke(p);
+                return;
+            }
+            p = spot.worldPosition;
+        }
+        else if (!buildGrid.CanBuildAt(p))
+        {
+            OnPlacementRejected?.Invoke(p);
+            return;
+        }
 
         int cost = selectedCost;
         if (cost <= 0 && towerFactory != null) cost = towerFactory.GetCost(selectedTower);
@@ -101,6 +119,8 @@ public class TowerPlacer : MonoBehaviour
 
         if (cmd.IsDone)
             OnTowerPlaced?.Invoke();
+        else
+            OnPlacementRejected?.Invoke(p);
 
         if (!stickySelection && cmd.IsDone)
             CancelSelection();

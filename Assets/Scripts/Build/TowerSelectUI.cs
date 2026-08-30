@@ -22,7 +22,7 @@ public class TowerSelectUI : MonoBehaviour
     void AutoBind()
     {
         if (placer == null)
-            placer = FindObjectOfType<TowerPlacer>(true);
+            placer = FindFirstObjectByType<TowerPlacer>(FindObjectsInactive.Include);
     }
 
     public void SelectThisTower()

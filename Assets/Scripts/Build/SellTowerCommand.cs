@@ -44,6 +44,7 @@ public class SellTowerCommand : ICostCommand
         if (target == null) return;
 
         EventQueueManager.Enqueue(GameplayEvent.AddMoney(refundAmount));
+        CombatEvents.RaiseTowerSold(target);
         Object.Destroy(target.gameObject);
         restoredTower = null;
         IsDone        = true;
@@ -52,6 +53,9 @@ public class SellTowerCommand : ICostCommand
     public void Undo()
     {
         if (!IsDone) return;
+
+        var rt = LevelController.Current;
+        if (rt != null && rt.UsesSpots && !rt.IsSpotFree(position)) return;   // alguien construyó ahí: el undo no aplica
 
         restoredTower = factory.Create(towerId, position, rotation);
         if (restoredTower == null) return;

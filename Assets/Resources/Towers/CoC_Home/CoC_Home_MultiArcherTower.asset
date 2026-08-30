@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: CoC_Home_MultiArcherTower
+  m_EditorClassIdentifier:
+  id: 17
+  displayName: 'Multi-Archer Tower'
+  description: 'three archers each pick a separate target (up to 3); if fewer targets present, archers concentrate fire on same target'
+  source: 1
+  kind: 0
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 60
+  range: 10
+  fireRate: 0.5
+  targets: 3
+  attackType: 2
+  minRange: 0
+  splashRadius: 0
+  multiTargetCount: 3
+  burstCount: 1
+  burstInterval: 0.1
+  beamRampSeconds: 5
+  beamMaxMultiplier: 3
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 0
+  cost: 600
+  hitpoints: 500
+  maxLevelReference: 2
+  dpsLevel1Reference: 120
+  dpsMaxReference: 130
+  unlockLevel: 16
+  referenceBuildCost: 20000000
+  referenceCurrency: 'gold'
+  special: 'three archers each pick a separate target (up to 3); if fewer targets present, archers concentrate fire on same target'
+  statsVerified: 1
+  levels: []

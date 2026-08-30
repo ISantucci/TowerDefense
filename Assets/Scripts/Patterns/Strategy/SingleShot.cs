@@ -1,13 +1,9 @@
-using System;
-using UnityEngine;
-
+/// <summary>Un proyectil al objetivo primario.</summary>
 public class SingleShot : IShootStrategy
 {
-    public void Shoot(Transform muzzle, Transform target,
-                      Func<Vector3, Projectile> getProjectile,
-                      Action<Projectile> releaseProjectile)
+    public void Shoot(ShootContext ctx)
     {
-        var proj = getProjectile(muzzle.position);
-        proj.FireAt(target, releaseProjectile);
+        if (ctx == null || ctx.primaryTarget == null) return;
+        ctx.FireProjectileAt(ctx.primaryTarget);
     }
 }

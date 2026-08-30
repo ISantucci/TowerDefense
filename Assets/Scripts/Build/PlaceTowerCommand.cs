@@ -10,7 +10,10 @@ public class PlaceTowerCommand : ICostCommand
 
     Tower createdTower;
 
-    public int Cost => cost;
+    bool refundable = true;
+
+    // Si la torre fue vendida/destruida antes del undo, no hay nada que reembolsar.
+    public int Cost => refundable ? cost : 0;
     public bool IsDone { get; private set; }
 
     public PlaceTowerCommand(TowerFactoryTD factory, TowerId towerId, Vector3 position, Quaternion rotation, int cost)
@@ -36,6 +39,8 @@ public class PlaceTowerCommand : ICostCommand
         if (!IsDone) return;
         if (createdTower != null)
             Object.Destroy(createdTower.gameObject);
+        else
+            refundable = false;
 
         createdTower = null;
         IsDone = false;

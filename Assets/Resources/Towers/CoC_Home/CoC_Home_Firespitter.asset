@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: CoC_Home_Firespitter
+  m_EditorClassIdentifier:
+  id: 20
+  displayName: 'Firespitter'
+  description: 'fires a 20-shot burst per volley in a straight piercing line, hitting up to 2 units per shot; longest range in Home Village but has a blind spot and only rotates in 90-degree steps'
+  source: 1
+  kind: 0
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 46
+  range: 16
+  fireRate: 0.0625
+  targets: 3
+  attackType: 3
+  minRange: 0
+  splashRadius: 0
+  multiTargetCount: 2
+  burstCount: 20
+  burstInterval: 0.1
+  beamRampSeconds: 5
+  beamMaxMultiplier: 3
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 1
+  cost: 600
+  hitpoints: 4500
+  maxLevelReference: 2
+  dpsLevel1Reference: 399
+  dpsMaxReference: 425
+  unlockLevel: 17
+  referenceBuildCost: 17000000
+  referenceCurrency: 'gold'
+  special: 'fires a 20-shot burst per volley in a straight piercing line, hitting up to 2 units per shot; longest range in Home Village but has a blind spot and only rotates in 90-degree steps'
+  statsVerified: 1
+  levels: []

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: CoC_Home_GigaInferno
+  m_EditorClassIdentifier:
+  id: 22
+  displayName: 'Giga Inferno'
+  description: 'replaces Giga Tesla from TH13-16; ramping-damage beam that activates once the Town Hall is destroyed; exact TH16/17 merge behavior with Inferno Tower unconfirmed'
+  source: 1
+  kind: 2
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 50
+  range: 7
+  fireRate: 0.25
+  targets: 3
+  attackType: 4
+  minRange: 0
+  splashRadius: 0
+  multiTargetCount: 1
+  burstCount: 1
+  burstInterval: 0.1
+  beamRampSeconds: 4
+  beamMaxMultiplier: 6
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 0
+  cost: 600
+  hitpoints: 500
+  maxLevelReference: 4
+  dpsLevel1Reference: 200
+  dpsMaxReference: 650
+  unlockLevel: 13
+  referenceBuildCost: 0
+  referenceCurrency: ''
+  special: 'replaces Giga Tesla from TH13-16; ramping-damage beam that activates once the Town Hall is destroyed; exact TH16/17 merge behavior with Inferno Tower unconfirmed'
+  statsVerified: 0
+  levels: []

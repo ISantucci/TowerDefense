@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a00432b5de58c940b19615775d43108, type: 3}
+  m_Name: Enemy_LavaHound
+  m_EditorClassIdentifier:
+  id: 16
+  displayName: 'Sabueso de lava'
+  description: 'Jefe aéreo: absorbe todo el fuego antiaéreo.'
+  maxHealth: 900
+  moveSpeed: 1.2
+  bounty: 110
+  scoreReward: 23
+  damageToBase: 18
+  isFlying: 1
+  armor: 0.15
+  tint: {r: 0.95, g: 0.45, b: 0.1, a: 1}
+  scale: 2
+  heightOffset: 3
+  bobAmplitude: 0.1
+  prefab: {fileID: 8934162589441819570, guid: 3cae3f0e8fdd34f44b586d719bdc72d4, type: 3}

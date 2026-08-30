@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: BoomBeach_Microwavr
+  m_EditorClassIdentifier:
+  id: 111
+  displayName: 'Microwav''r'
+  description: 'Prototype defense: continuous beam whose damage ramps up the longer it stays locked on one target'
+  source: 5
+  kind: 0
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 8
+  range: 10
+  fireRate: 0.25
+  targets: 1
+  attackType: 4
+  minRange: 0
+  splashRadius: 0
+  multiTargetCount: 1
+  burstCount: 1
+  burstInterval: 0.1
+  beamRampSeconds: 5
+  beamMaxMultiplier: 3
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 0
+  cost: 220
+  hitpoints: 520
+  maxLevelReference: 10
+  dpsLevel1Reference: 30
+  dpsMaxReference: 220
+  unlockLevel: 20
+  referenceBuildCost: 42000
+  referenceCurrency: 'gold'
+  special: 'Prototype defense: continuous beam whose damage ramps up the longer it stays locked on one target'
+  statsVerified: 0
+  levels: []

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class LoseUI : MonoBehaviour
 {
@@ -9,18 +8,25 @@ public class LoseUI : MonoBehaviour
     public Button btnRestart;
     public Button btnQuit;
 
+    [Header("Campaña")]
+    public Button btnChooseLevel;
+    public Text resultText;
+
     void Start()
     {
-        if (btnRestart != null)
-            btnRestart.onClick.AddListener(OnRestart);
-
-        if (btnQuit != null)
-            btnQuit.onClick.AddListener(OnQuit);
+        if (btnRestart != null) btnRestart.onClick.AddListener(OnRestart);
+        if (btnQuit != null) btnQuit.onClick.AddListener(OnQuit);
+        if (btnChooseLevel != null) btnChooseLevel.onClick.AddListener(() => GameFlow.GoToLevelSelector());
+        if (resultText != null)
+        {
+            var l = LevelCatalog.Selected;
+            resultText.text = l != null ? l.displayName : "";
+        }
     }
 
     void OnRestart()
     {
-        stateMachine.ChangeState(new Level1State());
+        GameFlow.RetryLevel();
     }
 
     void OnQuit()

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01636019c3c166a45944fa19a7c60534, type: 3}
+  m_Name: CoC_Capital_ZapTrap
+  m_EditorClassIdentifier:
+  id: 76
+  displayName: 'Zap Trap'
+  description: 'chain-lightning burst that jumps between several nearby troops'
+  source: 3
+  kind: 1
+  prefab: {fileID: 7061506985540296855, guid: 5997883e9c6753fe99b07f0c5fc109b6, type: 3}
+  damage: 150
+  range: 3
+  fireRate: 1
+  targets: 3
+  attackType: 5
+  minRange: 0
+  splashRadius: 2.5
+  multiTargetCount: 1
+  burstCount: 1
+  burstInterval: 0.1
+  beamRampSeconds: 5
+  beamMaxMultiplier: 3
+  pushDistance: 0
+  chainFalloff: 0.5
+  chainMaxJumps: 3
+  projectileId: 0
+  cost: 40
+  hitpoints: 500
+  maxLevelReference: 4
+  dpsLevel1Reference: 0
+  dpsMaxReference: 0
+  unlockLevel: 5
+  referenceBuildCost: 2000
+  referenceCurrency: 'capital gold'
+  special: 'chain-lightning burst that jumps between several nearby troops'
+  statsVerified: 0
+  levels: []

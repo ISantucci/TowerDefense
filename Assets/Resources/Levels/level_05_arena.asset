@@ -1,0 +1,326 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3a9f1c2b4e4c8fa1b2c3d4e5f60718, type: 3}
+  m_Name: level_05_arena
+  m_EditorClassIdentifier:
+  levelId: level_05_arena
+  sceneName: Level05_Arena
+  displayName: 'Arena Royale'
+  subtitle: 'Dos puentes, dos carriles, una torre del rey.'
+  description: 'Roster de Clash Royale (escala /6). Los enemigos entran por los dos carriles a la vez y cruzan el río por los puentes; después convergen hacia la torre del rey.'
+  order: 5
+  family: 4
+  width: 22
+  height: 14
+  cellSize: 1
+  paths:
+  - name: 'Carril sur'
+    waypoints:
+    - {x: 0, y: 11}
+    - {x: 6, y: 11}
+    - {x: 6, y: 9}
+    - {x: 15, y: 9}
+    - {x: 15, y: 7}
+    - {x: 21, y: 7}
+  - name: 'Carril norte'
+    waypoints:
+    - {x: 0, y: 2}
+    - {x: 6, y: 2}
+    - {x: 6, y: 4}
+    - {x: 15, y: 4}
+    - {x: 15, y: 7}
+    - {x: 21, y: 7}
+  buildMode: 1
+  spots: []
+  autoSpots: 1
+  autoSpotMaxDistance: 2
+  spotExclusions: []
+  decor:
+  - cell: {x: 10, y: 0}
+    kind: 2
+  - cell: {x: 10, y: 1}
+    kind: 2
+  - cell: {x: 10, y: 2}
+    kind: 2
+  - cell: {x: 10, y: 3}
+    kind: 2
+  - cell: {x: 10, y: 5}
+    kind: 2
+  - cell: {x: 10, y: 6}
+    kind: 2
+  - cell: {x: 10, y: 7}
+    kind: 2
+  - cell: {x: 10, y: 8}
+    kind: 2
+  - cell: {x: 10, y: 10}
+    kind: 2
+  - cell: {x: 10, y: 11}
+    kind: 2
+  - cell: {x: 10, y: 12}
+    kind: 2
+  - cell: {x: 10, y: 13}
+    kind: 2
+  - cell: {x: 11, y: 0}
+    kind: 2
+  - cell: {x: 11, y: 1}
+    kind: 2
+  - cell: {x: 11, y: 2}
+    kind: 2
+  - cell: {x: 11, y: 3}
+    kind: 2
+  - cell: {x: 11, y: 5}
+    kind: 2
+  - cell: {x: 11, y: 6}
+    kind: 2
+  - cell: {x: 11, y: 7}
+    kind: 2
+  - cell: {x: 11, y: 8}
+    kind: 2
+  - cell: {x: 11, y: 10}
+    kind: 2
+  - cell: {x: 11, y: 11}
+    kind: 2
+  - cell: {x: 11, y: 12}
+    kind: 2
+  - cell: {x: 11, y: 13}
+    kind: 2
+  - cell: {x: 0, y: 0}
+    kind: 6
+  - cell: {x: 0, y: 13}
+    kind: 6
+  - cell: {x: 21, y: 0}
+    kind: 5
+  - cell: {x: 21, y: 13}
+    kind: 5
+  - cell: {x: 21, y: 1}
+    kind: 4
+  - cell: {x: 21, y: 12}
+    kind: 4
+  decorSeed: 55
+  decorDensity: 0.06
+  startMoney: 430
+  startLives: 20
+  sellRefund: 0.6
+  roster:
+  - 78
+  - 79
+  - 81
+  - 82
+  - 83
+  - 80
+  - 91
+  waves:
+  - enemyType: 0
+    count: 8
+    spawnInterval: 0.5
+    pathIndex: 0
+    prepTime: 0
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 0
+    count: 8
+    spawnInterval: 0.5
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 2
+    count: 8
+    spawnInterval: 0.55
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 3
+    count: 8
+    spawnInterval: 0.5
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 6
+    count: 5
+    spawnInterval: 0.66
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 6
+    count: 5
+    spawnInterval: 0.66
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 12
+    count: 8
+    spawnInterval: 0.44
+    pathIndex: 0
+    prepTime: 12
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 12
+    count: 8
+    spawnInterval: 0.44
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 4
+    count: 2
+    spawnInterval: 1.65
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 5
+    count: 10
+    spawnInterval: 0.25
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 13
+    count: 4
+    spawnInterval: 1.1
+    pathIndex: 1
+    prepTime: 12
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 2
+    count: 12
+    spawnInterval: 0.39
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 7
+    count: 1
+    spawnInterval: 0.55
+    pathIndex: 0
+    prepTime: 14
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 3
+    count: 14
+    spawnInterval: 0.33
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 14
+    count: 4
+    spawnInterval: 0.77
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 2
+    count: 10
+    spawnInterval: 0.44
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 6
+    count: 10
+    spawnInterval: 0.39
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 4
+    count: 3
+    spawnInterval: 1.38
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 15
+    count: 2
+    spawnInterval: 1.65
+    pathIndex: 1
+    prepTime: 14
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 12
+    count: 10
+    spawnInterval: 0.39
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 7
+    count: 2
+    spawnInterval: 2.2
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 7
+    count: 2
+    spawnInterval: 2.2
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 5
+    count: 12
+    spawnInterval: 0.25
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 8
+    count: 1
+    spawnInterval: 0.55
+    pathIndex: 1
+    prepTime: 16
+    earlyCallBonus: 15
+    joinPrevious: 0
+  - enemyType: 13
+    count: 6
+    spawnInterval: 0.88
+    pathIndex: 0
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  - enemyType: 6
+    count: 12
+    spawnInterval: 0.33
+    pathIndex: 1
+    prepTime: 8
+    earlyCallBonus: 15
+    joinPrevious: 1
+  firstWaveDelay: 12
+  waveClearBonus: 35
+  theme:
+    ground: {r: 0.42, g: 0.7, b: 0.32, a: 1}
+    groundAlt: {r: 0.38, g: 0.64, b: 0.29, a: 1}
+    path: {r: 0.86, g: 0.76, b: 0.52, a: 1}
+    pathEdge: {r: 0.7, g: 0.6, b: 0.4, a: 1}
+    water: {r: 0.25, g: 0.55, b: 0.9, a: 1}
+    spot: {r: 0.33, g: 0.3, b: 0.28, a: 1}
+    spotRing: {r: 1, g: 0.85, b: 0.25, a: 1}
+    trunk: {r: 0.4, g: 0.26, b: 0.13, a: 1}
+    foliage: {r: 0.18, g: 0.5, b: 0.22, a: 1}
+    foliageAlt: {r: 0.22, g: 0.55, b: 0.2, a: 1}
+    rock: {r: 0.55, g: 0.55, b: 0.58, a: 1}
+    flower: {r: 0.95, g: 0.35, b: 0.45, a: 1}
+    baseWall: {r: 0.85, g: 0.82, b: 0.75, a: 1}
+    baseRoof: {r: 0.25, g: 0.45, b: 0.9, a: 1}
+    portal: {r: 0.95, g: 0.25, b: 0.35, a: 1}
+    sky: {r: 0.3, g: 0.55, b: 0.9, a: 1}
+    fog: {r: 0.65, g: 0.8, b: 0.98, a: 1}
+    groundHeightNoise: 0.06
+  cameraPitch: 58
+  cameraDistanceFactor: 1.05

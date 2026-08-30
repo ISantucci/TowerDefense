@@ -95,7 +95,7 @@ public class GameplayFacade : MonoBehaviour
         int   refund   = Mathf.RoundToInt((baseCost + spent) * pct);
 
         TowerFactoryTD factory = towerPlacer != null ? towerPlacer.towerFactory : null;
-        if (factory == null) factory = FindObjectOfType<TowerFactoryTD>();
+        if (factory == null) factory = FindFirstObjectByType<TowerFactoryTD>();
         if (factory == null) return false;
 
         buildInvoker.Do(new SellTowerCommand(tower, upgradeComp, factory, refund));

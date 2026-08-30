@@ -14,7 +14,7 @@ public class TowerSelectionHandler : MonoBehaviour
     void Awake()
     {
         if (cam == null) cam = Camera.main;
-        if (towerPlacer == null) towerPlacer = FindObjectOfType<TowerPlacer>(true);
+        if (towerPlacer == null) towerPlacer = SceneObjects.FindPreferPersistent<TowerPlacer>();
         ResolveUpgradeUI();
     }
 
@@ -38,7 +38,7 @@ public class TowerSelectionHandler : MonoBehaviour
         cam        = null;
 
         if (cam == null) cam = Camera.main;
-        if (towerPlacer == null) towerPlacer = FindObjectOfType<TowerPlacer>(true);
+        if (towerPlacer == null) towerPlacer = SceneObjects.FindPreferPersistent<TowerPlacer>();
         ResolveUpgradeUI();
     }
 
@@ -46,7 +46,7 @@ public class TowerSelectionHandler : MonoBehaviour
     {
         if (upgradeUI != null) return;
 
-        upgradeUI = FindObjectOfType<TowerUpgradeUI>(true);
+        upgradeUI = FindFirstObjectByType<TowerUpgradeUI>(FindObjectsInactive.Include);
 
         if (upgradeUI == null)
             Debug.LogError("[TowerSelection] No se encontro TowerUpgradeUI en la escena actual.");
@@ -67,7 +67,7 @@ public class TowerSelectionHandler : MonoBehaviour
 
         if (!Input.GetMouseButtonDown(0)) return;
 
-        if (towerPlacer == null) towerPlacer = FindObjectOfType<TowerPlacer>(true);
+        if (towerPlacer == null) towerPlacer = SceneObjects.FindPreferPersistent<TowerPlacer>();
         if (towerPlacer != null && towerPlacer.HasSelection)
         {
             towerPlacer.TryPlace();

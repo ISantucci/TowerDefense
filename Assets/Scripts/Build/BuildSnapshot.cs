@@ -23,7 +23,7 @@ public class BuildSnapshot
     {
         var snap = new BuildSnapshot();
 
-        var all = GameObject.FindObjectsOfType<Tower>();
+        var all = UnityEngine.Object.FindObjectsByType<Tower>(FindObjectsSortMode.None);
         foreach (var t in all)
         {
             snap.towers.Add(new TowerInfo
@@ -51,7 +51,7 @@ public class BuildSnapshot
 
         if (factory == null) return;
 
-        var all = GameObject.FindObjectsOfType<Tower>();
+        var all = UnityEngine.Object.FindObjectsByType<Tower>(FindObjectsSortMode.None);
         foreach (var t in all)
             UnityEngine.Object.Destroy(t.gameObject);
 

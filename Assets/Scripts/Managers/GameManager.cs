@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -13,12 +13,20 @@ public class GameManager : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float towerSellRefundPercent = 0.5f;
     public float TowerSellRefundPercent => towerSellRefundPercent;
 
+    /// <summary>El nivel fija su propio porcentaje de reembolso al vender (LevelDefinition.sellRefund).</summary>
+    public void SetSellRefundPercent(float pct)
+    {
+        towerSellRefundPercent = Mathf.Clamp01(pct);
+    }
+
     public int Lives { get; private set; }
     public int Money { get; private set; }
     public int Score { get; private set; }
 
     [Header("Game State Machine")]
     [SerializeField] GameStateMachine stateMachine;
+
+    public GameStateMachine StateMachine => stateMachine;
 
     IGameState mainMenuState;
     IGameState level1State;
@@ -41,7 +49,13 @@ public class GameManager : MonoBehaviour
         loseState = new LoseState();
 
         if (stateMachine != null)
-            stateMachine.ChangeState(level1State);
+        {
+            // Primera creación (se le dio Play a una escena de nivel): el estado inicial es ESE nivel,
+            // sin recargar la escena. Si la escena no es de un nivel, se conserva el flujo original.
+            var current = LevelCatalog.ByScene(SceneManager.GetActiveScene().name);
+            if (current != null) stateMachine.ChangeState(new LevelState(current, false));
+            else stateMachine.ChangeState(level1State);
+        }
 
         EventQueueManager.Enqueue(new GameplayEvent(GameplayEventType.SetStats, Money, Lives, Score));
 
@@ -103,8 +117,16 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel1()
     {
-        Awake();
-        if (stateMachine != null && level1State != null)
+        var first = LevelCatalog.First;
+        if (first != null) StartLevel(first);
+        else if (stateMachine != null && level1State != null)
             stateMachine.ChangeState(level1State);
+    }
+
+    /// <summary>Entra a un nivel por la máquina de estados (recarga la escena del nivel).</summary>
+    public void StartLevel(LevelDefinition level)
+    {
+        if (level == null || stateMachine == null) return;
+        stateMachine.ChangeState(new LevelState(level, true));
     }
 }
