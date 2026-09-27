@@ -26,26 +26,31 @@ public class EnemyPriorityABB : MonoBehaviour
 
     public EnemyTD GetMostAdvancedInRange(Vector3 origin, float range)
     {
-        // Usamos el mismo enemigo que marca el ABB como más avanzado
-        var bestProg = GetMostAdvanced();   // este ya lo tenés en la clase
+        return SearchInRange(root, origin, range * range);
+    }
 
-        if (bestProg == null)
-            return null;
+    EnemyTD SearchInRange(Node node, Vector3 origin, float rangeSq)
+    {
+        if (node == null) return null;
 
-        float d = Vector3.Distance(origin, bestProg.transform.position);
+        var result = SearchInRange(node.right, origin, rangeSq);
+        if (result != null) return result;
 
-        if (d <= range)
-            return bestProg.GetComponent<EnemyTD>();
+        if (node.prog != null && node.prog.gameObject != null)
+        {
+            float distSq = (node.prog.transform.position - origin).sqrMagnitude;
+            if (distSq <= rangeSq)
+                return node.prog.GetComponent<EnemyTD>();
+        }
 
-        // Si el más avanzado está fuera de rango, no disparamos a nadie
-        return null;
+        return SearchInRange(node.left, origin, rangeSq);
     }
 
 
     // Llamar al inicio de cada wave
     public void Clear()
     {
-        // restaurar color si había uno
+        // restaurar color si habï¿½a uno
         if (currentClosest != null)
             SetColor(currentClosest, Color.white);
 
@@ -101,7 +106,7 @@ public class EnemyPriorityABB : MonoBehaviour
         if (a == null) return b;
         if (b == null) return a;
 
-        // engancho a en el más chico de b
+        // engancho a en el mï¿½s chico de b
         Node minRight = b;
         while (minRight.left != null) minRight = minRight.left;
         minRight.left = a;
@@ -116,7 +121,7 @@ public class EnemyPriorityABB : MonoBehaviour
         Insert(p);
     }
 
-    // === Obtener el más avanzado (mayor progress) ===
+    // === Obtener el mï¿½s avanzado (mayor progress) ===
     EnemyProgress GetMostAdvanced()
     {
         if (root == null) return null;
