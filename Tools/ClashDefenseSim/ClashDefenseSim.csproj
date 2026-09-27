@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Herramienta de simulación sin Unity: compila el MISMO núcleo que usa el juego (Assets/ClashDefense/Core).
+       dotnet run test       pruebas del núcleo contra los GDS
+       dotnet run bots       estrategias automáticas contra los criterios del Doc 05 §11
+       dotnet run mapa       cobertura del recorrido por lugar construible (instrumento del LDS) -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>ClashDefense.Sim</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Assets/ClashDefense/Core/**/*.cs" Link="Core/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

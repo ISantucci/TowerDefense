@@ -1,0 +1,19 @@
+{
+    "name": "ClashDefense.QA",
+    "rootNamespace": "ClashDefense.QA",
+    "references": [
+        "ClashDefense.Core",
+        "ClashDefense.Game"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
