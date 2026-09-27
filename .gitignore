@@ -1,0 +1,52 @@
+# ============================================================
+# Unity: carpetas que genera el editor (se regeneran solas)
+# ============================================================
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# Los .meta de Assets siempre se versionan
+!/[Aa]ssets/**/*.meta
+
+# ============================================================
+# IDE (Visual Studio / Rider / VS Code): los regenera Unity
+# ============================================================
+/*.csproj
+/*.sln
+/*.unityproj
+/*.suo
+/*.user
+/*.userprefs
+/*.pidb
+/*.booproj
+/*.svd
+/*.pdb
+/*.mdb
+/*.opendb
+/*.VC.db
+/*.tmp
+.vs/
+.vscode/
+.idea/
+.consulo/
+
+# ============================================================
+# Builds y reportes
+# ============================================================
+sysinfo.txt
+*.apk
+*.aab
+crashlytics-build.properties
+
+# ============================================================
+# Sistema operativo
+# ============================================================
+.DS_Store
+[Tt]humbs.db
+[Dd]esktop.ini
