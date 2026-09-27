@@ -207,6 +207,7 @@ namespace ClashDefense.Game
             }
             Flush();
             HandlePointer();
+            UpdateHint();
 
             if (sellArmed && Time.unscaledTime - sellArmedAt > SellConfirmWindow) { sellArmed = false; RefreshTowerPanel(); }
 
@@ -236,6 +237,7 @@ namespace ClashDefense.Game
             switch (e.Type)
             {
                 case SimEventType.TutorialStep: ApplyTutorialStep(e.Int1); break;
+                case SimEventType.StateChanged: if (match.State != MatchState.Tutorial) hud.SetCardsInteractable(id => match.CanSelectTower(id)); break;
                 case SimEventType.GoldChanged:
                 case SimEventType.TowerUpgraded: RefreshTowerPanel(); break;
                 case SimEventType.TowerSold: if (e.TowerId == selectedTower) CloseTowerPanel(); break;
@@ -246,7 +248,7 @@ namespace ClashDefense.Game
         {
             string towerId = level.tutorialTowerId;
             var type = match.GetTowerType(towerId);
-            hud.SetTutorialStep(step, towerId, type != null ? type.displayName : towerId, match.WaveCount, balance.economy.startGold);
+            hud.SetTutorialStep(step, towerId, type != null ? type.displayName : towerId, match.WaveCount, match.Gold);
             world.Highlight(step == 1 ? "base" : step == 2 ? "entrada" : step == 5 ? "pista" : null);
             if (step == 4 || step == 5) hud.SetCardsInteractable(id => id == towerId);
             else if (step > 0) hud.SetCardsInteractable(id => false);
@@ -299,6 +301,18 @@ namespace ClashDefense.Game
                 if (Input.GetKeyDown(KeyCode.Alpha1 + i) || Input.GetKeyDown(KeyCode.Keypad1 + i)) { SelectType(balance.towers[i].id); return; }
             if (Input.GetKeyDown(KeyCode.U)) Upgrade();
             if (Input.GetKeyDown(KeyCode.V)) Sell();
+        }
+
+        /// <summary>Línea de ayuda de la franja inferior: UXS-001.6, pantallas Partida y Colocando.</summary>
+        void UpdateHint()
+        {
+            string h = "";
+            if (match != null && !match.Ended && match.State != MatchState.Tutorial && match.State != MatchState.Paused)
+            {
+                if (selectedType != null) h = "Cancelar [Esc / clic derecho]";
+                else if (match.Towers.Count > 0) h = "Clic en una torre para mejorarla o venderla";
+            }
+            hud.SetHint(h);
         }
 
         // ------------------------------------------------------------------ mouse sobre el mapa
@@ -407,10 +421,11 @@ namespace ClashDefense.Game
         void SelectType(string id)
         {
             if (match == null || match.Ended || match.State == MatchState.Paused) return;
-            bool tutorial = match.State == MatchState.Tutorial;
-            if (tutorial && !(match.Tutorial == TutorialStep.SelectTower || match.Tutorial == TutorialStep.PlaceTower)) return;
-            if (tutorial && id != level.tutorialTowerId) { sfx.Play("rechazo", 0.7f); return; }
-            if (!tutorial && match.State != MatchState.Countdown && match.State != MatchState.Wave && match.State != MatchState.Interval) return;
+            if (!match.CanSelectTower(id))
+            {
+                if (match.State == MatchState.Tutorial || match.State == MatchState.Countdown) sfx.Play("rechazo", 0.7f);
+                return;
+            }
             CloseTowerPanel();
             selectedType = id;
             hud.SetSelectedCard(id);

@@ -39,6 +39,7 @@ namespace ClashDefense.Game
         Button tpUpgrade, tpSell;
         // avisos
         GameObject toast; TextMeshProUGUI toastText; float toastUntil;
+        TextMeshProUGUI hintText;
         TextMeshProUGUI countdownText; string countdownLabel; float countdownStart;
         GameObject tutorialPanel; TextMeshProUGUI tutorialText; Button tutorialButton; TextMeshProUGUI tutorialButtonText;
         RectTransform highlightRt; RectTransform highlightTarget;
@@ -59,8 +60,11 @@ namespace ClashDefense.Game
         }
 
         // ------------------------------------------------------------------ construcción
+        TimingData timing;
+
         public void Build(BalanceData balance)
         {
+            timing = balance.timing;
             canvas = UiKit.Canvas(transform, 10);
             root = (RectTransform)canvas.transform;
             BuildHud(balance);
@@ -88,6 +92,8 @@ namespace ClashDefense.Game
 
             var bottom = UiKit.Rect("FranjaInferior", hudRoot.transform, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0), Vector2.zero, new Vector2(0, 151));
             UiKit.Panel(bottom, Palette.WithAlpha(Palette.Panel, 0.94f));
+            hintText = UiKit.Text(bottom, "Ayuda", "", 21, Palette.Texto2, TextAlignmentOptions.MidlineLeft, new Vector2(0, 0), new Vector2(0, 1), new Vector2(0, 0.5f), new Vector2(40, 0), new Vector2(360, 0));
+            hintText.textWrappingMode = TextWrappingModes.Normal;
             int n = balance.towers.Length;
             float w = 340f, gap = 22f, total = n * w + (n - 1) * gap;
             for (int i = 0; i < n; i++)
@@ -415,7 +421,7 @@ namespace ClashDefense.Game
                     oleadaText.text = $"OLEADA {e.Int1}/{e.Int2} — completa"; oleadaText.color = Palette.Acento;
                     break;
                 case SimEventType.Countdown:
-                    countdownLabel = e.Text; countdownStart = Time.unscaledTime;
+                    countdownLabel = e.Text; countdownStart = Time.time;
                     countdownText.gameObject.SetActive(true);
                     break;
                 case SimEventType.EnemySpawned:
@@ -433,7 +439,7 @@ namespace ClashDefense.Game
         {
             toastText.text = text;
             toast.SetActive(true);
-            toastUntil = Time.unscaledTime + seconds;
+            toastUntil = Time.time + seconds;
         }
 
         // ------------------------------------------------------------------ panel de torre (UXS-001.3)
@@ -455,7 +461,7 @@ namespace ClashDefense.Game
                 tpUpgradeLabel.text = afford ? $"Mejorar a nivel {t.Level + 1} · {cost} oro  [U]" : $"Mejorar a nivel {t.Level + 1} · {cost} oro (faltan {cost - m.Gold})  [U]";
                 tpUpgradeLabel.color = afford ? Palette.Texto : Palette.Invalido;
                 var n = t.Type.levels[t.Level];
-                tpPreview.text = "→ " + StatsLine(t.Type, n);
+                tpPreview.text = DeltaLine(t.Type, s, n);
             }
             else
             {
@@ -468,10 +474,23 @@ namespace ClashDefense.Game
             tpN3.text = t.CanUpgrade ? "Nivel 3 · bloqueado · próximamente" : "Nivel 2 es el máximo del prototipo · Nivel 3 próximamente";
         }
 
+        /// <summary>UXS-001.3: "Daño 25→30 · 0,65→0,55 s · alcance 8→9" (y el área si la torre la tiene).</summary>
+        static string DeltaLine(TowerTypeData type, TowerLevelData a, TowerLevelData b)
+        {
+            string area = type.attack == "area" ? $" · área {UiKit.Num(a.areaRadius)}→{UiKit.Num(b.areaRadius)}" : "";
+            return $"Daño {a.damage}→{b.damage} · {UiKit.Num(a.interval)}→{UiKit.Num(b.interval)} s · alcance {UiKit.Num(a.range)}→{UiKit.Num(b.range)}{area}";
+        }
+
         static string StatsLine(TowerTypeData type, TowerLevelData s)
         {
             string area = type.attack == "area" ? $" · área {UiKit.Num(s.areaRadius)}" : "";
             return $"Daño {s.damage} · cada {UiKit.Num(s.interval)} s · alcance {UiKit.Num(s.range)}{area}";
+        }
+
+        /// <summary>Línea de ayuda de la franja inferior (UXS-001.6: Partida y Colocando).</summary>
+        public void SetHint(string text)
+        {
+            if (hintText != null && hintText.text != text) hintText.text = text;
         }
 
         public void ShowUpgradePreview(bool on)
@@ -531,18 +550,19 @@ namespace ClashDefense.Game
         void Update()
         {
             float now = Time.unscaledTime;
-            if (toast != null && toast.activeSelf && now > toastUntil) toast.SetActive(false);
+            if (toast != null && toast.activeSelf && Time.time > toastUntil) toast.SetActive(false);
 
             if (countdownText != null && countdownText.gameObject.activeSelf)
             {
-                float t = now - countdownStart;
+                float t = Time.time - countdownStart;   // tiempo escalado: la pausa congela la cuenta (SOL-001 D11)
                 bool defense = countdownLabel == "DEFENSE";
-                float dur = defense ? 1.0f : 0.8f;
+                float dur = Mathf.Max(0.05f, defense ? timing.defenseDuration : timing.countdownStep);   // del balance, no del código
+                float fade = dur * 0.25f;                                                                // GDS-001.6: 0,2 entra · 0,4 queda · 0,2 sale sobre 0,8
                 if (t >= dur) countdownText.gameObject.SetActive(false);
                 else
                 {
                     countdownText.text = countdownLabel;
-                    float a = defense ? 1f - t / dur : (t < 0.2f ? t / 0.2f : t > 0.6f ? 1f - (t - 0.6f) / 0.2f : 1f);
+                    float a = defense ? 1f - t / dur : (t < fade ? t / fade : t > dur - fade ? 1f - (t - (dur - fade)) / fade : 1f);
                     var c = defense ? Palette.Oro : Palette.Texto; c.a = Mathf.Clamp01(a);
                     countdownText.color = c;
                     countdownText.rectTransform.localScale = Vector3.one * (defense ? Mathf.Lerp(1f, 1.6f, t / dur) : 1f);

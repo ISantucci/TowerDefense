@@ -85,6 +85,8 @@ namespace ClashDefense.QA
             yield return WaitUntilOr(() => m.State == MatchState.Countdown, 2f);
             yield return new WaitForSecondsRealtime(0.35f);
             yield return Shot("02_cuenta_regresiva");
+            boot.QaSelectType("arqueras");
+            Check(m.State == MatchState.Countdown && boot.QaSelectedType == null && m.Towers.Count == 0, "con tutorial, en la cuenta no se elige torre (GDS-001.6)");
             yield return WaitUntilOr(() => m.State == MatchState.Tutorial, 6f);
             Check(m.State == MatchState.Tutorial && m.Tutorial == TutorialStep.Base, "tras DEFENSE entra el tutorial en el paso 1");
             yield return new WaitForSecondsRealtime(0.3f);

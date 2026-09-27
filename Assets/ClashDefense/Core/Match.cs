@@ -450,7 +450,18 @@ namespace ClashDefense.Core
         }
 
         // ------------------------------------------------------------------ acciones del jugador
-        bool ActionsOpen => State == MatchState.Countdown || State == MatchState.Wave || State == MatchState.Interval;
+        // Con tutorial, la cuenta regresiva no abre la construcción: el nivel 1 enseña las acciones antes de habilitarlas
+        // (Doc 03 §6, excepción del tutorial; GDS-001.6, regla 1 enmendada). Sin tutorial rige el Doc 03 §5.
+        bool ActionsOpen => (State == MatchState.Countdown && !TutorialEnabled) || State == MatchState.Wave || State == MatchState.Interval;
+
+        /// <summary>Si el jugador puede elegir ese tipo de torre ahora (la presentación pregunta; no repite la regla).</summary>
+        public bool CanSelectTower(string towerTypeId)
+        {
+            if (Ended || GetTowerType(towerTypeId) == null) return false;
+            if (State == MatchState.Tutorial)
+                return (Tutorial == TutorialStep.SelectTower || Tutorial == TutorialStep.PlaceTower) && towerTypeId == level.tutorialTowerId;
+            return ActionsOpen;
+        }
 
         public TowerTypeData GetTowerType(string id) => id != null && towerTypes.TryGetValue(id, out var t) ? t : null;
 

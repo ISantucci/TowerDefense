@@ -309,6 +309,33 @@ namespace ClashDefense.Sim
                 Check(Near(tAtTutorial, 3.4f, Dt * 1.5f), "GDS-001.6 el tutorial no suma a la duración (3,4 s de cuenta)", $"{tAtTutorial:0.000}");
             }
 
+            // GDS-001.6 regla 1 enmendada (revisión de EJ-001): con tutorial la cuenta no abre la construcción
+            {
+                var m = new Match(B(), L(), tutorial: true);
+                var log = new List<SimEvent>();
+                m.Begin();
+                bool canSel = m.CanSelectTower("arqueras");
+                bool built = m.TryBuild("arqueras", Beside(m, 5f, 3f), out _, out var r);
+                RunUntil(m, log, () => m.State == MatchState.Tutorial);
+                m.TutorialNext(); m.TutorialNext(); m.TutorialNext();
+                m.NotifyTowerSelected("arqueras");
+                bool ok = m.TryBuild("arqueras", Beside(m, 5f, 3f), out _, out _);
+                m.TutorialNext(); m.TutorialNext();
+                Check(!canSel && !built && r == RejectReason.InvalidState && ok && m.State == MatchState.Wave,
+                    "GDS-001.6 con tutorial, la cuenta no deja construir y el tutorial llega a la oleada 1", $"canSel={canSel} built={built} r={r} ok={ok} estado={m.State}");
+
+                var n = new Match(B(), L(), tutorial: false);
+                n.Begin();
+                bool nb = n.TryBuild("arqueras", Beside(n, 5f, 3f), out _, out var nr);
+                Check(n.State == MatchState.Countdown && nb, "Doc 03 §5 sin tutorial, en la cuenta se construye", nr.ToString());
+            }
+
+            // Registro: el reloj redondea antes de partir en minutos (revisión de EJ-001)
+            {
+                string a = MatchRecorder.Clock(59.97f), b2 = MatchRecorder.Clock(179.96f), c = MatchRecorder.Clock(178.267f);
+                Check(a == "1:00.0" && b2 == "3:00.0" && c == "2:58.3", "RQ-001.7 el reloj no escribe 0:60.0", $"{a} · {b2} · {c}");
+            }
+
             // GDS-001.6 CA4: estrellas
             {
                 var m = new Match(B(), L(), false);

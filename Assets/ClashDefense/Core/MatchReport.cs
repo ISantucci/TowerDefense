@@ -225,8 +225,10 @@ namespace ClashDefense.Core
 
         public static string Clock(float s)
         {
-            int m = (int)(s / 60f);
-            float sec = s - m * 60;
+            // se redondea a décimas ANTES de partir en minutos: 59,97 s es 1:00.0, no 0:60.0
+            int tenths = (int)Math.Round(Math.Max(0f, s) * 10.0, MidpointRounding.AwayFromZero);
+            int m = tenths / 600;
+            float sec = (tenths % 600) / 10f;
             return $"{m}:{sec.ToString("00.0", CultureInfo.InvariantCulture)}";
         }
     }
