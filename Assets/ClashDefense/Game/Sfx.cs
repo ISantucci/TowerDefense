@@ -15,6 +15,7 @@ namespace ClashDefense.Game
         AudioSource src;
         readonly Dictionary<string, AudioClip> clips = new Dictionary<string, AudioClip>();
         float lastGold;
+        readonly Dictionary<int, int> stage = new Dictionary<int, int>();
         public float Volume { get => src != null ? src.volume : 1f; set { if (src != null) src.volume = Mathf.Clamp01(value); } }
         public bool Muted { get => src != null && src.mute; set { if (src != null) src.mute = value; } }
 
@@ -42,12 +43,28 @@ namespace ClashDefense.Game
             Make("nuevo",     new[] { N(988, 0.1f, 0.4f, W.Square), N(740, 0.14f, 0.4f, W.Square) }, sequential: true);
             Make("victoria",  new[] { N(523, 0.12f, 0.5f, W.Sine), N(659, 0.12f, 0.5f, W.Sine), N(784, 0.12f, 0.5f, W.Sine), N(1046, 0.4f, 0.5f, W.Sine) }, sequential: true);
             Make("derrota",   new[] { N(392, 0.2f, 0.5f, W.Saw), N(330, 0.2f, 0.5f, W.Saw), N(262, 0.5f, 0.5f, W.Saw) }, sequential: true);
+            // Mundo 1 (UXS-002.4 y .5): un sonido por mecánica nueva, debajo de filtración e inmunidad en la jerarquía
+            Make("mortero",   new[] { N(60, 0.22f, 0.9f, W.Sine), N(120, 0.1f, 0.4f, W.Noise) });
+            Make("electrica", new[] { N(1800, 0.06f, 0.25f, W.Noise), N(2400, 0.05f, 0.18f, W.Square) });
+            Make("infernal",  new[] { N(180, 0.12f, 0.3f, W.Saw), N(270, 0.12f, 0.25f, W.Saw) });
+            Make("llamas",    new[] { N(400, 0.35f, 0.45f, W.Noise) });
+            Make("oro_recoger", new[] { N(1568, 0.05f, 0.3f, W.Sine), N(2093, 0.05f, 0.3f, W.Sine), N(2637, 0.08f, 0.3f, W.Sine) }, sequential: true);
+            Make("oro_lleno", new[] { N(1318, 0.08f, 0.3f, W.Square), N(1318, 0.08f, 0.3f, W.Square) }, sequential: true);
+            Make("miniboss",  new[] { N(110, 0.45f, 0.8f, W.Saw), N(82, 0.55f, 0.8f, W.Saw) }, sequential: true);
+            Make("desbloqueo", new[] { N(659, 0.1f, 0.45f, W.Sine), N(880, 0.1f, 0.45f, W.Sine), N(1175, 0.25f, 0.45f, W.Sine) }, sequential: true);
+            Make("compra",    new[] { N(988, 0.06f, 0.35f, W.Sine), N(1318, 0.12f, 0.35f, W.Sine) }, sequential: true);
         }
 
         public void Play(string name, float vol = 1f)
         {
             if (clips.TryGetValue(name, out var c)) src.PlayOneShot(c, vol);
         }
+
+        /// <summary>Qué tipos de enemigo son miniboss (se lee de los datos, no de ids fijos).</summary>
+        public System.Func<string, bool> IsMiniboss = id => false;
+
+        /// <summary>Partida nueva: los ids de torre se reusan, las etapas infernales empiezan de cero.</summary>
+        public void ResetMatch() => stage.Clear();
 
         public void OnEvent(SimEvent e)
         {
@@ -60,13 +77,27 @@ namespace ClashDefense.Game
                 case SimEventType.TowerUpgraded: Play("mejorar"); break;
                 case SimEventType.TowerSold: Play("vender"); break;
                 case SimEventType.ActionRejected: Play("rechazo", 0.7f); break;
-                case SimEventType.AttackImmune: Play("inmune", 0.8f); break;
+                case SimEventType.AttackImmune: if (e.Int2 != 1) Play("inmune", 0.8f); break;   // el calentamiento infernal no suena a inmune
                 case SimEventType.ArmorBroken: Play("armadura", 0.9f); break;
                 case SimEventType.BaseDamaged: Play("base"); break;
                 case SimEventType.ProjectileImpact: Play("impacto", 0.35f); break;
                 case SimEventType.EnemyKilled:
                     if (Time.unscaledTime - lastGold > 0.06f) { Play("oro", 0.6f); lastGold = Time.unscaledTime; }
                     break;
+                case SimEventType.Shot:
+                    switch (e.Text)
+                    {
+                        case "mortero": Play("mortero", 0.7f); break;
+                        case "electrica": if (e.Int2 <= 1) Play("electrica", 0.35f); break;
+                        case "lanzallamas": Play("llamas", 0.6f); break;
+                        case "infernal":
+                            if (!stage.TryGetValue(e.TowerId, out var st) || st != e.Int2) { stage[e.TowerId] = e.Int2; Play("infernal", 0.25f + 0.1f * e.Int2); }   // inicio (etapa 1, también al volver a fijar) y cada subida (Doc 04 §18)
+                            break;
+                    }
+                    break;
+                case SimEventType.GoldCollected: Play("oro_recoger", 0.8f); break;
+                case SimEventType.GoldStoredFull: Play("oro_lleno", 0.6f); break;
+                case SimEventType.EnemySpawned: if (IsMiniboss(e.Text)) Play("miniboss"); break;
                 case SimEventType.MatchEnded: Play(e.Text == "victoria" ? "victoria" : e.Text == "derrota" ? "derrota" : "click"); break;
             }
         }

@@ -1,0 +1,91 @@
+{
+  "version": "w1-0.1",
+  "currencyName": "Cristales",
+  "starMultipliers": [0.5, 0.75, 1.0],
+  "replayFactor": 0.25,
+  "initialTowers": ["arqueras", "canon", "mago"],
+  "followText": "Seguí Clash Defense en itch.io para enterarte cuando lleguen sus niveles.",
+  "roster": [
+    { "id": "arqueras", "displayName": "Torre de arqueras", "playable": true, "unlockLabel": "Inicial" },
+    { "id": "canon", "displayName": "Cañón", "playable": true, "unlockLabel": "Inicial" },
+    { "id": "mago", "displayName": "Torre de mago", "playable": true, "unlockLabel": "Inicial" },
+    { "id": "mortero", "displayName": "Mortero", "playable": true, "unlockLabel": "Completá Mundo 1 · Nivel 1" },
+    { "id": "bombardera", "displayName": "Torre bombardera", "playable": true, "unlockLabel": "Completá Mundo 1 · Nivel 2" },
+    { "id": "electrica", "displayName": "Torre eléctrica", "playable": true, "unlockLabel": "Completá Mundo 1 · Nivel 3" },
+    { "id": "infernal", "displayName": "Torre infernal", "playable": true, "unlockLabel": "Completá Mundo 1 · Nivel 4" },
+    { "id": "oro", "displayName": "Torre de oro", "playable": true, "unlockLabel": "Completá Mundo 1 · Nivel 5" },
+    { "id": "lanzallamas", "displayName": "Lanzallamas", "playable": true, "unlockLabel": "Completá Mundo 1 · Nivel 6" },
+    { "id": "choque", "displayName": "Torre de choque", "playable": false, "unlockLabel": "Mundo 2 · Nivel 1 (próxima entrega)" },
+    { "id": "ninja", "displayName": "Torre ninja", "playable": false, "unlockLabel": "Mundo 2 · Nivel 2 (próxima entrega)" },
+    { "id": "cuartel", "displayName": "Cuartel de bombarderos", "playable": false, "unlockLabel": "Mundo 2 · Nivel 3 (próxima entrega)" }
+  ],
+  "worlds": [
+    {
+      "id": "m1", "displayName": "Mundo 1", "unlockedBy": "",
+      "continents": [
+        {
+          "id": "m1_c1", "displayName": "Praderas", "theme": "praderas", "available": true, "unavailableText": "",
+          "levels": [
+            { "id": "m1_n1", "number": 1, "displayName": "El sendero", "file": "level_m1_n1", "rewardTower": "mortero", "baseReward": 40, "durationTarget": "5–7 min", "available": true },
+            { "id": "m1_n2", "number": 2, "displayName": "La colina", "file": "level_m1_n2", "rewardTower": "bombardera", "baseReward": 50, "durationTarget": "6–8 min", "available": true },
+            { "id": "m1_n3", "number": 3, "displayName": "El cruce", "file": "level_m1_n3", "rewardTower": "electrica", "baseReward": 70, "durationTarget": "7–9 min", "available": true }
+          ]
+        },
+        {
+          "id": "m1_c2", "displayName": "Desfiladero", "theme": "desfiladero", "available": true, "unavailableText": "",
+          "levels": [
+            { "id": "m1_n4", "number": 4, "displayName": "La garganta", "file": "level_m1_n4", "rewardTower": "infernal", "baseReward": 80, "durationTarget": "8–10 min", "available": true },
+            { "id": "m1_n5", "number": 5, "displayName": "Dos puertas", "file": "level_m1_n5", "rewardTower": "oro", "baseReward": 90, "durationTarget": "9–11 min", "available": true },
+            { "id": "m1_n6", "number": 6, "displayName": "El paso del dragón", "file": "level_m1_n6", "rewardTower": "lanzallamas", "baseReward": 120, "durationTarget": "10–12 min", "available": true }
+          ]
+        },
+        {
+          "id": "m1_c3", "displayName": "Tercer continente", "theme": "", "available": false,
+          "unavailableText": "Fuera de la beta: los niveles 7 a 9 y el jefe final llegan con el mundo completo.",
+          "levels": [
+            { "id": "m1_n7", "number": 7, "displayName": "Próximamente", "available": false },
+            { "id": "m1_n8", "number": 8, "displayName": "Próximamente", "available": false },
+            { "id": "m1_n9", "number": 9, "displayName": "Próximamente", "available": false },
+            { "id": "m1_n10", "number": 10, "displayName": "Jefe final", "available": false, "boss": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m2", "displayName": "Mundo 2", "unlockedBy": "m1_n6",
+      "continents": [
+        {
+          "id": "m2_c1", "displayName": "Primer continente", "theme": "", "available": false,
+          "unavailableText": "Sus tres niveles llegan en la próxima entrega de la beta.",
+          "levels": [
+            { "id": "m2_n1", "number": 1, "displayName": "Próximamente", "rewardTower": "choque", "available": false },
+            { "id": "m2_n2", "number": 2, "displayName": "Próximamente", "rewardTower": "ninja", "available": false },
+            { "id": "m2_n3", "number": 3, "displayName": "Próximamente", "rewardTower": "cuartel", "available": false }
+          ]
+        }
+      ]
+    }
+  ],
+  "shop": [
+    { "id": "mortero_carga", "tower": "mortero", "displayName": "Carga reforzada", "description": "Daño +20 %", "cost": 60, "mods": [ { "stat": "damage", "op": "mul", "value": 1.2 } ] },
+    { "id": "mortero_curena", "tower": "mortero", "displayName": "Cureña ágil", "description": "Dispara 12 % más seguido", "cost": 80, "mods": [ { "stat": "interval", "op": "mul", "value": 0.88 } ] },
+    { "id": "bombardera_mecha", "tower": "bombardera", "displayName": "Mecha corta", "description": "Dispara 12 % más seguido", "cost": 60, "mods": [ { "stat": "interval", "op": "mul", "value": 0.88 } ] },
+    { "id": "bombardera_polvora", "tower": "bombardera", "displayName": "Pólvora extra", "description": "Área de la explosión +0,3", "cost": 80, "mods": [ { "stat": "areaRadius", "op": "add", "value": 0.3 } ] },
+    { "id": "electrica_bobina", "tower": "electrica", "displayName": "Bobina doble", "description": "Un salto más por descarga", "cost": 70, "mods": [ { "stat": "chainJumps", "op": "add", "value": 1 } ] },
+    { "id": "electrica_voltaje", "tower": "electrica", "displayName": "Alto voltaje", "description": "Daño +25 %", "cost": 90, "mods": [ { "stat": "damage", "op": "mul", "value": 1.25 } ] },
+    { "id": "infernal_nucleo", "tower": "infernal", "displayName": "Núcleo estable", "description": "Daño de todas las etapas +15 %", "cost": 80, "mods": [ { "stat": "rampDps", "op": "mul", "value": 1.15 } ] },
+    { "id": "infernal_lente", "tower": "infernal", "displayName": "Lente ancha", "description": "Alcance +0,75", "cost": 90, "mods": [ { "stat": "range", "op": "add", "value": 0.75 } ] },
+    { "id": "oro_veta", "tower": "oro", "displayName": "Veta rica", "description": "Produce 25 % más rápido", "cost": 80, "mods": [ { "stat": "goldPerSecond", "op": "mul", "value": 1.25 } ] },
+    { "id": "oro_boveda", "tower": "oro", "displayName": "Bóveda", "description": "Capacidad +50 %", "cost": 60, "mods": [ { "stat": "goldCapacity", "op": "mul", "value": 1.5 } ] },
+    { "id": "lanzallamas_combustible", "tower": "lanzallamas", "displayName": "Combustible denso", "description": "Quemadura +30 %", "cost": 80, "mods": [ { "stat": "burnDps", "op": "mul", "value": 1.3 } ] },
+    { "id": "lanzallamas_boquilla", "tower": "lanzallamas", "displayName": "Boquilla larga", "description": "Alcance +0,75", "cost": 90, "mods": [ { "stat": "range", "op": "add", "value": 0.75 } ] }
+  ],
+  "tanda": {
+    "description": "Al completar los tres niveles de un continente elegís una torre inicial: la mejora es permanente y vale en todos los mundos. Se puede elegir la misma torre dos veces.",
+    "options": [
+      { "tower": "arqueras", "description": "Daño +15 % y alcance +8 %", "mods": [ { "stat": "damage", "op": "mul", "value": 1.15 }, { "stat": "range", "op": "mul", "value": 1.08 } ] },
+      { "tower": "canon", "description": "Daño +15 % y alcance +8 %", "mods": [ { "stat": "damage", "op": "mul", "value": 1.15 }, { "stat": "range", "op": "mul", "value": 1.08 } ] },
+      { "tower": "mago", "description": "Daño +15 % y área +8 %", "mods": [ { "stat": "damage", "op": "mul", "value": 1.15 }, { "stat": "areaRadius", "op": "mul", "value": 1.08 } ] }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 namespace ClashDefense.Core
 {
-    /// <summary>Contrato de eventos del núcleo (GDS-001.0). El núcleo emite; presentación, sonido y métricas escuchan.</summary>
+    /// <summary>Contrato de eventos del núcleo (GDS-001.0, ampliado en GDS-002.0). El núcleo emite; presentación, sonido y métricas escuchan.</summary>
     public enum SimEventType
     {
         StateChanged,       // Text = estado nuevo, Text2 = estado anterior
@@ -8,20 +8,24 @@ namespace ClashDefense.Core
         TutorialStep,       // Int1 = paso (1..7), 0 = terminó
         WaveStarted,        // Int1 = n, Int2 = total
         WaveCleared,        // Int1 = n, Int2 = total
-        EnemySpawned,       // EnemyId, Text = tipo, Int1 = oleada
-        EnemyDamaged,       // EnemyId, TowerId, Float1 = daño efectivo a la vida, Float2 = daño efectivo a la armadura
+        EnemySpawned,       // EnemyId, Text = tipo, Int1 = oleada, Int2 = recorrido
+        EnemyDamaged,       // EnemyId, TowerId, Float1 = daño efectivo a la vida, Float2 = daño efectivo a la armadura, Int1 = 1 si es quemadura
         AttackImmune,       // EnemyId, TowerId, Int1 = 1 si es el descubrimiento de esa torre
         ArmorBroken,        // EnemyId, TowerId
         EnemyKilled,        // EnemyId, TowerId, Text = tipo, Int1 = oro
         EnemyReachedBase,   // EnemyId, Text = tipo, Int1 = daño
         BaseDamaged,        // Int1 = vida antes, Int2 = vida después, Text = tipo
-        GoldChanged,        // Int1 = delta, Int2 = total, Text = motivo (inicial|baja|construccion|mejora|venta)
+        GoldChanged,        // Int1 = delta, Int2 = total, Text = motivo (inicial|baja|construccion|mejora|venta|recoleccion)
         TowerBuilt,         // TowerId, Text = tipo, Int1 = costo, Pos
         TowerUpgraded,      // TowerId, Text = tipo, Int1 = costo, Int2 = nivel nuevo
         TowerSold,          // TowerId, Text = tipo, Int1 = reembolso, Int2 = nivel
         ActionRejected,     // Text = motivo, Text2 = acción
-        Shot,               // TowerId, EnemyId, Int1 = proyectil
-        ProjectileImpact,   // Int1 = proyectil, TowerId, Pos, Float1 = radio de área
+        Shot,               // TowerId, EnemyId, Text = tipo de torre, Pos = origen, Aim = destino, Int1 = proyectil (0 si es instantáneo),
+                            //   Int2 = etapa del Infernal (1..n) o eslabón de la cadena (1..n), Float1 = segundos de vuelo o de fuego
+        ProjectileImpact,   // Int1 = proyectil, TowerId, Pos, Float1 = radio de área, Text = tipo de torre
+        BurnStarted,        // EnemyId, TowerId: empezó a quemarse (no se emite al renovar)
+        GoldStoredFull,     // TowerId: la Torre de oro llegó a su capacidad
+        GoldCollected,      // TowerId, Int1 = oro recogido, Pos
         MatchEnded,         // Text = resultado (victoria|derrota|abandono), Int1 = estrellas, Int2 = vida
     }
 
@@ -38,6 +42,7 @@ namespace ClashDefense.Core
         public string Text;
         public string Text2;
         public Vec2 Pos;
+        public Vec2 Aim;
 
         public override string ToString() =>
             $"{Time:0.000} {Type} e{EnemyId} t{TowerId} {Int1} {Int2} {Float1:0.##} {Float2:0.##} {Text} {Text2} {Pos}";

@@ -87,25 +87,28 @@ namespace ClashDefense.EditorTools
             bool saved = EditorSceneManager.SaveScene(scene, ScenePath);
             log.Add(saved ? $"escena guardada: {ScenePath}" : "ERROR al guardar la escena");
 
-            var list = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(ScenePath, true) };
-            foreach (var s in EditorBuildSettings.scenes)
-                if (s.path != ScenePath) list.Add(new EditorBuildSettingsScene(s.path, false));
-            EditorBuildSettings.scenes = list.ToArray();
-            log.Add($"Build Settings: {ScenePath} primera y habilitada; {list.Count - 1} escenas del TP quedan deshabilitadas (no se borran)");
-
-            PlayerSettings.productName = "Clash Defense";
-            PlayerSettings.bundleVersion = "p0-0.1";
-            log.Add("PlayerSettings: productName 'Clash Defense', versión 'p0-0.1'");
+            if (!File.Exists(CampaignSceneBuilder.ScenePath))
+            {
+                var list = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(ScenePath, true) };
+                foreach (var s in EditorBuildSettings.scenes)
+                    if (s.path != ScenePath) list.Add(new EditorBuildSettingsScene(s.path, false));
+                EditorBuildSettings.scenes = list.ToArray();
+                log.Add($"Build Settings: {ScenePath} primera y habilitada; {list.Count - 1} escenas del TP quedan deshabilitadas (no se borran)");
+                PlayerSettings.productName = "Clash Defense";
+                PlayerSettings.bundleVersion = "p0-0.1";
+                log.Add("PlayerSettings: productName 'Clash Defense', versión 'p0-0.1'");
+            }
+            else log.Add("Build Settings y versión: los maneja la escena del juego (CampaignSceneBuilder); no se tocan");
             AssetDatabase.SaveAssets();
             return "OK Prototipo 0\n - " + string.Join("\n - ", log);
         }
 
-        static void EnsureFolder(string parent, string name)
+        public static void EnsureFolder(string parent, string name)
         {
             if (!AssetDatabase.IsValidFolder(parent + "/" + name)) AssetDatabase.CreateFolder(parent, name);
         }
 
-        static Material MakeMaterial(string path, string shaderName, bool transparent, List<string> log)
+        public static Material MakeMaterial(string path, string shaderName, bool transparent, List<string> log)
         {
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             var shader = Shader.Find(shaderName);

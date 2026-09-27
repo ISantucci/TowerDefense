@@ -9,9 +9,10 @@ namespace ClashDefense.Core
 
     [Serializable] public class MatchReport
     {
-        public string schema = "clashdefense.p0.partida/1";
+        public string schema = "clashdefense.partida/2";   // /2: recorridos, torres del Mundo 1 y oro recogido (GDS-002.0)
         public string balanceVersion;
         public string levelId;
+        public string[] towersAvailable;     // torres que el jugador podía usar en esta partida
         public string buildVersion;
         public string platform;
         public string startedAtUtc;
@@ -36,7 +37,7 @@ namespace ClashDefense.Core
         public string[] checks;               // cierres aritméticos: "OK ..." o "FALLA ..."
     }
 
-    [Serializable] public class GoldReport { public int start, earned, spent, refunded, unspent; }
+    [Serializable] public class GoldReport { public int start, earned, collected, spent, refunded, unspent; }
     [Serializable] public class BuildRecord { public float t; public int towerId; public string type; public int cost; public float x, z; }
     [Serializable] public class UpgradeRecord { public float t; public int towerId; public string type; public int cost; public int level; }
     [Serializable] public class SellRecord { public float t; public int towerId; public string type; public int level; public int refund; }
@@ -71,6 +72,7 @@ namespace ClashDefense.Core
                     if (e.Text == "inicial") gold.start = e.Int1;
                     else if (e.Text == "baja") gold.earned += e.Int1;
                     else if (e.Text == "venta") gold.refunded += e.Int1;
+                    else if (e.Text == "recoleccion") gold.collected += e.Int1;
                     else gold.spent += -e.Int1;
                     gold.unspent = e.Int2;
                     break;
@@ -111,6 +113,7 @@ namespace ClashDefense.Core
                     var td = Tower(e.TowerId, e.Text); td.damage += e.Float1; td.armorDamage += e.Float2;
                     break;
                 case SimEventType.AttackImmune:
+                    if (e.Int2 == 1) break;   // calentamiento de la Infernal contra metal: no es un disparo desperdiciado (GDS-002.4 S12)
                     Tower(e.TowerId, e.Text).immuneHits++;
                     metal.wastedShots++;
                     if (e.Int1 == 1) metal.immuneDiscoveries++;
@@ -148,6 +151,7 @@ namespace ClashDefense.Core
                 baseHpLeft = m.BaseHp,
                 stars = m.Stars,
                 gold = gold,
+                towersAvailable = TypeIds(m),
                 builds = builds.ToArray(),
                 upgrades = upgrades.ToArray(),
                 sells = sells.ToArray(),
@@ -188,8 +192,8 @@ namespace ClashDefense.Core
 
             // cierres aritméticos (RQ-001.7 CA 4)
             var checks = new List<string>();
-            int expected = gold.start + gold.earned - gold.spent + gold.refunded;
-            checks.Add((expected == m.Gold ? "OK" : "FALLA") + $" oro: {gold.start} + {gold.earned} - {gold.spent} + {gold.refunded} = {expected}; final {m.Gold}");
+            int expected = gold.start + gold.earned + gold.collected - gold.spent + gold.refunded;
+            checks.Add((expected == m.Gold ? "OK" : "FALLA") + $" oro: {gold.start} + {gold.earned} + {gold.collected} - {gold.spent} + {gold.refunded} = {expected}; final {m.Gold}");
             int spawned = 0, resolved = 0, alive = 0;
             foreach (var r in rep.enemies) { spawned += r.spawned; resolved += r.killed + r.leaked; }
             foreach (var e in m.Enemies) if (e.Alive) alive++;
@@ -198,15 +202,22 @@ namespace ClashDefense.Core
             return rep;
         }
 
+        static string[] TypeIds(Match m)
+        {
+            var l = new List<string>();
+            foreach (var t in m.TowerTypes) l.Add(t.id);
+            return l.ToArray();
+        }
+
         /// <summary>Resumen legible (RQ-001.7: "un resumen legible al terminar").</summary>
         public static string Summary(MatchReport r)
         {
             var ci = CultureInfo.InvariantCulture;
             var sb = new StringBuilder();
-            sb.AppendLine($"Clash Defense · Prototipo 0 · balance {r.balanceVersion} · nivel {r.levelId} · build {r.buildVersion}");
+            sb.AppendLine($"Clash Defense · balance {r.balanceVersion} · nivel {r.levelId} · build {r.buildVersion}");
             sb.AppendLine($"Resultado: {r.result}  ·  oleada {r.waveReached}/{r.waveCount}  ·  vida {r.baseHpLeft}  ·  estrellas {r.stars}");
             sb.AppendLine($"Duración (sin tutorial ni pausa): {Clock(r.durationSeconds)}  ·  pausa real {r.realPauseSeconds.ToString("0", ci)} s  ·  tutorial: {(r.tutorialPlayed ? "sí" : "no")}");
-            sb.AppendLine($"Oro: inicial {r.gold.start}, ganado {r.gold.earned}, gastado {r.gold.spent}, reembolsado {r.gold.refunded}, sin usar {r.gold.unspent}");
+            sb.AppendLine($"Oro: inicial {r.gold.start}, ganado {r.gold.earned}, recogido {r.gold.collected}, gastado {r.gold.spent}, reembolsado {r.gold.refunded}, sin usar {r.gold.unspent}");
             sb.AppendLine($"Construcciones {r.builds.Length} · mejoras {r.upgrades.Length} · ventas {r.sells.Length}");
             sb.Append("Torres al final:");
             foreach (var t in r.towersAtEnd) sb.Append($"  {t.type} N1×{t.level1} N2×{t.level2}");

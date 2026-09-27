@@ -18,6 +18,7 @@ namespace ClashDefense.Sim
 
         public static BalanceData Balance(string file = "balance_p0.json") => JsonSerializer.Deserialize<BalanceData>(File.ReadAllText(Path.Combine(DataDir, file)), Opt);
         public static LevelData Level(string file = "level_p0.json") => JsonSerializer.Deserialize<LevelData>(File.ReadAllText(Path.Combine(DataDir, file)), Opt);
+        public static T Load<T>(string file) => JsonSerializer.Deserialize<T>(File.ReadAllText(Path.Combine(DataDir, file)), Opt);
         public static string ToJson<T>(T obj) => JsonSerializer.Serialize(obj, Opt);
         public static T Clone<T>(T obj) => JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(obj, Opt), Opt);
     }

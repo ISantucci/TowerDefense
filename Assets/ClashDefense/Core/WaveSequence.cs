@@ -8,9 +8,12 @@ namespace ClashDefense.Core
     /// Expande la secuencia de una oleada tal cual la escribe el owner (Doc 05 §8, GDS-001.5):
     ///   "D D E / (D E V A E V)x4 / A D D E A"
     /// '/' solo agrupa (no agrega tiempo). "(…)xN" o "(…)×N" repite el grupo. "D x10" repite el código anterior.
+    /// "." es un lugar vacío: consume un intervalo sin que aparezca nadie (LDS-002.6, respiro dentro de la oleada).
     /// </summary>
     public static class WaveSequence
     {
+        public const string Gap = ".";
+
         public static List<string> Expand(string sequence)
         {
             if (sequence == null) throw new FormatException("secuencia vacía");
@@ -30,7 +33,7 @@ namespace ClashDefense.Core
             {
                 char c = s[k];
                 if (char.IsWhiteSpace(c) || c == '/') { Flush(); continue; }
-                if (c == '(' || c == ')') { Flush(); list.Add(c.ToString()); continue; }
+                if (c == '(' || c == ')' || c == '.') { Flush(); list.Add(c.ToString()); continue; }
                 if ((c == 'x' || c == 'X' || c == '×') && k + 1 < s.Length && char.IsDigit(s[k + 1]) && sb.Length == 0)
                 {
                     // multiplicador: x10, ×4

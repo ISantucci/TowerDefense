@@ -86,6 +86,7 @@ namespace ClashDefense.Game
             colors.fadeDuration = 0.05f;
             b.colors = colors;
             if (onClick != null) b.onClick.AddListener(() => onClick());
+            b.navigation = new Navigation { mode = Navigation.Mode.None };   // sin foco de teclado: las teclas las maneja el juego
             text = Fill(rt, "Texto", label, fontSize, Palette.Texto, TextAlignmentOptions.Center);
             text.margin = new Vector4(8, 4, 8, 4);
             return b;
@@ -116,6 +117,20 @@ namespace ClashDefense.Game
             Panel(e, c, false);
         }
 
+        /// <summary>Cambia la etiqueta Text (legacy) de un control por defecto por una de TextMesh Pro.</summary>
+        public static void ReplaceLegacyLabel(GameObject control, string text, float size)
+        {
+            var legacy = control.GetComponentInChildren<UnityEngine.UI.Text>(true);
+            if (legacy == null) return;
+            var go = legacy.gameObject;
+            var rt = (RectTransform)go.transform;
+            UnityEngine.Object.DestroyImmediate(legacy);
+            var t = go.AddComponent<TextMeshProUGUI>();
+            t.text = text; t.fontSize = size; t.color = Palette.Texto; t.alignment = TextAlignmentOptions.MidlineLeft; t.raycastTarget = false;
+            rt.anchorMin = Vector2.zero; rt.anchorMax = Vector2.one;
+            rt.offsetMin = new Vector2(44, 0); rt.offsetMax = Vector2.zero;
+        }
+
         /// <summary>Casilla legible sin sprites: caja oscura con borde claro y marca de acento (UXS-001.6).</summary>
         public static void StyleToggle(GameObject toggleGo, float box = 30f)
         {
@@ -139,6 +154,22 @@ namespace ClashDefense.Game
                 mark.sprite = null; mark.color = Palette.Acento;
                 mark.transform.SetAsLastSibling();
             }
+        }
+
+        /// <summary>Barra de volumen legible sin sprites: riel oscuro, relleno de acento y manija clara (UXS-002.1).</summary>
+        public static void StyleSlider(GameObject sliderGo)
+        {
+            var slider = sliderGo.GetComponent<Slider>();
+            if (slider == null) return;
+            foreach (var img in sliderGo.GetComponentsInChildren<Image>(true))
+            {
+                img.sprite = null;
+                if (img.name == "Background") { img.color = Palette.PanelClaro; var r = img.rectTransform; r.anchorMin = new Vector2(0, 0.3f); r.anchorMax = new Vector2(1, 0.7f); }
+                else if (img.name == "Fill") img.color = Palette.Acento;
+                else if (img.name == "Handle") { img.color = Palette.Texto; img.rectTransform.sizeDelta = new Vector2(18, 0); }
+            }
+            var fillArea = sliderGo.transform.Find("Fill Area") as RectTransform;
+            if (fillArea != null) { fillArea.anchorMin = new Vector2(0, 0.3f); fillArea.anchorMax = new Vector2(1, 0.7f); }
         }
 
         static Sprite star;

@@ -75,6 +75,8 @@ namespace ClashDefense.QA
             Check(boot != null, "la escena tiene GameBootstrap");
             if (boot == null) { Finish(); yield break; }
             boot.QaTakeControl();
+            // el registro del piloto va a su carpeta: no se mezcla con las partidas del owner (TL-002)
+            if (boot.QaMetrics != null) boot.QaMetrics.SetFolder(Path.Combine(dir, "metricas"));
             yield return new WaitForSecondsRealtime(0.5f);
             Check(boot.QaHud.StartVisible, "arranca en la pantalla de inicio");
             yield return Shot("01_inicio");
@@ -245,7 +247,7 @@ namespace ClashDefense.QA
         {
             Check(exceptions == 0, $"sin excepciones en consola ({exceptions})");
             Check(errors == 0, $"sin errores en consola ({errors})");
-            var csv = Path.Combine(Application.persistentDataPath, "metricas", "eventos.csv");
+            var csv = Path.Combine(boot != null && boot.QaMetrics != null ? boot.QaMetrics.Folder : Path.Combine(Application.persistentDataPath, "metricas"), "eventos.csv");
             if (File.Exists(csv)) Line($"eventos.csv: {File.ReadAllLines(csv).Length} líneas en {csv}");
             var sb = new StringBuilder();
             sb.Append("QA-001 piloto automático · ").Append(DateTime.Now.ToString("yyyy-MM-dd HH:mm")).Append('\n');

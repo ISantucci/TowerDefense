@@ -15,7 +15,7 @@ namespace ClashDefense.Game
     public sealed class MetricsWriter
     {
         static readonly CultureInfo Ci = CultureInfo.InvariantCulture;
-        readonly string dir;
+        string dir;
         readonly string playerId;
         readonly string sessionId = Guid.NewGuid().ToString("N").Substring(0, 12);
         readonly string environment;
@@ -24,6 +24,8 @@ namespace ClashDefense.Game
         string startedAt;
         float realPause;
         public string Folder => dir;
+        /// <summary>El piloto de QA escribe su registro aparte, para no mezclarlo con el playtest del owner.</summary>
+        public void SetFolder(string folder) { if (!string.IsNullOrEmpty(folder)) dir = folder; }
         public string LastReportPath { get; private set; }
         public MatchReport LastReport { get; private set; }
 
@@ -35,14 +37,20 @@ namespace ClashDefense.Game
             environment = Application.isEditor ? "editor" : Application.platform == RuntimePlatform.WebGLPlayer ? "webgl" : "windows";
         }
 
-        public void Begin(Match m)
+        public void Begin(Match m, string campaignLevelId = null)
         {
             match = m;
             recorder = new MatchRecorder();
             realPause = 0f;
             startedAt = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ", Ci);
-            Row("partida_iniciada", 0f, ("balance_version", m.Balance.version), ("level_id", m.Level.id), ("tutorial", m.TutorialEnabled ? "1" : "0"));
+            var ids = new List<string>();
+            foreach (var t in m.TowerTypes) ids.Add(t.id);
+            Row("partida_iniciada", 0f, ("balance_version", m.Balance.version), ("level_id", m.Level.id), ("tutorial", m.TutorialEnabled ? "1" : "0"),
+                ("mode", campaignLevelId != null ? "campana" : "laboratorio"), ("towers_available", string.Join("|", ids)));
         }
+
+        /// <summary>Eventos de progresión de MET-002.7 (fuera de una partida): compra, mejora de tanda, recompensa.</summary>
+        public void CampaignEvent(string ev, params (string k, string v)[] prms) => Row(ev, 0f, prms);
 
         public void AddPause(float seconds) => realPause += seconds;
 
@@ -56,7 +64,7 @@ namespace ClashDefense.Game
                 case SimEventType.TowerUpgraded: Row("torre_mejorada", e.Time, ("tower_type", e.Text), ("cost", e.Int1.ToString(Ci))); break;
                 case SimEventType.TowerSold: Row("torre_vendida", e.Time, ("tower_type", e.Text), ("level", e.Int2.ToString(Ci)), ("refund", e.Int1.ToString(Ci))); break;
                 case SimEventType.EnemyReachedBase: Row("enemigo_filtrado", e.Time, ("enemy_type", e.Text), ("wave", match.WaveNumber.ToString(Ci)), ("damage", e.Int1.ToString(Ci))); break;
-                case SimEventType.AttackImmune: Row("ataque_inmune", e.Time, ("tower_type", e.Text), ("discovery", e.Int1.ToString(Ci))); break;
+                case SimEventType.AttackImmune: if (e.Int2 == 1) break; Row("ataque_inmune", e.Time, ("tower_type", e.Text), ("discovery", e.Int1.ToString(Ci))); break;
                 case SimEventType.WaveCleared: Row("oleada_terminada", e.Time, ("wave", e.Int1.ToString(Ci)), ("leaked", LeakedIn(e.Int1).ToString(Ci))); break;
             }
         }
@@ -77,15 +85,14 @@ namespace ClashDefense.Game
             rep.platform = environment;
             rep.startedAtUtc = startedAt;
             rep.realPauseSeconds = realPause;
-            float dA = 0, dC = 0, dM = 0;
-            foreach (var d in rep.damageByTowerType)
+            var prms = new List<(string, string)>
             {
-                float v = d.damage + d.armorDamage;
-                if (d.type == "arqueras") dA = v; else if (d.type == "canon") dC = v; else if (d.type == "mago") dM = v;
-            }
-            Row("partida_terminada", rep.durationSeconds, ("result", rep.result), ("seconds", F(rep.durationSeconds)), ("wave", rep.waveReached.ToString(Ci)),
+                ("result", rep.result), ("seconds", F(rep.durationSeconds)), ("wave", rep.waveReached.ToString(Ci)),
                 ("hp", rep.baseHpLeft.ToString(Ci)), ("stars", rep.stars.ToString(Ci)), ("gold_unspent", rep.gold.unspent.ToString(Ci)),
-                ("damage_arqueras", F(dA)), ("damage_canon", F(dC)), ("damage_mago", F(dM)));
+                ("level_id", rep.levelId),
+            };
+            foreach (var d in rep.damageByTowerType) prms.Add(("damage_" + d.type, F(d.damage + d.armorDamage)));
+            Row("partida_terminada", rep.durationSeconds, prms.ToArray());
             string summary = MatchRecorder.Summary(rep);
             try
             {

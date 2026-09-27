@@ -27,6 +27,13 @@ namespace ClashDefense.Game
             Fit();
         }
 
+        /// <summary>Otro nivel, otro encuadre (cada mapa del Mundo 1 se ve completo, Doc 03 §20).</summary>
+        public void SetContent(Bounds contentBounds)
+        {
+            content = contentBounds;
+            Fit();
+        }
+
         public void Tick()
         {
             if (Screen.width != lastW || Screen.height != lastH) Fit();

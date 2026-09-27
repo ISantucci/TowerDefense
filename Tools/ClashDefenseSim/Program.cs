@@ -15,12 +15,14 @@ namespace ClashDefense.Sim
             if (args.Length > 1) DataLoader.DataDir = args[1];
             switch (cmd)
             {
-                case "test": return Tests.Run();
+                case "test": { int a = Tests.Run(); int b = Tests1.RunAll(); return a == 0 && b == 0 ? 0 : 1; }
                 case "bots": return Bots(args.Skip(2).ToArray());
                 case "mapa": return Map();
                 case "lds": return Lds.Run();
+                case "mundo1": return World1.Run(args.Skip(2).ToArray());
+                case "oleadas": return World1.Waves(args.Length > 2 ? args[2] : "m1_n1");
                 default:
-                    Console.WriteLine("uso: dotnet run -- test|bots|mapa [carpeta de datos]");
+                    Console.WriteLine("uso: dotnet run -- test|bots|mapa|lds|mundo1|oleadas [carpeta de datos] [nivel]");
                     return 2;
             }
         }

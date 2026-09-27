@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/ClashDefense/Scenes/ClashDefense.unity
+    guid: eec258b1b55eda74dab86c7e4dece620
+  - enabled: 0
     path: Assets/ClashDefense/Scenes/Prototipo0.unity
     guid: 41dc2d6e6d25d6f4795ea0f448d9349c
   - enabled: 0

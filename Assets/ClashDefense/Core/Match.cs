@@ -7,10 +7,20 @@ namespace ClashDefense.Core
 
     public enum TutorialStep { None = 0, Base = 1, Path = 2, Gold = 3, SelectTower = 4, PlaceTower = 5, Income = 6, Goal = 7 }
 
-    public enum RejectReason { None, NotEnoughGold, OutsideArea, OnPath, Blocked, Overlap, InvalidState, UnknownTower, MaxLevel, TutorialRestricted, UnknownTarget }
+    public enum RejectReason { None, NotEnoughGold, OutsideArea, OnPath, Blocked, Overlap, InvalidState, UnknownTower, MaxLevel, TutorialRestricted, UnknownTarget, NothingToCollect }
+
+    /// <summary>Con qué entra el jugador a la partida (GDS-002.0): tutorial, torres desbloqueadas y mejoras permanentes.</summary>
+    public sealed class MatchOptions
+    {
+        public bool Tutorial;
+        /// <summary>Torres que puede usar, en el orden del balance. null = todas (P0).</summary>
+        public ICollection<string> AllowedTowers;
+        /// <summary>Mejoras permanentes por torre (tienda y tanda). null = ninguna.</summary>
+        public IDictionary<string, List<StatMod>> Mods;
+    }
 
     /// <summary>
-    /// Una partida del Prototipo 0: máquina de estados (GDS-001.6) + mundo (GDS-001.1…5).
+    /// Una partida: máquina de estados (GDS-001.6) + mundo (GDS-001.1…5, GDS-002.4…6).
     /// Pura: sin UnityEngine, determinista, avanzada por pasos fijos. La presentación la alimenta y escucha sus eventos.
     /// </summary>
     public sealed class Match
@@ -21,25 +31,35 @@ namespace ClashDefense.Core
 
         readonly BalanceData balance;
         readonly LevelData level;
+        readonly List<TowerTypeData> towerOrder = new List<TowerTypeData>();
         readonly Dictionary<string, TowerTypeData> towerTypes = new Dictionary<string, TowerTypeData>();
         readonly Dictionary<string, EnemyTypeData> enemyByCode = new Dictionary<string, EnemyTypeData>();
+        readonly List<PathTrack> routes = new List<PathTrack>();
+        readonly WaveData[] waves;
         readonly List<Enemy> enemies = new List<Enemy>();
         readonly List<Tower> towers = new List<Tower>();
         readonly List<Projectile> projectiles = new List<Projectile>();
+        readonly List<FireZone> fires = new List<FireZone>();
         readonly List<SimEvent> events = new List<SimEvent>();
+        readonly float referenceLength;
+        readonly float burnTick;
 
-        List<EnemyTypeData> waveSeq;
+        List<EnemyTypeData> waveSeq;    // null en un lugar vacío (".")
+        List<int> waveLanes;
         float waveSpawnInterval;
-        int nextSpawnIndex;
+        int nextSpawnIndex, spawnedInWave;
         int waveTicks;          // el reloj se cuenta en pasos enteros: sin deriva de coma flotante
         long activeTicks;
         int stateTicks;
         string lastCountdown;
-        int nextEnemyId = 1, nextTowerId = 1, nextProjectileId = 1;
+        int nextEnemyId = 1, nextTowerId = 1, nextProjectileId = 1, nextFireId = 1;
 
         public BalanceData Balance => balance;
         public LevelData Level => level;
-        public PathTrack Path { get; }
+        /// <summary>Recorrido principal (el 0). Referencia de velocidad y del tutorial.</summary>
+        public PathTrack Path => routes[0];
+        public IReadOnlyList<PathTrack> Routes => routes;
+        public Vec2 BasePosition => routes[0].End;
         public MatchState State { get; private set; } = MatchState.Start;
         /// <summary>Estado al que vuelve la pausa.</summary>
         public MatchState ResumeState { get; private set; }
@@ -49,7 +69,7 @@ namespace ClashDefense.Core
         public int Gold { get; private set; }
         public int BaseHp { get; private set; }
         public int WaveNumber { get; private set; }
-        public int WaveCount => balance.waves.Length;
+        public int WaveCount => waves.Length;
         /// <summary>Tiempo de partida que cuenta para la duración: cuenta regresiva, oleadas e intervalos. Sin tutorial ni pausa.</summary>
         public float ActiveTime => (float)(activeTicks * (double)Step);
         public float StateTimer => (float)(stateTicks * (double)Step);
@@ -60,18 +80,34 @@ namespace ClashDefense.Core
         public IReadOnlyList<Enemy> Enemies => enemies;
         public IReadOnlyList<Tower> Towers => towers;
         public IReadOnlyList<Projectile> Projectiles => projectiles;
-        public IEnumerable<TowerTypeData> TowerTypes => balance.towers;
+        public IReadOnlyList<FireZone> Fires => fires;
+        /// <summary>Las torres que el jugador puede usar en ESTA partida, con sus mejoras permanentes aplicadas.</summary>
+        public IReadOnlyList<TowerTypeData> TowerTypes => towerOrder;
 
-        public Match(BalanceData balance, LevelData level, bool tutorial)
+        public Match(BalanceData balance, LevelData level, bool tutorial) : this(balance, level, new MatchOptions { Tutorial = tutorial }) { }
+
+        public Match(BalanceData balance, LevelData level, MatchOptions options)
         {
+            options = options ?? new MatchOptions();
             var errors = DataValidator.Validate(balance, level);
             if (errors.Count > 0) throw new InvalidOperationException("Datos inválidos:\n - " + string.Join("\n - ", errors));
             this.balance = balance;
             this.level = level;
-            Path = new PathTrack(level.path);
-            foreach (var t in balance.towers) towerTypes[t.id] = t;
+            foreach (var pts in LevelGeometry.RoutePoints(level)) routes.Add(new PathTrack(pts));
+            referenceLength = routes[0].Length;
+            waves = level.waves != null && level.waves.Length > 0 ? level.waves : balance.waves;
+            burnTick = balance.timing.burnTick;   // el validador lo exige > 0 cuando hay torres que queman
+            foreach (var t in balance.towers)
+            {
+                if (options.AllowedTowers != null && !options.AllowedTowers.Contains(t.id)) continue;
+                List<StatMod> mods = null;
+                if (options.Mods != null) options.Mods.TryGetValue(t.id, out mods);
+                var applied = StatMods.Apply(t, mods);
+                towerOrder.Add(applied);
+                towerTypes[t.id] = applied;
+            }
             foreach (var e in balance.enemies) enemyByCode[e.code] = e;
-            TutorialEnabled = tutorial && !string.IsNullOrEmpty(level.tutorialTowerId) && towerTypes.ContainsKey(level.tutorialTowerId);
+            TutorialEnabled = options.Tutorial && !string.IsNullOrEmpty(level.tutorialTowerId) && towerTypes.ContainsKey(level.tutorialTowerId);
             Gold = balance.economy.startGold;
             BaseHp = balance.economy.baseHp;
         }
@@ -210,11 +246,15 @@ namespace ClashDefense.Core
         void StartWave(int n)
         {
             WaveNumber = n;
-            var wd = balance.waves[n - 1];
+            var wd = waves[n - 1];
             waveSeq = new List<EnemyTypeData>();
-            foreach (var code in WaveSequence.Expand(wd.sequence)) waveSeq.Add(enemyByCode[code]);
+            foreach (var code in WaveSequence.Expand(wd.sequence)) waveSeq.Add(code == WaveSequence.Gap ? null : enemyByCode[code]);
+            waveLanes = new List<int>();
+            if (!string.IsNullOrEmpty(wd.lanes))
+                foreach (var l in WaveSequence.Expand(wd.lanes)) waveLanes.Add(int.Parse(l));
             waveSpawnInterval = wd.spawnInterval;
             nextSpawnIndex = 0;
+            spawnedInWave = 0;
             waveTicks = 0;
             SetState(MatchState.Wave);
             Emit(new SimEvent { Type = SimEventType.WaveStarted, Int1 = n, Int2 = WaveCount });
@@ -227,20 +267,26 @@ namespace ClashDefense.Core
             while (nextSpawnIndex < waveSeq.Count && nextSpawnIndex * (double)waveSpawnInterval <= waveTime + Eps)
             {
                 var type = waveSeq[nextSpawnIndex++];
+                if (type == null) continue; // lugar vacío
+                int route = waveLanes.Count > 0 ? waveLanes[spawnedInWave % waveLanes.Count] : 0;
+                spawnedInWave++;
+                var track = routes[route];
                 var e = new Enemy
                 {
                     Id = nextEnemyId++,
                     Wave = WaveNumber,
+                    Route = route,
                     Type = type,
                     Layer = type.layer == "air" ? Layer.Air : Layer.Ground,
                     Hp = type.hp,
                     Armor = type.armor,
                     Distance = 0f,
-                    Speed = Path.Length / type.travelTime,
-                    Position = Path.Start,
+                    Remaining = track.Length,
+                    Speed = referenceLength / type.travelTime,
+                    Position = track.Start,
                 };
                 enemies.Add(e);
-                Emit(new SimEvent { Type = SimEventType.EnemySpawned, EnemyId = e.Id, Text = type.id, Int1 = WaveNumber, Pos = e.Position });
+                Emit(new SimEvent { Type = SimEventType.EnemySpawned, EnemyId = e.Id, Text = type.id, Int1 = WaveNumber, Int2 = route, Pos = e.Position });
             }
         }
 
@@ -261,9 +307,11 @@ namespace ClashDefense.Core
             {
                 var e = enemies[i];
                 if (!e.Alive) continue;
+                var track = routes[e.Route];
                 e.Distance += e.Speed * dt;
-                e.Position = Path.Evaluate(e.Distance);
-                if (e.Distance >= Path.Length - Eps)
+                e.Position = track.Evaluate(e.Distance);
+                e.Remaining = track.Length - e.Distance;
+                if (e.Distance >= track.Length - Eps)
                 {
                     Arrive(e);
                     if (State == MatchState.Defeat) return; // la derrota manda en su paso
@@ -277,25 +325,52 @@ namespace ClashDefense.Core
                 SpawnDue();
             }
 
-            // 3. torres (en orden de construcción)
+            // 3. fuego en el piso y quemaduras (antes que las torres: el daño de este paso ya cuenta)
+            UpdateFires(dt);
+            UpdateBurns(dt);
+
+            // 4. torres (en orden de construcción)
             for (int i = 0; i < towers.Count; i++)
             {
                 var t = towers[i];
+                if (t.Type.attack == AttackKind.Gold) { Produce(t, dt); continue; }
                 if (t.Cooldown > 0f)
                 {
                     t.Cooldown -= dt;
                     if (t.Cooldown > Eps) continue;
                 }
-                var target = FindTarget(t);
-                if (target == null) { t.Cooldown = 0f; continue; }
-                Fire(t, target);
+                bool fired;
+                switch (t.Type.attack)
+                {
+                    case AttackKind.Inferno: fired = FireInferno(t); break;
+                    case AttackKind.Chain: fired = FireChain(t); break;
+                    case AttackKind.Flame: fired = FireFlame(t); break;
+                    case AttackKind.Mortar: fired = FireMortar(t); break;
+                    default:
+                        {
+                            var target = FindTarget(t);
+                            fired = target != null;
+                            if (fired) Fire(t, target);
+                            break;
+                        }
+                }
+                if (!fired) { t.Cooldown = 0f; continue; }
                 t.Cooldown += t.Stats.interval;
             }
 
-            // 4. proyectiles
+            // 5. proyectiles
             for (int i = 0; i < projectiles.Count; i++)
             {
                 var p = projectiles[i];
+                if (p.Kind == ProjectileKind.Lob)
+                {
+                    if (p.JustFired) { p.JustFired = false; continue; }   // el vuelo cuenta desde el tick siguiente: cae a los 1,1 s exactos (GDS-002.4)
+                    p.Elapsed += dt;
+                    float k = p.Progress;
+                    p.Position = p.Start + (p.LastTargetPosition - p.Start) * k;
+                    if (p.Elapsed >= p.FlightTime - Eps) { p.Position = p.LastTargetPosition; Impact(p, null); }
+                    continue;
+                }
                 var target = FindEnemy(p.TargetId);
                 if (target != null && target.Alive) p.LastTargetPosition = target.Position;
                 float step = p.Speed * dt;
@@ -313,9 +388,11 @@ namespace ClashDefense.Core
 
         void Arrive(Enemy e)
         {
+            var track = routes[e.Route];
             e.Alive = false;
             e.Arrived = true;
-            e.Position = Path.End;
+            e.Position = track.End;
+            e.Remaining = 0f;
             int before = BaseHp;
             BaseHp = Math.Max(0, BaseHp - e.Type.baseDamage);
             Emit(new SimEvent { Type = SimEventType.EnemyReachedBase, EnemyId = e.Id, Text = e.Type.id, Int1 = e.Type.baseDamage, Pos = e.Position });
@@ -337,19 +414,26 @@ namespace ClashDefense.Core
 
         static bool CanTarget(TowerTypeData t, Layer layer) => layer == Layer.Air ? t.targetsAir : t.targetsGround;
 
-        /// <summary>Objetivo válido con menor distancia restante; empate: el que apareció antes (S1).</summary>
+        bool InReach(Tower t, Enemy e)
+        {
+            var s = t.Stats;
+            float d2 = Vec2.SqrDistance(t.Position, e.Position);
+            if (d2 > s.range * s.range) return false;
+            if (s.minRange > 0f && d2 < s.minRange * s.minRange) return false;
+            return true;
+        }
+
+        bool ValidFor(Tower t, Enemy e) => e.Alive && CanTarget(t.Type, e.Layer) && !(e.Armored && t.KnownImmune.Contains(e.Id)) && InReach(t, e);
+
+        /// <summary>Objetivo válido con menor distancia restante hasta SU llegada (Doc 03 §14); empate: el que apareció antes (S1).</summary>
         public Enemy FindTarget(Tower t)
         {
-            float r2 = t.Stats.range * t.Stats.range;
             Enemy best = null;
             for (int i = 0; i < enemies.Count; i++)
             {
                 var e = enemies[i];
-                if (!e.Alive) continue;
-                if (!CanTarget(t.Type, e.Layer)) continue;
-                if (e.Armored && t.KnownImmune.Contains(e.Id)) continue;
-                if (Vec2.SqrDistance(t.Position, e.Position) > r2) continue;
-                if (best == null || e.Distance > best.Distance) best = e;
+                if (!ValidFor(t, e)) continue;
+                if (best == null || e.Remaining < best.Remaining - Eps || (Math.Abs(e.Remaining - best.Remaining) <= Eps && e.Id < best.Id)) best = e;
             }
             return best;
         }
@@ -361,15 +445,213 @@ namespace ClashDefense.Core
                 Id = nextProjectileId++,
                 TowerId = t.Id,
                 TowerType = t.Type,
+                Kind = ProjectileKind.Homing,
                 TargetId = target.Id,
+                Start = t.Position,
                 Position = t.Position,
                 LastTargetPosition = target.Position,
                 Speed = t.Type.projectileSpeed,
                 Damage = t.Stats.damage,
-                AreaRadius = t.Type.attack == "area" ? t.Stats.areaRadius : 0f,
+                AreaRadius = t.Type.attack == AttackKind.Area ? t.Stats.areaRadius : 0f,
             };
             projectiles.Add(p);
-            Emit(new SimEvent { Type = SimEventType.Shot, TowerId = t.Id, EnemyId = target.Id, Int1 = p.Id, Text = t.Type.id, Pos = t.Position });
+            Emit(new SimEvent { Type = SimEventType.Shot, TowerId = t.Id, EnemyId = target.Id, Int1 = p.Id, Text = t.Type.id, Pos = t.Position, Aim = target.Position });
+        }
+
+        // ---- Mortero: fija la posición del objetivo al disparar y no la corrige (Doc 04 §6.1)
+        bool FireMortar(Tower t)
+        {
+            var target = FindTarget(t);
+            if (target == null) return false;
+            var s = t.Stats;
+            var p = new Projectile
+            {
+                Id = nextProjectileId++,
+                TowerId = t.Id,
+                TowerType = t.Type,
+                Kind = ProjectileKind.Lob,
+                TargetId = 0,
+                Start = t.Position,
+                Position = t.Position,
+                LastTargetPosition = target.Position,
+                Damage = s.damage,
+                AreaRadius = s.areaRadius,
+                FlightTime = s.flightTime,
+                JustFired = true,
+            };
+            projectiles.Add(p);
+            Emit(new SimEvent { Type = SimEventType.Shot, TowerId = t.Id, EnemyId = target.Id, Int1 = p.Id, Text = t.Type.id, Pos = t.Position, Aim = target.Position, Float1 = s.flightTime });
+            return true;
+        }
+
+        // ---- Eléctrica: primer objetivo en alcance, después salta dentro del radio del anterior; uno por enemigo (Doc 04 §6.3)
+        readonly List<Enemy> chainHits = new List<Enemy>();
+        bool FireChain(Tower t)
+        {
+            var first = FindTarget(t);
+            if (first == null) return false;
+            var s = t.Stats;
+            chainHits.Clear();
+            chainHits.Add(first);
+            var from = t.Position;
+            var current = first;
+            float r2 = s.chainRadius * s.chainRadius;
+            for (int link = 0; ; link++)
+            {
+                Emit(new SimEvent { Type = SimEventType.Shot, TowerId = t.Id, EnemyId = current.Id, Int1 = 0, Int2 = link + 1, Text = t.Type.id, Pos = from, Aim = current.Position });
+                if (link >= s.chainJumps) break;
+                Enemy next = null; float bestD = float.MaxValue;
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    var e = enemies[i];
+                    if (!e.Alive || e.Armored || chainHits.Contains(e) || !CanTarget(t.Type, e.Layer)) continue; // los rebotes no buscan metal (GDS-002.4 S11)
+                    float d2 = Vec2.SqrDistance(e.Position, current.Position);
+                    if (d2 <= r2 && (d2 < bestD - Eps || (Math.Abs(d2 - bestD) <= Eps && next != null && e.Id < next.Id))) { bestD = d2; next = e; }
+                }
+                if (next == null) break;
+                chainHits.Add(next);
+                from = current.Position;
+                current = next;
+            }
+            for (int i = 0; i < chainHits.Count; i++)
+                if (chainHits[i].Alive) ApplyHit(chainHits[i], s.damage, t.Type, t, t.Id);
+            return true;
+        }
+
+        // ---- Infernal: fija al más próximo a su llegada y lo mantiene; el daño sube por etapas; al cambiar vuelve a la primera (Doc 04 §6.4)
+        bool FireInferno(Tower t)
+        {
+            var s = t.Stats;
+            Enemy target = t.LockedId != 0 ? FindEnemy(t.LockedId) : null;
+            if (target != null && !(target.Alive && CanTarget(t.Type, target.Layer) && InReach(t, target))) target = null;
+            if (target == null)
+            {
+                // la fijación terminó: nueva búsqueda y la potencia vuelve a la etapa inicial
+                var next = FindTarget(t);
+                t.LockTime = 0f;
+                t.LockImmuneShown = false;
+                t.LockedId = next != null ? next.Id : 0;
+                target = next;
+                if (target == null) return false;
+            }
+            int stage = t.InfernoStage;
+            float dmg = s.rampDps[stage] * s.interval;
+            Emit(new SimEvent { Type = SimEventType.Shot, TowerId = t.Id, EnemyId = target.Id, Int1 = 0, Int2 = stage + 1, Text = t.Type.id, Pos = t.Position, Aim = target.Position });
+            if (target.Armored && !t.InfernoMax)
+            {
+                // contra metal las primeras etapas no dañan, pero la torre sigue acumulando (no se registra como inmunidad descubierta)
+                if (!t.LockImmuneShown)
+                {
+                    t.LockImmuneShown = true;
+                    // Int2 = 1: es calentamiento, no inmunidad; el registro no lo cuenta como disparo desperdiciado (MET-002.7)
+                    Emit(new SimEvent { Type = SimEventType.AttackImmune, EnemyId = target.Id, TowerId = t.Id, Int1 = 0, Int2 = 1, Text = t.Type.id, Pos = target.Position });
+                }
+            }
+            else ApplyHit(target, dmg, t.Type, t, t.Id, recordImmunity: false);
+            t.LockTime += s.interval;
+            return true;
+        }
+
+        // ---- Lanzallamas: fija el punto del objetivo y lanza una ráfaga lineal; quema y deja fuego en el piso (Doc 04 §6.6)
+        bool FireFlame(Tower t)
+        {
+            var target = FindTarget(t);
+            if (target == null) return false;
+            var s = t.Stats;
+            var dir = target.Position - t.Position;
+            float len = dir.Magnitude;
+            if (len < 1e-4f) dir = new Vec2(1f, 0f); else dir = dir * (1f / len);
+            var a = t.Position + dir * t.Type.footprintRadius;
+            var b = t.Position + dir * s.range;
+            float half = s.flameWidth * 0.5f;
+            Emit(new SimEvent { Type = SimEventType.Shot, TowerId = t.Id, EnemyId = target.Id, Int1 = 0, Text = t.Type.id, Pos = a, Aim = b, Float1 = s.burnDuration, Float2 = s.flameWidth });
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                var e = enemies[i];
+                if (!e.Alive || !CanTarget(t.Type, e.Layer)) continue;
+                if (Vec2.DistanceToSegment(e.Position, a, b) > half) continue;
+                ApplyHit(e, s.damage, t.Type, t, t.Id);
+                if (e.Alive && !e.Armored) ApplyBurn(e, s.burnDps, s.burnDuration, t);
+            }
+            if (s.burnDuration > 0f)
+                fires.Add(new FireZone { Id = nextFireId++, TowerId = t.Id, TowerType = t.Type, A = a, B = b, HalfWidth = half, TimeLeft = s.burnDuration, Duration = s.burnDuration, BurnDps = s.burnDps });
+            return true;
+        }
+
+        void ApplyBurn(Enemy e, float dps, float duration, Tower source)
+        {
+            if (dps <= 0f || duration <= 0f || e.Armored) return; // el metal no se quema (Doc 04 §9)
+            bool was = e.Burning;
+            e.BurnTime = duration;                                              // no se acumula: reinicia la duración
+            if (!was || dps >= e.BurnDps)
+            {
+                // con dos potencias manda la mayor, y la baja se acredita a quien puso esa potencia (GDS-002.4 S14)
+                e.BurnDps = dps;
+                e.BurnTowerId = source.Id;
+                e.BurnSource = source.Type;
+            }
+            if (!was) { e.BurnTick = 0f; Emit(new SimEvent { Type = SimEventType.BurnStarted, EnemyId = e.Id, TowerId = source.Id, Text = source.Type.id, Pos = e.Position, Float1 = e.BurnDps }); }
+        }
+
+        void UpdateFires(float dt)
+        {
+            for (int f = fires.Count - 1; f >= 0; f--)
+            {
+                var z = fires[f];
+                z.TimeLeft -= dt;
+                if (z.TimeLeft <= 0f) { fires.RemoveAt(f); continue; }
+                var src = FindTower(z.TowerId);
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    var e = enemies[i];
+                    if (!e.Alive || e.Layer != Layer.Ground || e.Armored) continue; // el fuego del piso prende a los terrestres
+                    if (Vec2.DistanceToSegment(e.Position, z.A, z.B) > z.HalfWidth) continue;
+                    if (src != null) ApplyBurn(e, z.BurnDps, z.Duration, src);
+                    else
+                    {
+                        // la torre que dejó el fuego ya no existe (vendida): misma regla que ApplyBurn, con su tipo y su id
+                        bool was = e.Burning;
+                        e.BurnTime = z.Duration;
+                        if (!was || z.BurnDps >= e.BurnDps) { e.BurnDps = z.BurnDps; e.BurnSource = z.TowerType; e.BurnTowerId = z.TowerId; }
+                        if (!was) { e.BurnTick = 0f; Emit(new SimEvent { Type = SimEventType.BurnStarted, EnemyId = e.Id, TowerId = z.TowerId, Text = z.TowerType.id, Pos = e.Position, Float1 = e.BurnDps }); }
+                    }
+                }
+            }
+        }
+
+        void UpdateBurns(float dt)
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                var e = enemies[i];
+                if (!e.Alive || !e.Burning) continue;
+                if (e.Armored) { e.BurnTime = 0f; continue; }
+                e.BurnTime -= dt;
+                e.BurnTick += dt;
+                if (e.BurnTick >= burnTick - Eps)
+                {
+                    e.BurnTick -= burnTick;
+                    float dmg = e.BurnDps * burnTick;
+                    float hpEff = Math.Min(dmg, e.Hp);
+                    e.Hp -= dmg;
+                    Emit(new SimEvent { Type = SimEventType.EnemyDamaged, EnemyId = e.Id, TowerId = e.BurnTowerId, Float1 = hpEff, Int1 = 1, Text = e.BurnSource != null ? e.BurnSource.id : "", Pos = e.Position });
+                    if (e.Hp <= Eps) Kill(e, e.BurnTowerId);
+                }
+                if (e.BurnTime <= 0f) { e.BurnTime = 0f; e.BurnTick = 0f; }
+            }
+        }
+
+        // ---- Torre de oro: produce hasta su capacidad y espera el clic (Doc 04 §6.5)
+        void Produce(Tower t, float dt)
+        {
+            var s = t.Stats;
+            if (t.Stored >= s.goldCapacity - Eps) return;
+            t.Stored = Math.Min(s.goldCapacity, t.Stored + s.goldPerSecond * dt);
+            if (t.Stored >= s.goldCapacity - Eps && !t.Full)
+            {
+                t.Full = true;
+                Emit(new SimEvent { Type = SimEventType.GoldStoredFull, TowerId = t.Id, Text = t.Type.id, Pos = t.Position });
+            }
         }
 
         void Impact(Projectile p, Enemy target)
@@ -394,15 +676,15 @@ namespace ClashDefense.Core
             // si el objetivo murió o llegó antes, el proyectil de un solo objetivo se pierde (S3)
         }
 
-        /// <summary>La única función de daño (GDS-001.4).</summary>
-        void ApplyHit(Enemy e, int damage, TowerTypeData type, Tower tower, int towerId)
+        /// <summary>La única función de daño directo (GDS-001.4). La quemadura descuenta vida en UpdateBurns.</summary>
+        void ApplyHit(Enemy e, float damage, TowerTypeData type, Tower tower, int towerId, bool recordImmunity = true)
         {
             if (e.Armor > 0f)
             {
                 float eff = type.metalEfficiency;
                 if (eff <= 0f)
                 {
-                    bool discovery = tower != null && tower.KnownImmune.Add(e.Id);
+                    bool discovery = recordImmunity && tower != null && tower.KnownImmune.Add(e.Id);
                     Emit(new SimEvent { Type = SimEventType.AttackImmune, EnemyId = e.Id, TowerId = towerId, Int1 = discovery ? 1 : 0, Text = type.id, Pos = e.Position });
                     return;
                 }
@@ -413,7 +695,7 @@ namespace ClashDefense.Core
                 if (e.Armor <= Eps)
                 {
                     e.Armor = 0f; // el exceso no pasa a la vida
-                    if (e.Type.travelTimeExposed > 0f) e.Speed = Path.Length / e.Type.travelTimeExposed;
+                    if (e.Type.travelTimeExposed > 0f) e.Speed = referenceLength / e.Type.travelTimeExposed;
                     Emit(new SimEvent { Type = SimEventType.ArmorBroken, EnemyId = e.Id, TowerId = towerId, Text = e.Type.id, Pos = e.Position });
                 }
                 return;
@@ -426,8 +708,10 @@ namespace ClashDefense.Core
 
         void Kill(Enemy e, int towerId)
         {
+            if (!e.Alive) return;
             e.Alive = false;
             e.Hp = 0f;
+            e.BurnTime = 0f;
             Gold += e.Type.gold;
             Emit(new SimEvent { Type = SimEventType.EnemyKilled, EnemyId = e.Id, TowerId = towerId, Text = e.Type.id, Int1 = e.Type.gold, Pos = e.Position });
             Emit(new SimEvent { Type = SimEventType.GoldChanged, Int1 = e.Type.gold, Int2 = Gold, Text = "baja", Pos = e.Position });
@@ -481,11 +765,12 @@ namespace ClashDefense.Core
         {
             float r = type.footprintRadius;
             if (!level.buildArea.Contains(pos)) return RejectReason.OutsideArea;
-            if (Path.DistanceTo(pos) < level.pathWidth * 0.5f + r) return RejectReason.OnPath;
-            if (Vec2.Distance(pos, Path.End) < level.baseRadius + r) return RejectReason.OnPath;
+            for (int i = 0; i < routes.Count; i++)
+                if (routes[i].DistanceTo(pos) < level.pathWidth * 0.5f + r) return RejectReason.OnPath;
+            if (Vec2.Distance(pos, BasePosition) < level.baseRadius + r) return RejectReason.OnPath;
             if (level.blocked != null)
                 foreach (var c in level.blocked)
-                    if (Vec2.Distance(pos, c.Center) < c.radius + r) return RejectReason.Blocked;
+                    if (c != null && c.radius > 0f && Vec2.Distance(pos, c.Center) < c.radius + r) return RejectReason.Blocked;
             for (int i = 0; i < towers.Count; i++)
                 if (Vec2.Distance(pos, towers[i].Position) < towers[i].Type.footprintRadius + r) return RejectReason.Overlap;
             return RejectReason.None;
@@ -521,10 +806,34 @@ namespace ClashDefense.Core
             Gold -= cost;
             t.Level++;
             t.Invested += cost;
+            if (t.Type.attack == AttackKind.Gold && t.Stored < t.Stats.goldCapacity - Eps) t.Full = false; // la capacidad nueva vuelve a producir
             Emit(new SimEvent { Type = SimEventType.TowerUpgraded, TowerId = t.Id, Text = t.Type.id, Int1 = cost, Int2 = t.Level, Pos = t.Position });
             Emit(new SimEvent { Type = SimEventType.GoldChanged, Int1 = -cost, Int2 = Gold, Text = "mejora", Pos = t.Position });
             reason = RejectReason.None;
             return true;
+        }
+
+        /// <summary>Recoger el oro guardado en una Torre de oro (Doc 04 §6.5: recolección manual con clic).</summary>
+        public bool TryCollect(int towerId, out int amount, out RejectReason reason)
+        {
+            amount = 0;
+            if (!ActionsOpen) return Reject(RejectReason.InvalidState, "recoger", out reason);
+            var t = FindTower(towerId);
+            if (t == null || t.Type.attack != AttackKind.Gold) return Reject(RejectReason.UnknownTarget, "recoger", out reason);
+            amount = (int)Math.Floor(t.Stored + Eps);
+            if (amount <= 0) return Reject(RejectReason.NothingToCollect, "recoger", out reason);
+            Collect(t, amount);
+            reason = RejectReason.None;
+            return true;
+        }
+
+        void Collect(Tower t, int amount)
+        {
+            t.Stored = Math.Max(0f, t.Stored - amount);
+            t.Full = false;
+            Gold += amount;
+            Emit(new SimEvent { Type = SimEventType.GoldCollected, TowerId = t.Id, Text = t.Type.id, Int1 = amount, Pos = t.Position });
+            Emit(new SimEvent { Type = SimEventType.GoldChanged, Int1 = amount, Int2 = Gold, Text = "recoleccion", Pos = t.Position });
         }
 
         public bool TrySell(int towerId, out int refund, out RejectReason reason)
@@ -533,10 +842,17 @@ namespace ClashDefense.Core
             if (!ActionsOpen) return Reject(RejectReason.InvalidState, "vender", out reason);
             var t = FindTower(towerId);
             if (t == null) return Reject(RejectReason.UnknownTarget, "vender", out reason);
+            // el oro guardado en una Torre de oro se entrega al venderla (GDS-002.4 S16; Doc 04 §6.5 lo deja pendiente)
+            if (t.Type.attack == AttackKind.Gold)
+            {
+                int stored = (int)Math.Floor(t.Stored + Eps);
+                if (stored > 0) Collect(t, stored);
+            }
             refund = SellRefund(t);
             Gold += refund;
             t.Sold = true;
             towers.Remove(t);
+            if (t.LockedId != 0) t.LockedId = 0;
             Emit(new SimEvent { Type = SimEventType.TowerSold, TowerId = t.Id, Text = t.Type.id, Int1 = refund, Int2 = t.Level, Pos = t.Position });
             Emit(new SimEvent { Type = SimEventType.GoldChanged, Int1 = refund, Int2 = Gold, Text = "venta", Pos = t.Position });
             reason = RejectReason.None;
@@ -552,5 +868,6 @@ namespace ClashDefense.Core
 
         public Tower GetTower(int id) => FindTower(id);
         public Enemy GetEnemy(int id) => FindEnemy(id);
+        public PathTrack RouteOf(Enemy e) => routes[e.Route];
     }
 }
