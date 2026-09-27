@@ -92,7 +92,7 @@ namespace ClashDefense.Game
                 Directory.CreateDirectory(dir);
                 string stamp = DateTime.Now.ToString("yyyyMMdd_HHmmss", Ci);
                 LastReportPath = Path.Combine(dir, $"partida_{stamp}.json");
-                File.WriteAllText(LastReportPath, JsonUtility.ToJson(rep, true), Encoding.UTF8);
+                File.WriteAllText(LastReportPath, JsonUtility.ToJson(rep, true), new UTF8Encoding(false));   // JSON sin BOM (RFC 8259); el .txt y el .csv lo llevan para que Excel y el Bloc de notas lean los acentos
                 File.WriteAllText(Path.Combine(dir, $"partida_{stamp}.txt"), summary, Encoding.UTF8);
             }
             catch (Exception ex) { Debug.LogWarning("[ClashDefense] No se pudo escribir el registro: " + ex.Message); }

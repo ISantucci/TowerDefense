@@ -206,10 +206,24 @@ namespace ClashDefense.QA
             Check(m != null && !m.TutorialEnabled && m.Gold == 100 && m.BaseHp == 100 && m.Towers.Count == 0, "reintentar: vida 100, oro 100, sin torres, sin tutorial");
             boot.QaSelectType("arqueras");
             boot.QaClick(W(-8.5f, 9.5f));
+            Check(m.Towers.Count == 1 && m.Gold == 0, "construye una Arqueras lejos del camino");
+            // venta: el primer pedido solo arma la confirmación; el segundo vende (GDS-001.3, UXS-001.3)
+            var lone = m.Towers[0];
+            int refund = m.SellRefund(lone);
+            boot.QaSelectTower(lone.Id);
+            boot.QaSell();
+            Check(m.Towers.Count == 1 && m.Gold == 0, "vender pide confirmación: el primer pedido no vende");
+            Time.timeScale = 0f; yield return new WaitForSecondsRealtime(0.2f); yield return Shot("12a_venta_confirmacion"); Time.timeScale = 1f;
+            boot.QaSell();
+            Check(m.Towers.Count == 0 && m.Gold == refund, $"el segundo pedido vende y reembolsa {refund}");
+            boot.QaSelectType("arqueras");
+            boot.QaClick(W(-8.5f, 9.5f));
+            Check(m.Towers.Count == 0, "sin oro suficiente no se construye (negativo)");
+            boot.QaCancel();
             Time.timeScale = speed * 2f;
             yield return WaitUntilOr(() => m.Ended, 300f);
             Time.timeScale = 1f;
-            Check(m.State == MatchState.Defeat, "con una Arqueras mal puesta, derrota");
+            Check(m.State == MatchState.Defeat, "sin torres, derrota");
             yield return WaitUntilOr(() => boot.QaHud.ResultVisible, 3f);
             yield return new WaitForSecondsRealtime(0.3f);
             yield return Shot("12_resultado_derrota");

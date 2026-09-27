@@ -353,6 +353,7 @@ namespace ClashDefense.Game
         public void QaSelectTower(int id) => SelectTower(id);
         public void QaUpgrade() => Upgrade();
         public void QaSell() => Sell();
+        public void QaCancel() => ClearSelection();
         public void QaPause() => Pause();
         public void QaResume() => Resume();
         public void QaRestart() => Restart();
