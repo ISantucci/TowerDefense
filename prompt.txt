@@ -1,0 +1,6 @@
+En el archivo:
+Assets/Scripts/Patterns/DataStructures/EnemyPriorityABB.cs
+
+Eliminá todos los Debug.Log dentro del método SearchInRange.
+La lógica del método no debe cambiar, solo quitar los logs.
+No tocar ningún otro archivo.
