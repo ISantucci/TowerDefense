@@ -96,6 +96,14 @@ namespace ClashDefense.QA
             yield return new WaitForSecondsRealtime(0.3f);
             Check(menus.Current == MenuScreen.Shop, "la tienda abre desde el menú");
             yield return Shot("03_tienda_inicial");
+            // BUG-016: un precio que no se puede pagar responde (rechazo) y no compra
+            int rejected = 0;
+            Action<string> onRej = _ => rejected++;
+            menus.BuyRejected += onRej;
+            var lockedBuy = FindButton("Comprar_mortero_carga");
+            if (lockedBuy != null) lockedBuy.onClick.Invoke();
+            menus.BuyRejected -= onRej;
+            Check(lockedBuy != null && lockedBuy.interactable && rejected == 1 && !prog.IsPurchased("mortero_carga"), "tienda: el precio de una torre bloqueada responde con rechazo y no compra");
             boot.QaShowOptions();
             yield return new WaitForSecondsRealtime(0.3f);
             Check(menus.Current == MenuScreen.Options, "opciones");
@@ -105,6 +113,14 @@ namespace ClashDefense.QA
             prog = boot.QaProgression;
             Check(menus.Current == MenuScreen.Map && menus.SelectedLevel == "m1_n1" && prog.IsLevelUnlocked("m1_n1") && !prog.IsLevelUnlocked("m1_n2"), "mapa: solo el nivel 1 disponible al empezar");
             yield return Shot("05_mapa_inicial");
+            // BUG-013: el clic en un nivel bloqueado responde (rechazo) y no arranca nada
+            int locked = 0;
+            Action<string> onLocked = _ => locked++;
+            menus.LevelLocked += onLocked;
+            var lockedCard = FindButton("Nivel_m1_n2");
+            if (lockedCard != null) lockedCard.onClick.Invoke();
+            menus.LevelLocked -= onLocked;
+            Check(lockedCard != null && locked == 1 && boot.CurrentMatch == null && menus.Current == MenuScreen.Map, "mapa: el clic en un nivel bloqueado responde con rechazo y no arranca");
 
             string[] ids = { "m1_n1", "m1_n2", "m1_n3", "m1_n4", "m1_n5", "m1_n6" };
             string[] rewards = { "mortero", "bombardera", "electrica", "infernal", "oro", "lanzallamas" };
@@ -192,6 +208,13 @@ namespace ClashDefense.QA
                 yield return Shot("44_inicio_final");
             }
             Finish();
+        }
+
+        static UnityEngine.UI.Button FindButton(string name)
+        {
+            foreach (var bt in FindObjectsByType<UnityEngine.UI.Button>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+                if (bt.name == name) return bt;
+            return null;
         }
 
         static bool SameLevels(TowerTypeData a, TowerTypeData b)
