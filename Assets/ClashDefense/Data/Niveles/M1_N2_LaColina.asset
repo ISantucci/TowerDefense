@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4964cf3d7641741a4d74c082260fd1, type: 3}
+  m_Name: M1_N2_LaColina
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.LevelDefinition
+  id: m1_n2
+  displayName: "Mundo 1 \xB7 Nivel 2 \u2014 La colina"
+  theme: {fileID: 11400000, guid: e7e48396e022c904a81d5ea2d5029b9d, type: 2}
+  balance: {fileID: 11400000, guid: fe4c40737ea37794ba521acb9d4bcde1, type: 2}
+  tutorialTower: {fileID: 0}
+  waves:
+  - sequence: (D)x10
+    spawnInterval: 2
+    lanes: 
+  - sequence: (D x2 E x2 . x3)x4
+    spawnInterval: 0.929
+    lanes: 
+  - sequence: (E x4 D x2 . x4)x4
+    spawnInterval: 0.75
+    lanes: 
+  - sequence: (E x6 D x2 . x7)x4
+    spawnInterval: 0.633
+    lanes: 
+  - sequence: (D x2 E x8 . x12)x3
+    spawnInterval: 0.636
+    lanes: 
+  - sequence: (E x10 D x3 . x14)x3
+    spawnInterval: 0.568
+    lanes: 
+  - sequence: (D x3 E x12 . x16)x3
+    spawnInterval: 0.538
+    lanes: 
+  - sequence: (E x14 D x4 . x18)x3
+    spawnInterval: 0.5
+    lanes: 
+  - sequence: (E x20 D x6 . x20)x3
+    spawnInterval: 0.435
+    lanes: 
+  scenePath: Assets/ClashDefense/Scenes/Niveles/M1_N2_LaColina.unity
+  shape:
+    routes:
+    - points:
+      - x: -15
+        z: 12
+      - x: -15
+        z: -5
+      - x: -6
+        z: -5
+      - x: -6
+        z: 6
+      - x: 4
+        z: 6
+      - x: 4
+        z: -5
+      - x: 13
+        z: -5
+      - x: 13
+        z: 5
+    pathWidth: 2.2
+    buildArea:
+      minX: -20
+      minZ: -11
+      maxX: 20
+      maxZ: 11
+    blocked:
+    - x: -10
+      z: -9
+      radius: 1.6
+    - x: 9
+      z: 9.2
+      radius: 1.5
+    - x: 17.5
+      z: -8.5
+      radius: 1.4
+    - x: -18
+      z: 4
+      radius: 1.3
+    baseRadius: 1.6
+    tutorialHint:
+      x: 0
+      z: 0
+      radius: 0

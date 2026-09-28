@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a899460effcf44d8cdc02c4dee7811, type: 3}
+  m_Name: Enemigo_Dragon
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.EnemyDefinition
+  data:
+    id: dragon
+    code: B
+    displayName: "Beb\xE9 drag\xF3n"
+    layer: air
+    hp: 2400
+    armor: 0
+    travelTime: 50
+    travelTimeExposed: 0
+    baseDamage: 50
+    gold: 150
+    heavy: 0
+    miniboss: 1
+    counterHint: 'Miniboss volador: solo lo alcanzan las torres que atacan aire.'
+  color: {r: 0.8784314, g: 0.3529412, b: 0.22745098, a: 1}
+  prefab: {fileID: 4898988234213431241, guid: 076f6996c5ec1cd48817f86afc96318a, type: 3}

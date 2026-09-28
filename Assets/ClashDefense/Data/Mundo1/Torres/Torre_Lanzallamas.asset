@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3fb14621a37654c9c043357abed8dd, type: 3}
+  m_Name: Torre_Lanzallamas
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.TowerDefinition
+  data:
+    id: lanzallamas
+    displayName: Lanzallamas
+    shortName: Lanzallamas
+    description: "R\xE1faga en l\xEDnea que quema y deja fuego en el camino. Tierra
+      y aire. No da\xF1a el metal."
+    cost: 175
+    targetsGround: 1
+    targetsAir: 1
+    metalEfficiency: 0
+    attack: flame
+    projectileSpeed: 0
+    footprintRadius: 0.8
+    levels:
+    - damage: 30
+      interval: 2.4
+      range: 5.5
+      areaRadius: 0
+      minRange: 0
+      flightTime: 0
+      chainJumps: 0
+      chainRadius: 0
+      rampDps: []
+      rampStep: 0
+      goldPerSecond: 0
+      goldCapacity: 0
+      burnDps: 12
+      burnDuration: 3
+      flameWidth: 1.3
+    - damage: 40
+      interval: 2.2
+      range: 6
+      areaRadius: 0
+      minRange: 0
+      flightTime: 0
+      chainJumps: 0
+      chainRadius: 0
+      rampDps: []
+      rampStep: 0
+      goldPerSecond: 0
+      goldCapacity: 0
+      burnDps: 16
+      burnDuration: 3
+      flameWidth: 1.5
+  color: {r: 1, g: 0.43529412, b: 0.23529412, a: 1}
+  prefab: {fileID: 8583764243090693839, guid: b1ba97eb775a8814fb10535bc0439d87, type: 3}
+  projectile: {fileID: 0}

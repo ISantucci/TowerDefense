@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- Herramienta de simulación sin Unity: compila el MISMO núcleo que usa el juego (Assets/ClashDefense/Core).
+  <!-- Herramienta de simulación sin Unity: compila el MISMO núcleo que usa el juego (Assets/ClashDefense/Scripts/Core).
+       Los datos (Datos/*.json) los exporta Unity desde los assets del juego (TL-003): no se editan a mano.
        dotnet run test       pruebas del núcleo contra los GDS
        dotnet run bots       estrategias automáticas contra los criterios del Doc 05 §11
        dotnet run mapa       cobertura del recorrido por lugar construible (instrumento del LDS) -->
@@ -13,6 +14,6 @@
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../../Assets/ClashDefense/Core/**/*.cs" Link="Core/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../Assets/ClashDefense/Scripts/Core/**/*.cs" Link="Core/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

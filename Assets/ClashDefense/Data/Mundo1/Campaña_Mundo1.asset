@@ -1,0 +1,394 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db509415e03c88f4fa7f8ff214336afd, type: 3}
+  m_Name: "Campa\xF1a_Mundo1"
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.CampaignDefinition
+  version: w1-0.1
+  balance: {fileID: 11400000, guid: fe4c40737ea37794ba521acb9d4bcde1, type: 2}
+  currencyName: Cristales
+  starMultipliers:
+  - 0.5
+  - 0.75
+  - 1
+  replayFactor: 0.25
+  initialTowers:
+  - {fileID: 11400000, guid: a6acdfe565ecccb4fbc9c83cfa141ef9, type: 2}
+  - {fileID: 11400000, guid: ce6b32a981de624439588aa05f226b20, type: 2}
+  - {fileID: 11400000, guid: e5e4a2d851ec5b14185b4c57036c395c, type: 2}
+  roster:
+  - tower: {fileID: 11400000, guid: a6acdfe565ecccb4fbc9c83cfa141ef9, type: 2}
+    id: arqueras
+    displayName: Torre de arqueras
+    playable: 1
+    unlockLabel: Inicial
+  - tower: {fileID: 11400000, guid: ce6b32a981de624439588aa05f226b20, type: 2}
+    id: canon
+    displayName: "Ca\xF1\xF3n"
+    playable: 1
+    unlockLabel: Inicial
+  - tower: {fileID: 11400000, guid: e5e4a2d851ec5b14185b4c57036c395c, type: 2}
+    id: mago
+    displayName: Torre de mago
+    playable: 1
+    unlockLabel: Inicial
+  - tower: {fileID: 11400000, guid: 4dc84f685ebaba146888eade30901cb9, type: 2}
+    id: mortero
+    displayName: Mortero
+    playable: 1
+    unlockLabel: "Complet\xE1 Mundo 1 \xB7 Nivel 1"
+  - tower: {fileID: 11400000, guid: 36f9006d2eb008943911c643fe4f918f, type: 2}
+    id: bombardera
+    displayName: Torre bombardera
+    playable: 1
+    unlockLabel: "Complet\xE1 Mundo 1 \xB7 Nivel 2"
+  - tower: {fileID: 11400000, guid: 2a87af882e2401842a47e740e9f0e7f0, type: 2}
+    id: electrica
+    displayName: "Torre el\xE9ctrica"
+    playable: 1
+    unlockLabel: "Complet\xE1 Mundo 1 \xB7 Nivel 3"
+  - tower: {fileID: 11400000, guid: 0213b8805e11b1842a7c945837ee4f9a, type: 2}
+    id: infernal
+    displayName: Torre infernal
+    playable: 1
+    unlockLabel: "Complet\xE1 Mundo 1 \xB7 Nivel 4"
+  - tower: {fileID: 11400000, guid: 3ef032d525a2dd240be88695780b2ace, type: 2}
+    id: oro
+    displayName: Torre de oro
+    playable: 1
+    unlockLabel: "Complet\xE1 Mundo 1 \xB7 Nivel 5"
+  - tower: {fileID: 11400000, guid: da06957955ccac64fac667a27f8a7986, type: 2}
+    id: lanzallamas
+    displayName: Lanzallamas
+    playable: 1
+    unlockLabel: "Complet\xE1 Mundo 1 \xB7 Nivel 6"
+  - tower: {fileID: 0}
+    id: choque
+    displayName: Torre de choque
+    playable: 0
+    unlockLabel: "Mundo 2 \xB7 Nivel 1 (pr\xF3xima entrega)"
+  - tower: {fileID: 0}
+    id: ninja
+    displayName: Torre ninja
+    playable: 0
+    unlockLabel: "Mundo 2 \xB7 Nivel 2 (pr\xF3xima entrega)"
+  - tower: {fileID: 0}
+    id: cuartel
+    displayName: Cuartel de bombarderos
+    playable: 0
+    unlockLabel: "Mundo 2 \xB7 Nivel 3 (pr\xF3xima entrega)"
+  worlds:
+  - id: m1
+    displayName: Mundo 1
+    unlockedBy: 
+    continents:
+    - id: m1_c1
+      displayName: Praderas
+      theme: {fileID: 11400000, guid: e7e48396e022c904a81d5ea2d5029b9d, type: 2}
+      available: 1
+      unavailableText: 
+      levels:
+      - level: {fileID: 11400000, guid: 65121027d85571a4395ccb79d2b72ee0, type: 2}
+        id: m1_n1
+        number: 1
+        displayName: El sendero
+        rewardTower: {fileID: 11400000, guid: 4dc84f685ebaba146888eade30901cb9, type: 2}
+        rewardTowerId: 
+        baseReward: 40
+        durationTarget: "5\u20137 min"
+        available: 1
+        boss: 0
+      - level: {fileID: 11400000, guid: 48b32d4f509064e4298fd4a630e14e3e, type: 2}
+        id: m1_n2
+        number: 2
+        displayName: La colina
+        rewardTower: {fileID: 11400000, guid: 36f9006d2eb008943911c643fe4f918f, type: 2}
+        rewardTowerId: 
+        baseReward: 50
+        durationTarget: "6\u20138 min"
+        available: 1
+        boss: 0
+      - level: {fileID: 11400000, guid: c992a7ed2492b2f4cb34343dab0d6385, type: 2}
+        id: m1_n3
+        number: 3
+        displayName: El cruce
+        rewardTower: {fileID: 11400000, guid: 2a87af882e2401842a47e740e9f0e7f0, type: 2}
+        rewardTowerId: 
+        baseReward: 70
+        durationTarget: "7\u20139 min"
+        available: 1
+        boss: 0
+    - id: m1_c2
+      displayName: Desfiladero
+      theme: {fileID: 11400000, guid: 91679a766226b1f48a8bec926dc8df3f, type: 2}
+      available: 1
+      unavailableText: 
+      levels:
+      - level: {fileID: 11400000, guid: 960cd30405299584991e5654a43889e2, type: 2}
+        id: m1_n4
+        number: 4
+        displayName: La garganta
+        rewardTower: {fileID: 11400000, guid: 0213b8805e11b1842a7c945837ee4f9a, type: 2}
+        rewardTowerId: 
+        baseReward: 80
+        durationTarget: "8\u201310 min"
+        available: 1
+        boss: 0
+      - level: {fileID: 11400000, guid: 626adb84bcbd8ff409ee30231df0f9d4, type: 2}
+        id: m1_n5
+        number: 5
+        displayName: Dos puertas
+        rewardTower: {fileID: 11400000, guid: 3ef032d525a2dd240be88695780b2ace, type: 2}
+        rewardTowerId: 
+        baseReward: 90
+        durationTarget: "9\u201311 min"
+        available: 1
+        boss: 0
+      - level: {fileID: 11400000, guid: c1d1f07c9a528c74583f353da7ffe802, type: 2}
+        id: m1_n6
+        number: 6
+        displayName: "El paso del drag\xF3n"
+        rewardTower: {fileID: 11400000, guid: da06957955ccac64fac667a27f8a7986, type: 2}
+        rewardTowerId: 
+        baseReward: 120
+        durationTarget: "10\u201312 min"
+        available: 1
+        boss: 0
+    - id: m1_c3
+      displayName: Tercer continente
+      theme: {fileID: 0}
+      available: 0
+      unavailableText: 'Fuera de la beta: los niveles 7 a 9 y el jefe final llegan
+        con el mundo completo.'
+      levels:
+      - level: {fileID: 0}
+        id: m1_n7
+        number: 7
+        displayName: "Pr\xF3ximamente"
+        rewardTower: {fileID: 0}
+        rewardTowerId: 
+        baseReward: 0
+        durationTarget: 
+        available: 0
+        boss: 0
+      - level: {fileID: 0}
+        id: m1_n8
+        number: 8
+        displayName: "Pr\xF3ximamente"
+        rewardTower: {fileID: 0}
+        rewardTowerId: 
+        baseReward: 0
+        durationTarget: 
+        available: 0
+        boss: 0
+      - level: {fileID: 0}
+        id: m1_n9
+        number: 9
+        displayName: "Pr\xF3ximamente"
+        rewardTower: {fileID: 0}
+        rewardTowerId: 
+        baseReward: 0
+        durationTarget: 
+        available: 0
+        boss: 0
+      - level: {fileID: 0}
+        id: m1_n10
+        number: 10
+        displayName: Jefe final
+        rewardTower: {fileID: 0}
+        rewardTowerId: 
+        baseReward: 0
+        durationTarget: 
+        available: 0
+        boss: 1
+  - id: m2
+    displayName: Mundo 2
+    unlockedBy: m1_n6
+    continents:
+    - id: m2_c1
+      displayName: Primer continente
+      theme: {fileID: 0}
+      available: 0
+      unavailableText: "Sus tres niveles llegan en la pr\xF3xima entrega de la beta."
+      levels:
+      - level: {fileID: 0}
+        id: m2_n1
+        number: 1
+        displayName: "Pr\xF3ximamente"
+        rewardTower: {fileID: 0}
+        rewardTowerId: choque
+        baseReward: 0
+        durationTarget: 
+        available: 0
+        boss: 0
+      - level: {fileID: 0}
+        id: m2_n2
+        number: 2
+        displayName: "Pr\xF3ximamente"
+        rewardTower: {fileID: 0}
+        rewardTowerId: ninja
+        baseReward: 0
+        durationTarget: 
+        available: 0
+        boss: 0
+      - level: {fileID: 0}
+        id: m2_n3
+        number: 3
+        displayName: "Pr\xF3ximamente"
+        rewardTower: {fileID: 0}
+        rewardTowerId: cuartel
+        baseReward: 0
+        durationTarget: 
+        available: 0
+        boss: 0
+  shop:
+  - id: mortero_carga
+    tower: {fileID: 11400000, guid: 4dc84f685ebaba146888eade30901cb9, type: 2}
+    displayName: Carga reforzada
+    description: "Da\xF1o +20 %"
+    cost: 60
+    mods:
+    - stat: damage
+      op: mul
+      value: 1.2
+  - id: mortero_curena
+    tower: {fileID: 11400000, guid: 4dc84f685ebaba146888eade30901cb9, type: 2}
+    displayName: "Cure\xF1a \xE1gil"
+    description: "Dispara 12 % m\xE1s seguido"
+    cost: 80
+    mods:
+    - stat: interval
+      op: mul
+      value: 0.88
+  - id: bombardera_mecha
+    tower: {fileID: 11400000, guid: 36f9006d2eb008943911c643fe4f918f, type: 2}
+    displayName: Mecha corta
+    description: "Dispara 12 % m\xE1s seguido"
+    cost: 60
+    mods:
+    - stat: interval
+      op: mul
+      value: 0.88
+  - id: bombardera_polvora
+    tower: {fileID: 11400000, guid: 36f9006d2eb008943911c643fe4f918f, type: 2}
+    displayName: "P\xF3lvora extra"
+    description: "\xC1rea de la explosi\xF3n +0,3"
+    cost: 80
+    mods:
+    - stat: areaRadius
+      op: add
+      value: 0.3
+  - id: electrica_bobina
+    tower: {fileID: 11400000, guid: 2a87af882e2401842a47e740e9f0e7f0, type: 2}
+    displayName: Bobina doble
+    description: "Un salto m\xE1s por descarga"
+    cost: 70
+    mods:
+    - stat: chainJumps
+      op: add
+      value: 1
+  - id: electrica_voltaje
+    tower: {fileID: 11400000, guid: 2a87af882e2401842a47e740e9f0e7f0, type: 2}
+    displayName: Alto voltaje
+    description: "Da\xF1o +25 %"
+    cost: 90
+    mods:
+    - stat: damage
+      op: mul
+      value: 1.25
+  - id: infernal_nucleo
+    tower: {fileID: 11400000, guid: 0213b8805e11b1842a7c945837ee4f9a, type: 2}
+    displayName: "N\xFAcleo estable"
+    description: "Da\xF1o de todas las etapas +15 %"
+    cost: 80
+    mods:
+    - stat: rampDps
+      op: mul
+      value: 1.15
+  - id: infernal_lente
+    tower: {fileID: 11400000, guid: 0213b8805e11b1842a7c945837ee4f9a, type: 2}
+    displayName: Lente ancha
+    description: Alcance +0,75
+    cost: 90
+    mods:
+    - stat: range
+      op: add
+      value: 0.75
+  - id: oro_veta
+    tower: {fileID: 11400000, guid: 3ef032d525a2dd240be88695780b2ace, type: 2}
+    displayName: Veta rica
+    description: "Produce 25 % m\xE1s r\xE1pido"
+    cost: 80
+    mods:
+    - stat: goldPerSecond
+      op: mul
+      value: 1.25
+  - id: oro_boveda
+    tower: {fileID: 11400000, guid: 3ef032d525a2dd240be88695780b2ace, type: 2}
+    displayName: "B\xF3veda"
+    description: Capacidad +50 %
+    cost: 60
+    mods:
+    - stat: goldCapacity
+      op: mul
+      value: 1.5
+  - id: lanzallamas_combustible
+    tower: {fileID: 11400000, guid: da06957955ccac64fac667a27f8a7986, type: 2}
+    displayName: Combustible denso
+    description: Quemadura +30 %
+    cost: 80
+    mods:
+    - stat: burnDps
+      op: mul
+      value: 1.3
+  - id: lanzallamas_boquilla
+    tower: {fileID: 11400000, guid: da06957955ccac64fac667a27f8a7986, type: 2}
+    displayName: Boquilla larga
+    description: Alcance +0,75
+    cost: 90
+    mods:
+    - stat: range
+      op: add
+      value: 0.75
+  tanda:
+    description: "Al completar los tres niveles de un continente eleg\xEDs una torre
+      inicial: la mejora es permanente y vale en todos los mundos. Se puede elegir
+      la misma torre dos veces."
+    options:
+    - tower: {fileID: 11400000, guid: a6acdfe565ecccb4fbc9c83cfa141ef9, type: 2}
+      description: "Da\xF1o +15 % y alcance +8 %"
+      mods:
+      - stat: damage
+        op: mul
+        value: 1.15
+      - stat: range
+        op: mul
+        value: 1.08
+    - tower: {fileID: 11400000, guid: ce6b32a981de624439588aa05f226b20, type: 2}
+      description: "Da\xF1o +15 % y alcance +8 %"
+      mods:
+      - stat: damage
+        op: mul
+        value: 1.15
+      - stat: range
+        op: mul
+        value: 1.08
+    - tower: {fileID: 11400000, guid: e5e4a2d851ec5b14185b4c57036c395c, type: 2}
+      description: "Da\xF1o +15 % y \xE1rea +8 %"
+      mods:
+      - stat: damage
+        op: mul
+        value: 1.15
+      - stat: areaRadius
+        op: mul
+        value: 1.08
+  followText: "Segu\xED Clash Defense en itch.io para enterarte cuando lleguen sus
+    niveles."

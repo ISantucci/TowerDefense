@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bebc0b728f9f7a546886d46498e27f05, type: 3}
+  m_Name: Tema_Desfiladero
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.LevelTheme
+  id: desfiladero
+  terrain: {fileID: 2100000, guid: 76ac9af51cff8464e89b7f5fa7ddf64a, type: 2}
+  outside: {fileID: 2100000, guid: 39c21d4fa45951844b61435c73624404, type: 2}
+  path: {fileID: 2100000, guid: 11b4f2640ed20b448bf1bffb71cf570d, type: 2}
+  rock: {fileID: 2100000, guid: 790c14fbab9274342a030633713ae206, type: 2}
+  rockLight: {fileID: 2100000, guid: 7952391b37012674b935e1a676a101ce, type: 2}
+  baseBlock: {fileID: 2100000, guid: bc62e27cced40324fbfa9a87fbeed537, type: 2}
+  baseBattlement: {fileID: 2100000, guid: 1e3ce126988b5bb4baf85c06c9399592, type: 2}
+  entrance: {fileID: 2100000, guid: bd6dc1abcc675bd4bafae62f315a43fd, type: 2}

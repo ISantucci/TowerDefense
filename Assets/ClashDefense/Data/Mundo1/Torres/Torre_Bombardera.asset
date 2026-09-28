@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3fb14621a37654c9c043357abed8dd, type: 3}
+  m_Name: Torre_Bombardera
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.TowerDefinition
+  data:
+    id: bombardera
+    displayName: Torre bombardera
+    shortName: Bombardera
+    description: "Bomba que persigue y explota en \xE1rea. Solo tierra. El metal
+      lo rompe a medias."
+    cost: 150
+    targetsGround: 1
+    targetsAir: 0
+    metalEfficiency: 0.5
+    attack: area
+    projectileSpeed: 12
+    footprintRadius: 0.8
+    levels:
+    - damage: 45
+      interval: 1.6
+      range: 6
+      areaRadius: 1.5
+      minRange: 0
+      flightTime: 0
+      chainJumps: 0
+      chainRadius: 0
+      rampDps: []
+      rampStep: 0
+      goldPerSecond: 0
+      goldCapacity: 0
+      burnDps: 0
+      burnDuration: 0
+      flameWidth: 0
+    - damage: 60
+      interval: 1.45
+      range: 6.5
+      areaRadius: 1.8
+      minRange: 0
+      flightTime: 0
+      chainJumps: 0
+      chainRadius: 0
+      rampDps: []
+      rampStep: 0
+      goldPerSecond: 0
+      goldCapacity: 0
+      burnDps: 0
+      burnDuration: 0
+      flameWidth: 0
+  color: {r: 0.7607843, g: 0.23137255, b: 0.23137255, a: 1}
+  prefab: {fileID: 5980927394780999826, guid: 7b42b2d243a0ea94e93949bb6f866982, type: 3}
+  projectile: {fileID: 2615446885707846293, guid: 4887545a86a8ea144bb0166c789b0a2a, type: 3}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bebc0b728f9f7a546886d46498e27f05, type: 3}
+  m_Name: Tema_Praderas
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.LevelTheme
+  id: praderas
+  terrain: {fileID: 2100000, guid: e844956ffbd5dec4c95b9a11c62dde31, type: 2}
+  outside: {fileID: 2100000, guid: ca1a3a783cfbc1246a869ea84045f155, type: 2}
+  path: {fileID: 2100000, guid: b143f0889b5e51d44ad281c8dabc11d2, type: 2}
+  rock: {fileID: 2100000, guid: af1d6d85d6d1061478186b2819626a4b, type: 2}
+  rockLight: {fileID: 2100000, guid: 94938e565233317459670ba53a5a0de9, type: 2}
+  baseBlock: {fileID: 2100000, guid: bc62e27cced40324fbfa9a87fbeed537, type: 2}
+  baseBattlement: {fileID: 2100000, guid: 1e3ce126988b5bb4baf85c06c9399592, type: 2}
+  entrance: {fileID: 2100000, guid: bd6dc1abcc675bd4bafae62f315a43fd, type: 2}

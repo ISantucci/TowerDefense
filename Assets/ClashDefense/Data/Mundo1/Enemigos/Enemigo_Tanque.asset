@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a899460effcf44d8cdc02c4dee7811, type: 3}
+  m_Name: Enemigo_Tanque
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.EnemyDefinition
+  data:
+    id: tanque
+    code: T
+    displayName: Duende tanque
+    layer: ground
+    hp: 550
+    armor: 0
+    travelTime: 48
+    travelTimeExposed: 0
+    baseDamage: 25
+    gold: 35
+    heavy: 1
+    miniboss: 0
+    counterHint: "Mucha vida y lento: Ca\xF1\xF3n o Infernal."
+  color: {r: 0.43137255, g: 0.6039216, b: 0.22745098, a: 1}
+  prefab: {fileID: 8425458843528720735, guid: 41e7649d278e4df4faaf715d204e02eb, type: 3}

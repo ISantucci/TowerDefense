@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5d2aa420d213b47bd995f065753db2, type: 3}
+  m_Name: Balance_Mundo1
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.BalanceDefinition
+  version: w1-0.1
+  source: "Mundo 1 de la beta. Torres iniciales, Duende, Esqueleto, Esbirro y Duende
+    blindado: Documento 05 v1.0 sin tocar. Torres desbloqueables, Duende tanque y
+    minibosses: hip\xF3tesis de GDS-002.4 y GDS-002.5 (el Documento 05 no los numera).
+    Ver CHANGELOG_balance.md."
+  economy:
+    startGold: 100
+    baseHp: 100
+    upgradeCostFactor: 1
+    sellRefundFactor: 0.6
+  timing:
+    waveGap: 3
+    countdownStep: 0.8
+    defenseDuration: 1
+    burnTick: 0.25
+  stars:
+    threeStarsMinHp: 100
+    twoStarsMinHp: 50
+  towers:
+  - {fileID: 11400000, guid: a6acdfe565ecccb4fbc9c83cfa141ef9, type: 2}
+  - {fileID: 11400000, guid: ce6b32a981de624439588aa05f226b20, type: 2}
+  - {fileID: 11400000, guid: e5e4a2d851ec5b14185b4c57036c395c, type: 2}
+  - {fileID: 11400000, guid: 4dc84f685ebaba146888eade30901cb9, type: 2}
+  - {fileID: 11400000, guid: 36f9006d2eb008943911c643fe4f918f, type: 2}
+  - {fileID: 11400000, guid: 2a87af882e2401842a47e740e9f0e7f0, type: 2}
+  - {fileID: 11400000, guid: 0213b8805e11b1842a7c945837ee4f9a, type: 2}
+  - {fileID: 11400000, guid: 3ef032d525a2dd240be88695780b2ace, type: 2}
+  - {fileID: 11400000, guid: da06957955ccac64fac667a27f8a7986, type: 2}
+  enemies:
+  - {fileID: 11400000, guid: 501e4e809f2ff32489bbb4c48b8f8f9d, type: 2}
+  - {fileID: 11400000, guid: a522f4a5ec1f72f45bccb3a466f461fa, type: 2}
+  - {fileID: 11400000, guid: 5ef0d2be403337e449adb78d8edfc840, type: 2}
+  - {fileID: 11400000, guid: 952b756fff3456f48a0aac3f46d6a5f3, type: 2}
+  - {fileID: 11400000, guid: 84d338c10a92054478357d576102f54a, type: 2}
+  - {fileID: 11400000, guid: e04763c56a91d884ca6834f807909c26, type: 2}
+  - {fileID: 11400000, guid: e950360eb1a534a46a33436275ec2fcb, type: 2}
+  waves: []

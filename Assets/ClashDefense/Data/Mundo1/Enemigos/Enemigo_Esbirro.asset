@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a899460effcf44d8cdc02c4dee7811, type: 3}
+  m_Name: Enemigo_Esbirro
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.EnemyDefinition
+  data:
+    id: esbirro
+    code: V
+    displayName: Esbirro volador
+    layer: air
+    hp: 90
+    armor: 0
+    travelTime: 26
+    travelTimeExposed: 0
+    baseDamage: 10
+    gold: 20
+    heavy: 0
+    miniboss: 0
+    counterHint: "Vuela: el Ca\xF1\xF3n no lo alcanza. Arqueras o Mago."
+  color: {r: 0.18039216, g: 0.35686275, b: 0.8392157, a: 1}
+  prefab: {fileID: 699178895311188341, guid: 19f2f55f132cfab4592c268133eaa7d0, type: 3}

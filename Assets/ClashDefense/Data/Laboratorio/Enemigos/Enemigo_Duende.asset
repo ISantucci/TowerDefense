@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a899460effcf44d8cdc02c4dee7811, type: 3}
+  m_Name: Enemigo_Duende
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.EnemyDefinition
+  data:
+    id: duende
+    code: D
+    displayName: Duende
+    layer: ground
+    hp: 100
+    armor: 0
+    travelTime: 30
+    travelTimeExposed: 0
+    baseDamage: 10
+    gold: 20
+    heavy: 0
+    miniboss: 0
+    counterHint: Cualquier torre de tierra lo frena.
+  color: {r: 0.5254902, g: 0.8235294, b: 0.3529412, a: 1}
+  prefab: {fileID: 728683404776357925, guid: 0e84dbe4339fba648b3ef50e7276502e, type: 3}

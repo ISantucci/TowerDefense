@@ -1,0 +1,1 @@
+GENERADO desde Unity (Clash Defense/Datos/Exportar). No editar a mano: la fuente son los assets de Assets/ClashDefense/Data y las escenas de nivel.

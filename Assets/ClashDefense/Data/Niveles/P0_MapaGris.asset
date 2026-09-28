@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4964cf3d7641741a4d74c082260fd1, type: 3}
+  m_Name: P0_MapaGris
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.LevelDefinition
+  id: p0_mapa_gris
+  displayName: "Prototipo 0 \u2014 mapa gris"
+  theme: {fileID: 11400000, guid: 235d7e66a47ca574f9e66781b58127d5, type: 2}
+  balance: {fileID: 11400000, guid: 8dd2905b9283cdf498a3ffee473c1259, type: 2}
+  tutorialTower: {fileID: 11400000, guid: 57a8cb77b178b604e87206b08b6d91cb, type: 2}
+  waves: []
+  scenePath: Assets/ClashDefense/Scenes/Niveles/P0_MapaGris.unity
+  shape:
+    routes:
+    - points:
+      - x: -21
+        z: 7
+      - x: 13
+        z: 7
+      - x: 13
+        z: 0
+      - x: -13
+        z: 0
+      - x: -13
+        z: -7
+      - x: 18
+        z: -7
+    pathWidth: 2.2
+    buildArea:
+      minX: -20
+      minZ: -11
+      maxX: 20
+      maxZ: 11
+    blocked: []
+    baseRadius: 1.6
+    tutorialHint:
+      x: 4.5
+      z: 3.5
+      radius: 1.6

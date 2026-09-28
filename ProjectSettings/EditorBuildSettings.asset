@@ -8,6 +8,27 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ClashDefense/Scenes/ClashDefense.unity
     guid: eec258b1b55eda74dab86c7e4dece620
+  - enabled: 1
+    path: Assets/ClashDefense/Scenes/Niveles/M1_N1_ElSendero.unity
+    guid: ac644416b0864844b9c874c4f2a59c43
+  - enabled: 1
+    path: Assets/ClashDefense/Scenes/Niveles/M1_N2_LaColina.unity
+    guid: d82e4cc14c440bf42bd48740d93e7c29
+  - enabled: 1
+    path: Assets/ClashDefense/Scenes/Niveles/M1_N3_ElCruce.unity
+    guid: 7f2c2f28a2631d54587985dd23c020ba
+  - enabled: 1
+    path: Assets/ClashDefense/Scenes/Niveles/M1_N4_LaGarganta.unity
+    guid: 83ce25aa33be37a48b7a04639d30d6ee
+  - enabled: 1
+    path: Assets/ClashDefense/Scenes/Niveles/M1_N5_DosPuertas.unity
+    guid: fdb2883903b03f143bd6e48858366088
+  - enabled: 1
+    path: Assets/ClashDefense/Scenes/Niveles/M1_N6_ElPasoDelDragon.unity
+    guid: 8ef9c1829ca1c5a41b2547a66c630996
+  - enabled: 1
+    path: Assets/ClashDefense/Scenes/Niveles/P0_MapaGris.unity
+    guid: e30df5b9c0f9d1c4f946f096f62b47cb
   - enabled: 0
     path: Assets/ClashDefense/Scenes/Prototipo0.unity
     guid: 41dc2d6e6d25d6f4795ea0f448d9349c

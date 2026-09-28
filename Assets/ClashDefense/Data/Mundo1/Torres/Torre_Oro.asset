@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3fb14621a37654c9c043357abed8dd, type: 3}
+  m_Name: Torre_Oro
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.TowerDefinition
+  data:
+    id: oro
+    displayName: Torre de oro
+    shortName: Oro
+    description: 'No ataca: junta oro hasta llenarse. Clic en la torre para recogerlo.'
+    cost: 150
+    targetsGround: 0
+    targetsAir: 0
+    metalEfficiency: 0
+    attack: gold
+    projectileSpeed: 0
+    footprintRadius: 0.8
+    levels:
+    - damage: 0
+      interval: 0
+      range: 0
+      areaRadius: 0
+      minRange: 0
+      flightTime: 0
+      chainJumps: 0
+      chainRadius: 0
+      rampDps: []
+      rampStep: 0
+      goldPerSecond: 1.25
+      goldCapacity: 50
+      burnDps: 0
+      burnDuration: 0
+      flameWidth: 0
+    - damage: 0
+      interval: 0
+      range: 0
+      areaRadius: 0
+      minRange: 0
+      flightTime: 0
+      chainJumps: 0
+      chainRadius: 0
+      rampDps: []
+      rampStep: 0
+      goldPerSecond: 2
+      goldCapacity: 90
+      burnDps: 0
+      burnDuration: 0
+      flameWidth: 0
+  color: {r: 0.9490196, g: 0.75686276, b: 0.30588236, a: 1}
+  prefab: {fileID: 3169461505371429935, guid: 066ee4de670efb54db9bc70d9dc654ce, type: 3}
+  projectile: {fileID: 0}

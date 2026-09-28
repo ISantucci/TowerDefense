@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3fb14621a37654c9c043357abed8dd, type: 3}
+  m_Name: Torre_Canon
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.TowerDefinition
+  data:
+    id: canon
+    displayName: "Ca\xF1\xF3n"
+    shortName: 
+    description: 
+    cost: 125
+    targetsGround: 1
+    targetsAir: 0
+    metalEfficiency: 1
+    attack: single
+    projectileSpeed: 16
+    footprintRadius: 0.8
+    levels:
+    - damage: 60
+      interval: 1.5
+      range: 6
+      areaRadius: 0
+      minRange: 0
+      flightTime: 0
+      chainJumps: 0
+      chainRadius: 0
+      rampDps: []
+      rampStep: 0
+      goldPerSecond: 0
+      goldCapacity: 0
+      burnDps: 0
+      burnDuration: 0
+      flameWidth: 0
+    - damage: 90
+      interval: 1.5
+      range: 6.5
+      areaRadius: 0
+      minRange: 0
+      flightTime: 0
+      chainJumps: 0
+      chainRadius: 0
+      rampDps: []
+      rampStep: 0
+      goldPerSecond: 0
+      goldCapacity: 0
+      burnDps: 0
+      burnDuration: 0
+      flameWidth: 0
+  color: {r: 0.8509804, g: 0.50980395, b: 0.16862746, a: 1}
+  prefab: {fileID: 1157297120941624954, guid: 497712699e0479848a913516fb87a4f4, type: 3}
+  projectile: {fileID: 3209743576026936918, guid: e0e85f664f562cf4bb62d223badf256e, type: 3}

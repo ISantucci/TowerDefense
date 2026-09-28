@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a899460effcf44d8cdc02c4dee7811, type: 3}
+  m_Name: Enemigo_Blindado
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.EnemyDefinition
+  data:
+    id: blindado
+    code: A
+    displayName: Duende blindado
+    layer: ground
+    hp: 100
+    armor: 180
+    travelTime: 38
+    travelTimeExposed: 30
+    baseDamage: 20
+    gold: 35
+    heavy: 0
+    miniboss: 0
+    counterHint: "Metal: las arqueras no lo da\xF1an. Ca\xF1\xF3n (o Mago, m\xE1s
+      lento)."
+  color: {r: 0.6039216, g: 0.6392157, b: 0.6784314, a: 1}
+  prefab: {fileID: 3054111592916239324, guid: 3fe17b05e50dd004cad8977abb92b22b, type: 3}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fbf0c57ee9cb347b4bacbcc0aa6de4, type: 3}
+  m_Name: Juego_Mundo1
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.GameConfig
+  version: w1-0.1
+  campaign: {fileID: 11400000, guid: ee1e9555b76dd174eaa493a091e0d4c8, type: 2}
+  labBalance: {fileID: 11400000, guid: 8dd2905b9283cdf498a3ffee473c1259, type: 2}
+  labLevel: {fileID: 11400000, guid: 374c0c80ab8703c4a98be134a77fa8bc, type: 2}
+  presentation: {fileID: 11400000, guid: ed5caa35df3c0d947bee321e3122e2b9, type: 2}

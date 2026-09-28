@@ -1,7 +1,7 @@
 import json, os, matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-D = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Assets', 'ClashDefense', 'Data')
+D = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'ClashDefenseSim', 'Datos')   # exportados por Unity (TL-003)
 fig, axes = plt.subplots(2, 3, figsize=(18, 7.5))
 for i, ax in enumerate(axes.flat):
     lid = f"m1_n{i+1}"

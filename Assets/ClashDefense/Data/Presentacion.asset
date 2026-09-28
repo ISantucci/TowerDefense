@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d096598948427b478e9239ca218f3a3, type: 3}
+  m_Name: Presentacion
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.PresentationLibrary
+  ghostMaterial: {fileID: 2100000, guid: 56a67f8e3bcf37c489fb1bfe0016b578, type: 2}
+  lineMaterial: {fileID: 2100000, guid: 7ac610b9f09a2b248b16aa5bf541f41e, type: 2}
+  floatingText: {fileID: 8098235204385844929, guid: 7e7ce798775abc740a41cc5f03185c4e, type: 3}
+  ring: {fileID: 63876701431696551, guid: 8e94c3bbb220f7a49a769b2941090f72, type: 3}
+  spark: {fileID: 483324120577384204, guid: 41f213758364a4146bfaf03d45af4d08, type: 3}
+  flameBurst: {fileID: 7128058094837528456, guid: f24bf02dd6161124ab57b81e985cd17b, type: 3}
+  fireOnGround: {fileID: 8313363543944429753, guid: e40e9486abb81d34e9fe823bf680150f, type: 3}
+  armorShell: {fileID: 5768024854324473861, guid: 893fd1d92a268fe4ebe185cc9797d256, type: 3}
+  lightning: {fileID: 7332564574784735797, guid: fc7835a0dc9faca46a08b3c77fc82993, type: 3}
+  infernoBeam: {fileID: 4046286221353112068, guid: de50c2e39ab4bff4e8a5d16c1329e1fe, type: 3}
+  valid: {r: 1, g: 1, b: 1, a: 1}
+  invalid: {r: 1, g: 0.41960785, b: 0.41960785, a: 1}
+  edge: {r: 0.105882354, g: 0.12156863, b: 0.14901961, a: 1}
+  accent: {r: 0.27058825, g: 0.8156863, b: 0.76862746, a: 1}
+  gold: {r: 0.9490196, g: 0.75686276, b: 0.30588236, a: 1}
+  fire: {r: 1, g: 0.5411765, b: 0.12156863, a: 1}
+  immune: {r: 1, g: 1, b: 1, a: 1}
+  life: {r: 1, g: 0.3529412, b: 0.37254903, a: 1}
+  text: {r: 0.9490196, g: 0.9490196, b: 0.9490196, a: 1}
+  bomb: {r: 0.7607843, g: 0.23137255, b: 0.23137255, a: 1}
+  orb: {r: 0.70980394, g: 0.48235294, b: 1, a: 1}
+  lightningColor: {r: 1, g: 0.9647059, b: 0.65882355, a: 1}
+  infernoColor: {r: 0.8784314, g: 0.27058825, b: 0.48235294, a: 1}

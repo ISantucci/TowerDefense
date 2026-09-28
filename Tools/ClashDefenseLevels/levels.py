@@ -1,7 +1,9 @@
-# Generador de los niveles del Mundo 1 (LDS-002.6). Fuente única de geometría y oleadas:
-# escribe Assets/ClashDefense/Data/level_m1_nX.json. Las oleadas se afinan con ClashDefenseSim.
+# Generador de los niveles del Mundo 1 (LDS-002.6). Fue la fuente de geometría y oleadas hasta TL-003; ahora
+# escribe propuestas/level_m1_nX.json. Desde TL-003 los niveles del juego se editan en sus escenas de Unity
+# (Assets/ClashDefense/Scenes/Niveles): este generador quedó para bocetar niveles nuevos, no pisa los datos del juego.
 import json, sys, os
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Assets', 'ClashDefense', 'Data')
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'propuestas')
+os.makedirs(OUT, exist_ok=True)
 AREA = {"minX": -20.0, "minZ": -11.0, "maxX": 20.0, "maxZ": 11.0}
 
 def pts(*p): return [{"x": float(x), "z": float(z)} for x, z in p]

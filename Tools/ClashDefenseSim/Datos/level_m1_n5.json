@@ -1,0 +1,181 @@
+{
+    "id": "m1_n5",
+    "displayName": "Mundo 1 · Nivel 5 — Dos puertas",
+    "path": [],
+    "routes": [
+        {
+            "points": [
+                {
+                    "x": -21.0,
+                    "z": 0.0
+                },
+                {
+                    "x": -12.0,
+                    "z": 0.0
+                },
+                {
+                    "x": -12.0,
+                    "z": 9.0
+                },
+                {
+                    "x": -2.0,
+                    "z": 9.0
+                },
+                {
+                    "x": -2.0,
+                    "z": 4.0
+                },
+                {
+                    "x": 8.0,
+                    "z": 4.0
+                },
+                {
+                    "x": 8.0,
+                    "z": 9.0
+                },
+                {
+                    "x": 14.0,
+                    "z": 9.0
+                },
+                {
+                    "x": 14.0,
+                    "z": 0.0
+                }
+            ]
+        },
+        {
+            "points": [
+                {
+                    "x": -21.0,
+                    "z": 0.0
+                },
+                {
+                    "x": -12.0,
+                    "z": 0.0
+                },
+                {
+                    "x": -12.0,
+                    "z": -9.0
+                },
+                {
+                    "x": -2.0,
+                    "z": -9.0
+                },
+                {
+                    "x": -2.0,
+                    "z": -4.0
+                },
+                {
+                    "x": 8.0,
+                    "z": -4.0
+                },
+                {
+                    "x": 8.0,
+                    "z": -9.0
+                },
+                {
+                    "x": 14.0,
+                    "z": -9.0
+                },
+                {
+                    "x": 14.0,
+                    "z": 0.0
+                }
+            ]
+        }
+    ],
+    "pathWidth": 2.200000047683716,
+    "buildArea": {
+        "minX": -20.0,
+        "minZ": -11.0,
+        "maxX": 20.0,
+        "maxZ": 11.0
+    },
+    "blocked": [
+        {
+            "x": -16.5,
+            "z": 3.4000000953674318,
+            "radius": 2.200000047683716
+        },
+        {
+            "x": -16.5,
+            "z": -3.4000000953674318,
+            "radius": 2.200000047683716
+        },
+        {
+            "x": 18.0,
+            "z": 6.0,
+            "radius": 1.2000000476837159
+        },
+        {
+            "x": 18.0,
+            "z": -6.0,
+            "radius": 1.2000000476837159
+        }
+    ],
+    "baseRadius": 1.600000023841858,
+    "tutorialTowerId": "",
+    "tutorialHint": {
+        "x": 0.0,
+        "z": 0.0,
+        "radius": 0.0
+    },
+    "waves": [
+        {
+            "sequence": "(D)x8",
+            "spawnInterval": 2.75,
+            "lanes": "0"
+        },
+        {
+            "sequence": "(D E x2 . x3)x5",
+            "spawnInterval": 0.8669999837875366,
+            "lanes": "1"
+        },
+        {
+            "sequence": "(V D x3 . x4)x4",
+            "spawnInterval": 0.9380000233650208,
+            "lanes": "0 x4 1 x4"
+        },
+        {
+            "sequence": "(T D x3 E x3 . x6)x4",
+            "spawnInterval": 0.7689999938011169,
+            "lanes": "0 x7 1 x7"
+        },
+        {
+            "sequence": "(E x6 V x3 . x10)x3",
+            "spawnInterval": 0.7720000147819519,
+            "lanes": "0 x9 1 x9"
+        },
+        {
+            "sequence": "(T x3 D x3 V x2 E x4 . x12)x3",
+            "spawnInterval": 0.6669999957084656,
+            "lanes": "0 x12 1 x12"
+        },
+        {
+            "sequence": "(V x4 D x3 E x8 T x2 . x13)x3",
+            "spawnInterval": 0.578000009059906,
+            "lanes": "0 x17 1 x17"
+        },
+        {
+            "sequence": "(T x5 E x8 V x4 D x2 . x15)x3",
+            "spawnInterval": 0.5490000247955322,
+            "lanes": "0 x19 1 x19"
+        },
+        {
+            "sequence": "(D x3 E x10 V x4 T x6 . x16)x3",
+            "spawnInterval": 0.5130000114440918,
+            "lanes": "0 x23 1 x23"
+        },
+        {
+            "sequence": "(T x8 E x10 V x5 D x3 . x18)x3",
+            "spawnInterval": 0.48500001430511477,
+            "lanes": "0 x13 1 x13"
+        },
+        {
+            "sequence": "(T x10 E x12 V x6 D x4 . x20)x3",
+            "spawnInterval": 0.4620000123977661,
+            "lanes": "0 x16 1 x16"
+        }
+    ],
+    "theme": "desfiladero"
+}

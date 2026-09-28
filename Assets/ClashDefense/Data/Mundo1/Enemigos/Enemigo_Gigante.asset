@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a899460effcf44d8cdc02c4dee7811, type: 3}
+  m_Name: Enemigo_Gigante
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.EnemyDefinition
+  data:
+    id: gigante
+    code: G
+    displayName: Duende gigante
+    layer: ground
+    hp: 3200
+    armor: 0
+    travelTime: 70
+    travelTimeExposed: 0
+    baseDamage: 50
+    gold: 150
+    heavy: 1
+    miniboss: 1
+    counterHint: "Miniboss: concentr\xE1 da\xF1o en su camino."
+  color: {r: 0.4, g: 0.6901961, b: 0.2509804, a: 1}
+  prefab: {fileID: 5904659348361165217, guid: 1ef111d4823511b4d8607fb958a41884, type: 3}

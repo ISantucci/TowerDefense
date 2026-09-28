@@ -14,7 +14,7 @@ namespace ClashDefense.Sim
             WriteIndented = true,
         };
 
-        public static string DataDir = Path.GetFullPath(Path.Combine(System.AppContext.BaseDirectory, "../../../../../Assets/ClashDefense/Data"));
+        public static string DataDir = Path.GetFullPath(Path.Combine(System.AppContext.BaseDirectory, "../../../Datos"));
 
         public static BalanceData Balance(string file = "balance_p0.json") => JsonSerializer.Deserialize<BalanceData>(File.ReadAllText(Path.Combine(DataDir, file)), Opt);
         public static LevelData Level(string file = "level_p0.json") => JsonSerializer.Deserialize<LevelData>(File.ReadAllText(Path.Combine(DataDir, file)), Opt);

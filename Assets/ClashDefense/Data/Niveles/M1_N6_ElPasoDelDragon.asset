@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4964cf3d7641741a4d74c082260fd1, type: 3}
+  m_Name: M1_N6_ElPasoDelDragon
+  m_EditorClassIdentifier: ClashDefense.Game::ClashDefense.Game.LevelDefinition
+  id: m1_n6
+  displayName: "Mundo 1 \xB7 Nivel 6 \u2014 El paso del drag\xF3n"
+  theme: {fileID: 11400000, guid: 91679a766226b1f48a8bec926dc8df3f, type: 2}
+  balance: {fileID: 11400000, guid: fe4c40737ea37794ba521acb9d4bcde1, type: 2}
+  tutorialTower: {fileID: 0}
+  waves:
+  - sequence: (D)x8
+    spawnInterval: 2.75
+    lanes: 0 1
+  - sequence: (E x3 D . x3)x5
+    spawnInterval: 0.743
+    lanes: 2 3
+  - sequence: (D x2 A . x5)x4
+    spawnInterval: 0.938
+    lanes: 0 x3 3 x3
+  - sequence: (T E x3 A V . x5)x4
+    spawnInterval: 0.773
+    lanes: 0 1 2 3
+  - sequence: (D x2 E x4 A x2 V . x10)x3
+    spawnInterval: 0.737
+    lanes: 0 x9 3 x9
+  - sequence: (T x2 D x2 A x2 V x2 . x12)x3
+    spawnInterval: 0.767
+    lanes: 1 x8 2 x8
+  - sequence: (E x8 V x3 A x3 T x2 . x13)x3
+    spawnInterval: 0.575
+    lanes: 0 1 2 3
+  - sequence: (A x4 D x3 E x8 V x3 T . x14)x3
+    spawnInterval: 0.545
+    lanes: 0 x19 3 x19
+  - sequence: (T x4 A x5 V x4 E x8 . x15)x3
+    spawnInterval: 0.537
+    lanes: 0 x7 1 x7 2 x7 3 x7
+  - sequence: (A x6 E x10 V x4 T x6 . x16)x3
+    spawnInterval: 0.508
+    lanes: 1 x13 2 x13
+  - sequence: (D x3 E x8 V x4 A x5 T x2 . x14)x3 / . x5 B / (T x6 E x8 V x5 A x5
+      . x14)x3
+    spawnInterval: 0.421
+    lanes: 0 x22 2 x22 1 x22 3 x22
+  scenePath: Assets/ClashDefense/Scenes/Niveles/M1_N6_ElPasoDelDragon.unity
+  shape:
+    routes:
+    - points:
+      - x: -21
+        z: 9
+      - x: -12
+        z: 9
+      - x: -12
+        z: 0
+      - x: -4
+        z: 0
+      - x: -4
+        z: 6
+      - x: 8
+        z: 6
+      - x: 8
+        z: 0
+      - x: 17
+        z: 0
+    - points:
+      - x: -21
+        z: 9
+      - x: -12
+        z: 9
+      - x: -12
+        z: 0
+      - x: -4
+        z: 0
+      - x: -4
+        z: -6
+      - x: 8
+        z: -6
+      - x: 8
+        z: 0
+      - x: 17
+        z: 0
+    - points:
+      - x: -21
+        z: -9
+      - x: -12
+        z: -9
+      - x: -12
+        z: 0
+      - x: -4
+        z: 0
+      - x: -4
+        z: 6
+      - x: 8
+        z: 6
+      - x: 8
+        z: 0
+      - x: 17
+        z: 0
+    - points:
+      - x: -21
+        z: -9
+      - x: -12
+        z: -9
+      - x: -12
+        z: 0
+      - x: -4
+        z: 0
+      - x: -4
+        z: -6
+      - x: 8
+        z: -6
+      - x: 8
+        z: 0
+      - x: 17
+        z: 0
+    pathWidth: 2.2
+    buildArea:
+      minX: -20
+      minZ: -11
+      maxX: 20
+      maxZ: 11
+    blocked:
+    - x: 2
+      z: 0
+      radius: 1.6
+    - x: -17
+      z: 0
+      radius: 2
+    - x: 13
+      z: 8
+      radius: 1.5
+    - x: 13
+      z: -8
+      radius: 1.5
+    - x: -8
+      z: 3.4
+      radius: 2.1
+    - x: -8
+      z: -3.4
+      radius: 2.1
+    baseRadius: 1.6
+    tutorialHint:
+      x: 0
+      z: 0
+      radius: 0

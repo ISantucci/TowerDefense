@@ -1,0 +1,258 @@
+{
+    "version": "1.0",
+    "source": "Clash Defense — Documento 05 v1.0 (Balance provisional del prototipo), 25-09-2026. Valores sin tocar. Los marcados en CHANGELOG como 'GDS' no están en el Doc 05.",
+    "economy": {
+        "startGold": 100,
+        "baseHp": 100,
+        "upgradeCostFactor": 1.0,
+        "sellRefundFactor": 0.6000000238418579
+    },
+    "timing": {
+        "waveGap": 3.0,
+        "countdownStep": 0.800000011920929,
+        "defenseDuration": 1.0,
+        "burnTick": 0.0
+    },
+    "stars": {
+        "threeStarsMinHp": 100,
+        "twoStarsMinHp": 50
+    },
+    "towers": [
+        {
+            "id": "arqueras",
+            "displayName": "Torre de arqueras",
+            "shortName": "",
+            "description": "",
+            "cost": 100,
+            "targetsGround": true,
+            "targetsAir": true,
+            "metalEfficiency": 0.0,
+            "attack": "single",
+            "projectileSpeed": 22.0,
+            "footprintRadius": 0.800000011920929,
+            "levels": [
+                {
+                    "damage": 25.0,
+                    "interval": 0.6499999761581421,
+                    "range": 8.0,
+                    "areaRadius": 0.0,
+                    "minRange": 0.0,
+                    "flightTime": 0.0,
+                    "chainJumps": 0,
+                    "chainRadius": 0.0,
+                    "rampDps": [],
+                    "rampStep": 0.0,
+                    "goldPerSecond": 0.0,
+                    "goldCapacity": 0.0,
+                    "burnDps": 0.0,
+                    "burnDuration": 0.0,
+                    "flameWidth": 0.0
+                },
+                {
+                    "damage": 30.0,
+                    "interval": 0.550000011920929,
+                    "range": 9.0,
+                    "areaRadius": 0.0,
+                    "minRange": 0.0,
+                    "flightTime": 0.0,
+                    "chainJumps": 0,
+                    "chainRadius": 0.0,
+                    "rampDps": [],
+                    "rampStep": 0.0,
+                    "goldPerSecond": 0.0,
+                    "goldCapacity": 0.0,
+                    "burnDps": 0.0,
+                    "burnDuration": 0.0,
+                    "flameWidth": 0.0
+                }
+            ]
+        },
+        {
+            "id": "canon",
+            "displayName": "Cañón",
+            "shortName": "",
+            "description": "",
+            "cost": 125,
+            "targetsGround": true,
+            "targetsAir": false,
+            "metalEfficiency": 1.0,
+            "attack": "single",
+            "projectileSpeed": 16.0,
+            "footprintRadius": 0.800000011920929,
+            "levels": [
+                {
+                    "damage": 60.0,
+                    "interval": 1.5,
+                    "range": 6.0,
+                    "areaRadius": 0.0,
+                    "minRange": 0.0,
+                    "flightTime": 0.0,
+                    "chainJumps": 0,
+                    "chainRadius": 0.0,
+                    "rampDps": [],
+                    "rampStep": 0.0,
+                    "goldPerSecond": 0.0,
+                    "goldCapacity": 0.0,
+                    "burnDps": 0.0,
+                    "burnDuration": 0.0,
+                    "flameWidth": 0.0
+                },
+                {
+                    "damage": 90.0,
+                    "interval": 1.5,
+                    "range": 6.5,
+                    "areaRadius": 0.0,
+                    "minRange": 0.0,
+                    "flightTime": 0.0,
+                    "chainJumps": 0,
+                    "chainRadius": 0.0,
+                    "rampDps": [],
+                    "rampStep": 0.0,
+                    "goldPerSecond": 0.0,
+                    "goldCapacity": 0.0,
+                    "burnDps": 0.0,
+                    "burnDuration": 0.0,
+                    "flameWidth": 0.0
+                }
+            ]
+        },
+        {
+            "id": "mago",
+            "displayName": "Torre de mago",
+            "shortName": "",
+            "description": "",
+            "cost": 150,
+            "targetsGround": true,
+            "targetsAir": true,
+            "metalEfficiency": 0.33000001311302187,
+            "attack": "area",
+            "projectileSpeed": 14.0,
+            "footprintRadius": 0.800000011920929,
+            "levels": [
+                {
+                    "damage": 35.0,
+                    "interval": 1.25,
+                    "range": 4.0,
+                    "areaRadius": 1.75,
+                    "minRange": 0.0,
+                    "flightTime": 0.0,
+                    "chainJumps": 0,
+                    "chainRadius": 0.0,
+                    "rampDps": [],
+                    "rampStep": 0.0,
+                    "goldPerSecond": 0.0,
+                    "goldCapacity": 0.0,
+                    "burnDps": 0.0,
+                    "burnDuration": 0.0,
+                    "flameWidth": 0.0
+                },
+                {
+                    "damage": 45.0,
+                    "interval": 1.149999976158142,
+                    "range": 4.25,
+                    "areaRadius": 2.0999999046325685,
+                    "minRange": 0.0,
+                    "flightTime": 0.0,
+                    "chainJumps": 0,
+                    "chainRadius": 0.0,
+                    "rampDps": [],
+                    "rampStep": 0.0,
+                    "goldPerSecond": 0.0,
+                    "goldCapacity": 0.0,
+                    "burnDps": 0.0,
+                    "burnDuration": 0.0,
+                    "flameWidth": 0.0
+                }
+            ]
+        }
+    ],
+    "enemies": [
+        {
+            "id": "duende",
+            "code": "D",
+            "displayName": "Duende",
+            "layer": "ground",
+            "hp": 100.0,
+            "armor": 0.0,
+            "travelTime": 30.0,
+            "travelTimeExposed": 0.0,
+            "baseDamage": 10,
+            "gold": 20,
+            "heavy": false,
+            "miniboss": false,
+            "counterHint": "Cualquier torre de tierra lo frena."
+        },
+        {
+            "id": "esqueleto",
+            "code": "E",
+            "displayName": "Esqueleto",
+            "layer": "ground",
+            "hp": 60.0,
+            "armor": 0.0,
+            "travelTime": 24.0,
+            "travelTimeExposed": 0.0,
+            "baseDamage": 5,
+            "gold": 12,
+            "heavy": false,
+            "miniboss": false,
+            "counterHint": "Rápido y en grupo: arqueras y daño en área."
+        },
+        {
+            "id": "esbirro",
+            "code": "V",
+            "displayName": "Esbirro volador",
+            "layer": "air",
+            "hp": 90.0,
+            "armor": 0.0,
+            "travelTime": 26.0,
+            "travelTimeExposed": 0.0,
+            "baseDamage": 10,
+            "gold": 20,
+            "heavy": false,
+            "miniboss": false,
+            "counterHint": "Vuela: el Cañón no lo alcanza. Arqueras o Mago."
+        },
+        {
+            "id": "blindado",
+            "code": "A",
+            "displayName": "Duende blindado",
+            "layer": "ground",
+            "hp": 100.0,
+            "armor": 180.0,
+            "travelTime": 38.0,
+            "travelTimeExposed": 30.0,
+            "baseDamage": 20,
+            "gold": 35,
+            "heavy": false,
+            "miniboss": false,
+            "counterHint": "Metal: las arqueras no lo dañan. Cañón (o Mago, más lento)."
+        }
+    ],
+    "waves": [
+        {
+            "sequence": "D x10",
+            "spawnInterval": 1.5,
+            "lanes": ""
+        },
+        {
+            "sequence": "D D E E / D D E E / D D E / D D E",
+            "spawnInterval": 1.2000000476837159,
+            "lanes": ""
+        },
+        {
+            "sequence": "(D E D E V V)x3 / D E D E",
+            "spawnInterval": 1.0,
+            "lanes": ""
+        },
+        {
+            "sequence": "D D / (D E A E V)x4",
+            "spawnInterval": 1.100000023841858,
+            "lanes": ""
+        },
+        {
+            "sequence": "D D E / (D E V A E V)x4 / A D D E A",
+            "spawnInterval": 0.8999999761581421,
+            "lanes": ""
+        }
+    ]
+}
