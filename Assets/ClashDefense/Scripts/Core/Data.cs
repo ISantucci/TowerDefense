@@ -19,12 +19,28 @@ namespace ClashDefense.Core
         public EnemyTypeData[] enemies;
         /// <summary>Oleadas del P0 (Doc 05 §8). Los niveles del Mundo 1 traen las suyas en LevelData.waves.</summary>
         public WaveData[] waves;
+        /// <summary>Reglas para convertir una composición en orden de aparición (Doc 05 v2.0 §9.2). null = solo secuencias.</summary>
+        public WaveRulesData waveRules;
+    }
+
+    /// <summary>Doc 05 v2.0 §9.2: prioridad del reparto, dónde entra el miniboss y su separación.</summary>
+    [Serializable]
+    public class WaveRulesData
+    {
+        /// <summary>Prioridad del reparto por pasadas, en códigos del balance: "D E V T A C".</summary>
+        public string order;
+        /// <summary>Fracción de las unidades normales tras la que entra el miniboss (0,75), redondeando hacia arriba.</summary>
+        public float minibossAfter;
+        /// <summary>Segundos de separación antes y después del miniboss (3).</summary>
+        public float minibossGap;
     }
 
     [Serializable]
     public class EconomyData
     {
         public int startGold;
+        /// <summary>Oro inicial de la partida con tutorial (Doc 05 v2.0 §5.1: 100). 0 = startGold.</summary>
+        public int tutorialStartGold;
         public int baseHp;
         public float upgradeCostFactor;
         public float sellRefundFactor;
@@ -102,13 +118,21 @@ namespace ClashDefense.Core
         // Infernal: daño por segundo de cada etapa y segundos fijado para pasar de etapa
         public float[] rampDps;
         public float rampStep;
+        /// <summary>Infernal (Doc 05 v2.0 §6.5): segundos fijado en que empieza cada etapa, [0, 2, 5]. Vacío = etapas de rampStep.</summary>
+        public float[] rampTimes;
         // Oro
         public float goldPerSecond;
         public float goldCapacity;
+        /// <summary>Oro (Doc 05 v2.0 §6.6): oro que suma cada ciclo completo. Con goldCycle > 0 reemplaza a goldPerSecond.</summary>
+        public float goldPerCycle;
+        public float goldCycle;
         // Lanzallamas (y cualquier fuente de quemadura)
         public float burnDps;
         public float burnDuration;
         public float flameWidth;
+        /// <summary>Lanzallamas (Doc 05 v2.0 §6.7): segundos entre pulsos y duración de la ráfaga; damage es por pulso. 0 = un solo golpe.</summary>
+        public float pulseInterval;
+        public float burstDuration;
     }
 
     [Serializable]
@@ -142,6 +166,12 @@ namespace ClashDefense.Core
         public float spawnInterval;
         /// <summary>A qué recorrido va cada enemigo, en ciclo: "0 x3 1 x3" = grupos 3/3 (Doc 03 §9). Vacío = todos al 0.</summary>
         public string lanes;
+        /// <summary>Composición (Doc 05 v2.0 §10): "D10 E6 V4". Si está, reemplaza a sequence y lanes: el orden y las entradas salen de waveRules.</summary>
+        public string composition;
+        /// <summary>Código del miniboss de la oleada (Doc 05 v2.0 §9.2). Vacío = sin miniboss.</summary>
+        public string miniboss;
+
+        public bool IsComposition => !string.IsNullOrEmpty(composition);
     }
 
     [Serializable]
@@ -191,13 +221,16 @@ namespace ClashDefense.Core
     [Serializable]
     public class StatMod
     {
-        /// <summary>damage · interval · range · areaRadius · minRange · chainJumps · chainRadius · rampDps · goldPerSecond · goldCapacity · burnDps · burnDuration · flameWidth</summary>
+        /// <summary>damage · interval · range · areaRadius · minRange · chainJumps · chainRadius · rampDps · goldPerSecond · goldCapacity · burnDps · burnDuration · flameWidth
+        /// · flightTime · rampTimes · goldCycle · goldPerCycle · projectileSpeed (del tipo, vale para N1 y N2)</summary>
         public string stat;
-        /// <summary>"mul" o "add".</summary>
+        /// <summary>"mul", "add" o "pct". "pct" suma porcentajes (dos insignias de +8 % = +16 %) y redondea como el Doc 05 v2.0 §7.1:
+        /// el daño al entero más cercano, el resto a dos decimales.</summary>
         public string op;
         public float value;
 
         public static readonly string[] Stats =
-            { "damage", "interval", "range", "areaRadius", "minRange", "chainJumps", "chainRadius", "rampDps", "goldPerSecond", "goldCapacity", "burnDps", "burnDuration", "flameWidth" };
+            { "damage", "interval", "range", "areaRadius", "minRange", "chainJumps", "chainRadius", "rampDps", "goldPerSecond", "goldCapacity", "burnDps", "burnDuration", "flameWidth",
+              "flightTime", "rampTimes", "goldCycle", "goldPerCycle", "projectileSpeed" };
     }
 }

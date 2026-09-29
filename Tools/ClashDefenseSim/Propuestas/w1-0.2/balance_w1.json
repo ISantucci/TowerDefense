@@ -1,0 +1,473 @@
+{
+  "version": "w1-0.2",
+  "source": "Documento 05 v2.0 (28-09-2026), aprobado para implementación: costos, estadísticas N1/N2, enemigos, oro inicial y reglas de oleadas tal cual. Lo que el documento no numera (velocidad de proyectil, huella, tick de quemadura, textos) sigue de w1-0.1. Supuestos en GDS-004.2; cambios en CHANGELOG_balance.md.",
+  "economy": {
+    "startGold": 150,
+    "tutorialStartGold": 100,
+    "baseHp": 100,
+    "upgradeCostFactor": 1.0,
+    "sellRefundFactor": 0.6
+  },
+  "timing": {
+    "waveGap": 3.0,
+    "countdownStep": 0.800000011920929,
+    "defenseDuration": 1.0,
+    "burnTick": 0.25
+  },
+  "stars": {
+    "threeStarsMinHp": 100,
+    "twoStarsMinHp": 50
+  },
+  "towers": [
+    {
+      "id": "arqueras",
+      "displayName": "Torre de arqueras",
+      "shortName": "Arqueras",
+      "description": "Rápida y de largo alcance. Tierra y aire. No daña el metal.",
+      "cost": 100,
+      "targetsGround": true,
+      "targetsAir": true,
+      "metalEfficiency": 0.0,
+      "attack": "single",
+      "projectileSpeed": 22.0,
+      "footprintRadius": 0.800000011920929,
+      "levels": [
+        {
+          "damage": 25.0,
+          "interval": 0.6499999761581421,
+          "range": 8.0,
+          "areaRadius": 0.0,
+          "minRange": 0.0,
+          "flightTime": 0.0,
+          "chainJumps": 0,
+          "chainRadius": 0.0,
+          "rampDps": [],
+          "rampStep": 0.0,
+          "goldPerSecond": 0.0,
+          "goldCapacity": 0.0,
+          "burnDps": 0.0,
+          "burnDuration": 0.0,
+          "flameWidth": 0.0
+        },
+        {
+          "damage": 30.0,
+          "interval": 0.550000011920929,
+          "range": 9.0,
+          "areaRadius": 0.0,
+          "minRange": 0.0,
+          "flightTime": 0.0,
+          "chainJumps": 0,
+          "chainRadius": 0.0,
+          "rampDps": [],
+          "rampStep": 0.0,
+          "goldPerSecond": 0.0,
+          "goldCapacity": 0.0,
+          "burnDps": 0.0,
+          "burnDuration": 0.0,
+          "flameWidth": 0.0
+        }
+      ]
+    },
+    {
+      "id": "canon",
+      "displayName": "Cañón",
+      "shortName": "Cañón",
+      "description": "Golpe fuerte a un objetivo. Solo tierra. Rompe el metal.",
+      "cost": 125,
+      "targetsGround": true,
+      "targetsAir": false,
+      "metalEfficiency": 1.0,
+      "attack": "single",
+      "projectileSpeed": 16.0,
+      "footprintRadius": 0.800000011920929,
+      "levels": [
+        {
+          "damage": 60.0,
+          "interval": 1.5,
+          "range": 6.0,
+          "areaRadius": 0.0,
+          "minRange": 0.0,
+          "flightTime": 0.0,
+          "chainJumps": 0,
+          "chainRadius": 0.0,
+          "rampDps": [],
+          "rampStep": 0.0,
+          "goldPerSecond": 0.0,
+          "goldCapacity": 0.0,
+          "burnDps": 0.0,
+          "burnDuration": 0.0,
+          "flameWidth": 0.0
+        },
+        {
+          "damage": 90.0,
+          "interval": 1.5,
+          "range": 6.5,
+          "areaRadius": 0.0,
+          "minRange": 0.0,
+          "flightTime": 0.0,
+          "chainJumps": 0,
+          "chainRadius": 0.0,
+          "rampDps": [],
+          "rampStep": 0.0,
+          "goldPerSecond": 0.0,
+          "goldCapacity": 0.0,
+          "burnDps": 0.0,
+          "burnDuration": 0.0,
+          "flameWidth": 0.0
+        }
+      ]
+    },
+    {
+      "id": "mago",
+      "displayName": "Torre de mago",
+      "shortName": "Mago",
+      "description": "Daño en área a grupos. Tierra y aire. Alcance corto; el metal lo rompe lento.",
+      "cost": 150,
+      "targetsGround": true,
+      "targetsAir": true,
+      "metalEfficiency": 0.5,
+      "attack": "area",
+      "projectileSpeed": 14.0,
+      "footprintRadius": 0.800000011920929,
+      "levels": [
+        {
+          "damage": 35.0,
+          "interval": 1.25,
+          "range": 4.0,
+          "areaRadius": 1.75,
+          "minRange": 0.0,
+          "flightTime": 0.0,
+          "chainJumps": 0,
+          "chainRadius": 0.0,
+          "rampDps": [],
+          "rampStep": 0.0,
+          "goldPerSecond": 0.0,
+          "goldCapacity": 0.0,
+          "burnDps": 0.0,
+          "burnDuration": 0.0,
+          "flameWidth": 0.0
+        },
+        {
+          "damage": 45.0,
+          "interval": 1.149999976158142,
+          "range": 4.25,
+          "areaRadius": 2.0999999046325684,
+          "minRange": 0.0,
+          "flightTime": 0.0,
+          "chainJumps": 0,
+          "chainRadius": 0.0,
+          "rampDps": [],
+          "rampStep": 0.0,
+          "goldPerSecond": 0.0,
+          "goldCapacity": 0.0,
+          "burnDps": 0.0,
+          "burnDuration": 0.0,
+          "flameWidth": 0.0
+        }
+      ]
+    },
+    {
+      "id": "mortero",
+      "displayName": "Mortero",
+      "shortName": "Mortero",
+      "description": "Tiro lento de gran alcance y área. Solo tierra. No dispara de cerca. El proyectil cae donde estaba el objetivo.",
+      "cost": 180,
+      "targetsGround": true,
+      "targetsAir": false,
+      "metalEfficiency": 0.5,
+      "attack": "mortar",
+      "projectileSpeed": 0.0,
+      "footprintRadius": 0.8999999761581421,
+      "levels": [
+        {
+          "damage": 180,
+          "interval": 4.5,
+          "range": 10.0,
+          "minRange": 3.0,
+          "areaRadius": 2.25,
+          "flightTime": 2.0
+        },
+        {
+          "damage": 240,
+          "interval": 4.0,
+          "range": 11.0,
+          "minRange": 3.0,
+          "areaRadius": 2.6,
+          "flightTime": 1.8
+        }
+      ]
+    },
+    {
+      "id": "bombardera",
+      "displayName": "Torre bombardera",
+      "shortName": "Bombardera",
+      "description": "Bomba que persigue y explota en área. Solo tierra. El metal lo rompe a medias.",
+      "cost": 160,
+      "targetsGround": true,
+      "targetsAir": false,
+      "metalEfficiency": 0.5,
+      "attack": "area",
+      "projectileSpeed": 12.0,
+      "footprintRadius": 0.800000011920929,
+      "levels": [
+        {
+          "damage": 70,
+          "interval": 2.0,
+          "range": 6.5,
+          "areaRadius": 1.6
+        },
+        {
+          "damage": 95,
+          "interval": 1.8,
+          "range": 7.0,
+          "areaRadius": 1.9
+        }
+      ]
+    },
+    {
+      "id": "electrica",
+      "displayName": "Torre eléctrica",
+      "shortName": "Eléctrica",
+      "description": "Descarga que salta entre enemigos cercanos. Tierra y aire. Alcance corto. No daña el metal.",
+      "cost": 170,
+      "targetsGround": true,
+      "targetsAir": true,
+      "metalEfficiency": 0.0,
+      "attack": "chain",
+      "projectileSpeed": 0.0,
+      "footprintRadius": 0.800000011920929,
+      "levels": [
+        {
+          "damage": 18,
+          "interval": 0.45,
+          "range": 4.5,
+          "chainJumps": 2,
+          "chainRadius": 3.0
+        },
+        {
+          "damage": 24,
+          "interval": 0.4,
+          "range": 5.0,
+          "chainJumps": 3,
+          "chainRadius": 3.25
+        }
+      ]
+    },
+    {
+      "id": "infernal",
+      "displayName": "Torre infernal",
+      "shortName": "Infernal",
+      "description": "Rayo que se queda con un objetivo y calienta en tres etapas. Tierra y aire. Solo en la etapa máxima rompe el metal.",
+      "cost": 200,
+      "targetsGround": true,
+      "targetsAir": true,
+      "metalEfficiency": 1.0,
+      "attack": "inferno",
+      "projectileSpeed": 0.0,
+      "footprintRadius": 0.8999999761581421,
+      "levels": [
+        {
+          "interval": 0.1,
+          "range": 6.5,
+          "rampDps": [
+            20,
+            55,
+            120
+          ],
+          "rampTimes": [
+            0,
+            2.0,
+            5.0
+          ]
+        },
+        {
+          "interval": 0.1,
+          "range": 7.0,
+          "rampDps": [
+            25,
+            70,
+            150
+          ],
+          "rampTimes": [
+            0,
+            1.5,
+            4.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oro",
+      "displayName": "Torre de oro",
+      "shortName": "Oro",
+      "description": "No ataca: suma oro cada ciclo hasta llenarse. Clic en la torre para recogerlo.",
+      "cost": 175,
+      "targetsGround": false,
+      "targetsAir": false,
+      "metalEfficiency": 0.0,
+      "attack": "gold",
+      "projectileSpeed": 0.0,
+      "footprintRadius": 0.800000011920929,
+      "levels": [
+        {
+          "goldPerCycle": 10,
+          "goldCycle": 8.0,
+          "goldCapacity": 50
+        },
+        {
+          "goldPerCycle": 15,
+          "goldCycle": 6.0,
+          "goldCapacity": 90
+        }
+      ]
+    },
+    {
+      "id": "lanzallamas",
+      "displayName": "Lanzallamas",
+      "shortName": "Lanzallamas",
+      "description": "Ráfaga de pulsos en línea que quema y deja fuego en el camino. Tierra y aire. No daña el metal.",
+      "cost": 190,
+      "targetsGround": true,
+      "targetsAir": true,
+      "metalEfficiency": 0.0,
+      "attack": "flame",
+      "projectileSpeed": 0.0,
+      "footprintRadius": 0.800000011920929,
+      "levels": [
+        {
+          "damage": 12,
+          "pulseInterval": 0.2,
+          "burstDuration": 1.2,
+          "interval": 3.0,
+          "range": 6.5,
+          "flameWidth": 1.0,
+          "burnDps": 8,
+          "burnDuration": 4.0
+        },
+        {
+          "damage": 16,
+          "pulseInterval": 0.2,
+          "burstDuration": 1.4,
+          "interval": 2.8,
+          "range": 7.0,
+          "flameWidth": 1.2,
+          "burnDps": 12,
+          "burnDuration": 5.0
+        }
+      ]
+    }
+  ],
+  "enemies": [
+    {
+      "id": "duende",
+      "code": "D",
+      "displayName": "Duende común",
+      "layer": "ground",
+      "hp": 100,
+      "armor": 0,
+      "travelTime": 30.0,
+      "travelTimeExposed": 0.0,
+      "baseDamage": 10,
+      "gold": 20,
+      "heavy": false,
+      "miniboss": false,
+      "counterHint": "Cualquier torre de tierra lo frena."
+    },
+    {
+      "id": "esqueleto",
+      "code": "E",
+      "displayName": "Esqueleto",
+      "layer": "ground",
+      "hp": 60,
+      "armor": 0,
+      "travelTime": 24.0,
+      "travelTimeExposed": 0.0,
+      "baseDamage": 5,
+      "gold": 12,
+      "heavy": false,
+      "miniboss": false,
+      "counterHint": "Rápido y en grupo: arqueras y daño en área."
+    },
+    {
+      "id": "esbirro",
+      "code": "V",
+      "displayName": "Esbirro volador",
+      "layer": "air",
+      "hp": 90,
+      "armor": 0,
+      "travelTime": 26.0,
+      "travelTimeExposed": 0.0,
+      "baseDamage": 10,
+      "gold": 20,
+      "heavy": false,
+      "miniboss": false,
+      "counterHint": "Vuela: el Cañón no lo alcanza. Arqueras o Mago."
+    },
+    {
+      "id": "blindado",
+      "code": "A",
+      "displayName": "Duende con armadura",
+      "layer": "ground",
+      "hp": 120,
+      "armor": 240,
+      "travelTime": 40.0,
+      "travelTimeExposed": 30.0,
+      "baseDamage": 20,
+      "gold": 45,
+      "heavy": false,
+      "miniboss": false,
+      "counterHint": "Metal: las arqueras no lo dañan. Cañón (o Mago, más lento)."
+    },
+    {
+      "id": "tanque",
+      "code": "T",
+      "displayName": "Duende tanque",
+      "layer": "ground",
+      "hp": 500,
+      "armor": 0,
+      "travelTime": 45.0,
+      "travelTimeExposed": 0.0,
+      "baseDamage": 25,
+      "gold": 50,
+      "heavy": true,
+      "miniboss": false,
+      "counterHint": "Mucha vida y lento: Cañón o Infernal."
+    },
+    {
+      "id": "gigante",
+      "code": "G",
+      "displayName": "Duende gigante",
+      "layer": "ground",
+      "hp": 3000,
+      "armor": 0,
+      "travelTime": 70.0,
+      "travelTimeExposed": 0.0,
+      "baseDamage": 60,
+      "gold": 160,
+      "heavy": true,
+      "miniboss": true,
+      "counterHint": "Miniboss: concentrá daño en su camino."
+    },
+    {
+      "id": "dragon",
+      "code": "B",
+      "displayName": "Bebé dragón",
+      "layer": "air",
+      "hp": 2200,
+      "armor": 0,
+      "travelTime": 60.0,
+      "travelTimeExposed": 0.0,
+      "baseDamage": 60,
+      "gold": 160,
+      "heavy": false,
+      "miniboss": true,
+      "counterHint": "Miniboss volador: solo lo alcanzan las torres que atacan aire."
+    }
+  ],
+  "waves": [],
+  "waveRules": {
+    "order": "D E V T A",
+    "minibossAfter": 0.75,
+    "minibossGap": 3.0
+  }
+}

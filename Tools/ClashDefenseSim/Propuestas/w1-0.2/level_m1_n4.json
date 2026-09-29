@@ -1,0 +1,164 @@
+{
+ "id": "m1_n4",
+ "displayName": "Mundo 1 · Nivel 4 — La garganta",
+ "path": [],
+ "routes": [
+  {
+   "points": [
+    {
+     "x": 21.0,
+     "z": -8.0
+    },
+    {
+     "x": 12.0,
+     "z": -8.0
+    },
+    {
+     "x": 12.0,
+     "z": 0.0
+    },
+    {
+     "x": 12.0,
+     "z": 7.0
+    },
+    {
+     "x": -4.0,
+     "z": 7.0
+    },
+    {
+     "x": -4.0,
+     "z": 0.0
+    },
+    {
+     "x": -14.0,
+     "z": 0.0
+    },
+    {
+     "x": -14.0,
+     "z": -7.0
+    }
+   ]
+  },
+  {
+   "points": [
+    {
+     "x": 21.0,
+     "z": -8.0
+    },
+    {
+     "x": 12.0,
+     "z": -8.0
+    },
+    {
+     "x": 12.0,
+     "z": 0.0
+    },
+    {
+     "x": 4.0,
+     "z": 0.0
+    },
+    {
+     "x": 4.0,
+     "z": -7.0
+    },
+    {
+     "x": -4.0,
+     "z": -7.0
+    },
+    {
+     "x": -4.0,
+     "z": 0.0
+    },
+    {
+     "x": -14.0,
+     "z": 0.0
+    },
+    {
+     "x": -14.0,
+     "z": -7.0
+    }
+   ]
+  }
+ ],
+ "pathWidth": 2.200000047683716,
+ "buildArea": {
+  "minX": -20.0,
+  "minZ": -11.0,
+  "maxX": 20.0,
+  "maxZ": 11.0
+ },
+ "blocked": [
+  {
+   "x": 17.0,
+   "z": 3.0,
+   "radius": 2.0
+  },
+  {
+   "x": -12.0,
+   "z": 8.0,
+   "radius": 1.5
+  },
+  {
+   "x": -18.5,
+   "z": -2.5,
+   "radius": 1.2000000476837158
+  },
+  {
+   "x": 8.0,
+   "z": -9.800000190734863,
+   "radius": 1.2000000476837158
+  },
+  {
+   "x": 17.0,
+   "z": -4.5,
+   "radius": 2.0
+  },
+  {
+   "x": 8.0,
+   "z": -3.799999952316284,
+   "radius": 1.899999976158142
+  }
+ ],
+ "baseRadius": 1.600000023841858,
+ "tutorialTowerId": "",
+ "tutorialHint": {
+  "x": 0.0,
+  "z": 0.0,
+  "radius": 0.0
+ },
+ "waves": [
+  {
+   "composition": "D12 E8",
+   "spawnInterval": 1.3
+  },
+  {
+   "composition": "D10 E12 V6",
+   "spawnInterval": 1.2
+  },
+  {
+   "composition": "D8 E8 T2",
+   "spawnInterval": 1.1
+  },
+  {
+   "composition": "D12 E14 T3",
+   "spawnInterval": 1.05
+  },
+  {
+   "composition": "D10 E10 V8 T3",
+   "spawnInterval": 1.0
+  },
+  {
+   "composition": "D14 E16 V10 T4",
+   "spawnInterval": 0.9
+  },
+  {
+   "composition": "D16 E18 V12 T5",
+   "spawnInterval": 0.85
+  },
+  {
+   "composition": "D18 E20 V14 T6",
+   "spawnInterval": 0.8
+  }
+ ],
+ "theme": "desfiladero"
+}

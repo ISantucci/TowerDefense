@@ -9,7 +9,11 @@
       "mcp__ai-game-developer__gameobject-find",
       "mcp__ai-game-developer__gameobject-component-get",
       "mcp__ai-game-developer__console-get-logs",
-      "mcp__ai-game-developer__script-execute"
+      "mcp__ai-game-developer__script-execute",
+      "mcp__ai-game-developer__list_engine_instances",
+      "mcp__ai-game-developer__select_engine_instance",
+      "mcp__ai-game-developer__list-engine-instances",
+      "mcp__ai-game-developer__select-engine-instance"
     ]
   },
   "enableAllProjectMcpServers": true,

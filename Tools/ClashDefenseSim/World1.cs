@@ -21,6 +21,13 @@ namespace ClashDefense.Sim
         static readonly string[] Unlocks = { "mortero", "bombardera", "electrica", "infernal", "oro", "lanzallamas" };
         static readonly string[] Initial = { "arqueras", "canon", "mago" };
 
+        /// <summary>Todas las apariciones del nivel, oleada por oleada, con el mismo programa que usa la partida.</summary>
+        public static IEnumerable<SpawnEntry> AllSpawns(BalanceData bal, LevelData lvl)
+        {
+            var starts = LevelGeometry.RoutePoints(lvl).Select(p => p[0]).ToList();
+            foreach (var w in lvl.waves) foreach (var s in WaveSchedule.Build(w, bal.waveRules, starts)) yield return s;
+        }
+
         public static List<string> TowersAt(int levelIndex)
         {
             var l = new List<string>(Initial);
@@ -42,14 +49,18 @@ namespace ClashDefense.Sim
                 case 1: comp = new[] { "arqueras", "canon", "mortero", "^", "mago", "^", "arqueras", "mortero", "^", "canon" }; break;
                 case 2: comp = new[] { "arqueras", "canon", "bombardera", "^", "mago", "arqueras", "^", "mortero", "^", "arqueras" }; break;
                 case 3: comp = new[] { "arqueras", "canon", "electrica", "^", "bombardera", "mago", "^", "mortero", "^", "arqueras", "electrica" }; break;
-                case 4: comp = new[] { "arqueras", "canon", "infernal", "^", "electrica", "bombardera", "^", "arqueras", "mortero", "^", "infernal" }; break;
-                default: comp = new[] { "arqueras", "oro", "canon", "infernal", "^", "electrica", "oro", "bombardera", "^", "arqueras", "mortero", "^", "infernal", "^", "mago" }; break;
+                // w1-0.2 (Doc 05 v2.0 §9.2): desde la primera oleada llegan unidades por las dos puertas o ramales; el jugador competente
+                // abre con dos Arqueras (lo más barato que cubre tierra y aire) antes de invertir en torres caras u Oro
+                case 4: comp = new[] { "arqueras", "arqueras", "canon", "infernal", "^", "electrica", "bombardera", "^", "arqueras", "mortero", "^", "infernal" }; break;
+                default: comp = new[] { "arqueras", "arqueras", "canon", "oro", "infernal", "^", "electrica", "oro", "bombardera", "^", "arqueras", "mortero", "^", "infernal", "^", "mago" }; break;
             }
             p["competente"] = Repeat(comp, 400);
             p["sin_mejoras"] = Repeat(comp.Where(c => c != "^").ToArray(), 400);
             p["solo_arqueras"] = Repeat(new[] { "arqueras", "arqueras", "^" }, 400);
             p["solo_canon"] = new[] { "arqueras" }.Concat(Repeat(new[] { "canon", "canon", "^" }, 400)).ToArray();
             p["lento"] = Repeat(comp, 400); // mismo plan con reacción de 4 s: un jugador que duda
+            // Doc 05 §15: la Torre de oro no debe ser compra obligatoria → el mismo plan sin Oro
+            if (comp.Contains("oro")) p["sin_oro"] = Repeat(comp.Where(c => c != "oro").ToArray(), 400);
             return p;
         }
 
@@ -183,7 +194,7 @@ namespace ClashDefense.Sim
                 if (errs.Count > 0) { Console.WriteLine($"{id}: DATOS INVÁLIDOS\n  " + string.Join("\n  ", errs)); bad++; continue; }
                 var probe = new Match(bal, lvl, false);
                 int enemies = 0, gold = 0;
-                foreach (var w in lvl.waves) foreach (var c in WaveSequence.Expand(w.sequence)) if (c != WaveSequence.Gap) { enemies++; gold += bal.enemies.First(e => e.code == c).gold; }
+                foreach (var s in AllSpawns(bal, lvl)) { enemies++; gold += bal.enemies.First(e => e.code == s.Code).gold; }
                 Console.WriteLine($"\n{id} «{lvl.displayName}» · {lvl.waves.Length} oleadas · {enemies} enemigos · {gold} de oro posible · recorridos {string.Join("/", probe.Routes.Select(r => r.Length.ToString("0")))} u · torres {string.Join(",", TowersAt(li))}");
                 Console.WriteLine($"  {"estrategia",-14} {"resultado",-9} {"★",1} {"vida",4} {"ol.",3} {"duración",8} {"sin usar",8} {"recog.",6}  filtrados por oleada   torres");
                 foreach (var kv in Plans(li))

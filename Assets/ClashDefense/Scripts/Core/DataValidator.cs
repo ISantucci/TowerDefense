@@ -23,6 +23,7 @@ namespace ClashDefense.Core
             else
             {
                 if (b.economy.startGold < 0) e.Add("economy.startGold < 0");
+                if (b.economy.tutorialStartGold < 0) e.Add("economy.tutorialStartGold < 0");
                 if (b.economy.baseHp <= 0) e.Add("economy.baseHp <= 0");
                 if (b.economy.upgradeCostFactor <= 0) e.Add("economy.upgradeCostFactor <= 0");
                 if (b.economy.sellRefundFactor < 0 || b.economy.sellRefundFactor > 1) e.Add("economy.sellRefundFactor fuera de [0,1]");
@@ -62,7 +63,19 @@ namespace ClashDefense.Core
                 if (en.baseDamage < 0) e.Add($"{n}: baseDamage < 0");
                 if (en.gold < 0) e.Add($"{n}: gold < 0");
             }
-            if (b.waves != null) ValidateWaves("balance", b.waves, codes, 1, e);
+            if (b.waveRules != null)
+            {
+                if (b.waveRules.minibossAfter < 0 || b.waveRules.minibossAfter > 1) e.Add("waveRules.minibossAfter fuera de [0,1]");
+                if (b.waveRules.minibossGap < 0) e.Add("waveRules.minibossGap < 0");
+                try
+                {
+                    var order = WaveSequence.Expand(b.waveRules.order ?? "");
+                    if (order.Count == 0) e.Add("waveRules.order: vacío");
+                    foreach (var c in order) if (!codes.Contains(c)) e.Add($"waveRules.order: '{c}' no es un enemigo");
+                }
+                catch (FormatException ex) { e.Add($"waveRules.order: {ex.Message}"); }
+            }
+            if (b.waves != null) ValidateWaves("balance", b.waves, codes, 1, e, b.waveRules);
             return e;
         }
 
@@ -87,7 +100,8 @@ namespace ClashDefense.Core
                 if (lv == null) { e.Add($"{ln}: falta"); continue; }
                 if (gold)
                 {
-                    if (lv.goldPerSecond <= 0) e.Add($"{ln}: goldPerSecond <= 0");
+                    if (lv.goldCycle > 0) { if (lv.goldPerCycle <= 0) e.Add($"{ln}: goldPerCycle <= 0 con goldCycle"); }
+                    else if (lv.goldPerSecond <= 0) e.Add($"{ln}: ni goldPerSecond ni goldCycle");
                     if (lv.goldCapacity < 1) e.Add($"{ln}: goldCapacity < 1");
                     continue;
                 }
@@ -98,7 +112,13 @@ namespace ClashDefense.Core
                     case AttackKind.Inferno:
                         if (lv.rampDps == null || lv.rampDps.Length == 0) e.Add($"{ln}: rampDps vacío");
                         else foreach (var d in lv.rampDps) if (d <= 0) { e.Add($"{ln}: rampDps con valor <= 0"); break; }
-                        if (lv.rampStep <= 0) e.Add($"{ln}: rampStep <= 0");
+                        if (lv.rampTimes != null && lv.rampTimes.Length > 0)
+                        {
+                            if (lv.rampDps == null || lv.rampTimes.Length != lv.rampDps.Length) e.Add($"{ln}: rampTimes y rampDps deben tener el mismo largo");
+                            else if (lv.rampTimes[0] != 0f) e.Add($"{ln}: rampTimes debe empezar en 0");
+                            else for (int k = 1; k < lv.rampTimes.Length; k++) if (lv.rampTimes[k] <= lv.rampTimes[k - 1]) { e.Add($"{ln}: rampTimes no crece"); break; }
+                        }
+                        else if (lv.rampStep <= 0) e.Add($"{ln}: ni rampStep ni rampTimes");
                         break;
                     case AttackKind.Mortar:
                         if (lv.damage <= 0) e.Add($"{ln}: damage <= 0");
@@ -115,6 +135,8 @@ namespace ClashDefense.Core
                         if (lv.damage <= 0) e.Add($"{ln}: damage <= 0");
                         if (lv.flameWidth <= 0) e.Add($"{ln}: flameWidth <= 0");
                         if (lv.burnDps < 0 || lv.burnDuration < 0) e.Add($"{ln}: quemadura negativa");
+                        if (lv.pulseInterval < 0 || lv.burstDuration < 0) e.Add($"{ln}: pulsos negativos");
+                        if (lv.pulseInterval > 0 && lv.burstDuration < lv.pulseInterval) e.Add($"{ln}: burstDuration menor que pulseInterval");
                         break;
                     default:
                         if (lv.damage <= 0) e.Add($"{ln}: damage <= 0");
@@ -124,7 +146,7 @@ namespace ClashDefense.Core
             }
         }
 
-        static void ValidateWaves(string owner, WaveData[] waves, HashSet<string> codes, int routeCount, List<string> e)
+        static void ValidateWaves(string owner, WaveData[] waves, HashSet<string> codes, int routeCount, List<string> e, WaveRulesData rules)
         {
             for (int w = 0; w < waves.Length; w++)
             {
@@ -132,6 +154,23 @@ namespace ClashDefense.Core
                 string n = $"{owner} wave {w + 1}";
                 if (wd == null) { e.Add($"{n}: falta"); continue; }
                 if (wd.spawnInterval <= 0) e.Add($"{n}: spawnInterval <= 0");
+                if (wd.IsComposition)
+                {
+                    if (rules == null) e.Add($"{n}: usa composition y el balance no trae waveRules");
+                    try
+                    {
+                        int real = 0;
+                        foreach (var kv in WaveSchedule.ParseComposition(wd.composition))
+                        {
+                            real += kv.Value;
+                            if (!codes.Contains(kv.Key)) e.Add($"{n}: código '{kv.Key}' no es un enemigo");
+                        }
+                        if (real == 0) e.Add($"{n}: composición sin enemigos");
+                    }
+                    catch (FormatException ex) { e.Add($"{n}: {ex.Message}"); }
+                    if (!string.IsNullOrEmpty(wd.miniboss) && !codes.Contains(wd.miniboss)) e.Add($"{n}: miniboss '{wd.miniboss}' no es un enemigo");
+                    continue;
+                }
                 try
                 {
                     var seq = WaveSequence.Expand(wd.sequence);
@@ -184,7 +223,7 @@ namespace ClashDefense.Core
             var codes = new HashSet<string>();
             if (b?.enemies != null) foreach (var en in b.enemies) if (en != null && !string.IsNullOrEmpty(en.code)) codes.Add(en.code);
             bool levelWaves = l.waves != null && l.waves.Length > 0;
-            if (levelWaves) ValidateWaves(n, l.waves, codes, Math.Max(1, routes.Count), e);
+            if (levelWaves) ValidateWaves(n, l.waves, codes, Math.Max(1, routes.Count), e, b?.waveRules);
             else if (b?.waves == null || b.waves.Length == 0) e.Add($"{n}: sin oleadas (ni en el nivel ni en el balance)");
             else if (routes.Count > 1) e.Add($"{n}: varios recorridos pero las oleadas del balance no los reparten");
             if (!string.IsNullOrEmpty(l.tutorialTowerId) && b?.towers != null && Array.Find(b.towers, t => t != null && t.id == l.tutorialTowerId) == null)

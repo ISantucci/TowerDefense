@@ -44,10 +44,11 @@ namespace ClashDefense.Core
         readonly float referenceLength;
         readonly float burnTick;
 
-        List<EnemyTypeData> waveSeq;    // null en un lugar vacío (".")
-        List<int> waveLanes;
-        float waveSpawnInterval;
-        int nextSpawnIndex, spawnedInWave;
+        List<SpawnEntry> waveSchedule;  // programa exacto de la oleada en curso (WaveSchedule)
+        readonly List<Vec2> routeStarts = new List<Vec2>();
+        /// <summary>Tipos de torre que ya descubrieron que el metal los anula en este nivel (Doc 05 v2.0 §8.2).</summary>
+        readonly HashSet<string> immuneKnown = new HashSet<string>();
+        int nextSpawnIndex;
         int waveTicks;          // el reloj se cuenta en pasos enteros: sin deriva de coma flotante
         long activeTicks;
         int stateTicks;
@@ -81,6 +82,8 @@ namespace ClashDefense.Core
         public IReadOnlyList<Tower> Towers => towers;
         public IReadOnlyList<Projectile> Projectiles => projectiles;
         public IReadOnlyList<FireZone> Fires => fires;
+        /// <summary>Si ese tipo de torre ya descubrió en este nivel que el metal lo anula (Doc 05 v2.0 §8.2).</summary>
+        public bool ImmuneKnown(string towerTypeId) => immuneKnown.Contains(towerTypeId);
         /// <summary>Las torres que el jugador puede usar en ESTA partida, con sus mejoras permanentes aplicadas.</summary>
         public IReadOnlyList<TowerTypeData> TowerTypes => towerOrder;
 
@@ -93,7 +96,7 @@ namespace ClashDefense.Core
             if (errors.Count > 0) throw new InvalidOperationException("Datos inválidos:\n - " + string.Join("\n - ", errors));
             this.balance = balance;
             this.level = level;
-            foreach (var pts in LevelGeometry.RoutePoints(level)) routes.Add(new PathTrack(pts));
+            foreach (var pts in LevelGeometry.RoutePoints(level)) { routes.Add(new PathTrack(pts)); routeStarts.Add(pts[0]); }
             referenceLength = routes[0].Length;
             waves = level.waves != null && level.waves.Length > 0 ? level.waves : balance.waves;
             burnTick = balance.timing.burnTick;   // el validador lo exige > 0 cuando hay torres que queman
@@ -108,7 +111,8 @@ namespace ClashDefense.Core
             }
             foreach (var e in balance.enemies) enemyByCode[e.code] = e;
             TutorialEnabled = options.Tutorial && !string.IsNullOrEmpty(level.tutorialTowerId) && towerTypes.ContainsKey(level.tutorialTowerId);
-            Gold = balance.economy.startGold;
+            // Doc 05 v2.0 §5.1: la primera partida del Nivel 1 (la del tutorial) arranca con menos oro
+            Gold = TutorialEnabled && balance.economy.tutorialStartGold > 0 ? balance.economy.tutorialStartGold : balance.economy.startGold;
             BaseHp = balance.economy.baseHp;
         }
 
@@ -247,14 +251,8 @@ namespace ClashDefense.Core
         {
             WaveNumber = n;
             var wd = waves[n - 1];
-            waveSeq = new List<EnemyTypeData>();
-            foreach (var code in WaveSequence.Expand(wd.sequence)) waveSeq.Add(code == WaveSequence.Gap ? null : enemyByCode[code]);
-            waveLanes = new List<int>();
-            if (!string.IsNullOrEmpty(wd.lanes))
-                foreach (var l in WaveSequence.Expand(wd.lanes)) waveLanes.Add(int.Parse(l));
-            waveSpawnInterval = wd.spawnInterval;
+            waveSchedule = WaveSchedule.Build(wd, balance.waveRules, routeStarts);
             nextSpawnIndex = 0;
-            spawnedInWave = 0;
             waveTicks = 0;
             SetState(MatchState.Wave);
             Emit(new SimEvent { Type = SimEventType.WaveStarted, Int1 = n, Int2 = WaveCount });
@@ -264,12 +262,11 @@ namespace ClashDefense.Core
         void SpawnDue()
         {
             double waveTime = waveTicks * (double)Step;
-            while (nextSpawnIndex < waveSeq.Count && nextSpawnIndex * (double)waveSpawnInterval <= waveTime + Eps)
+            while (nextSpawnIndex < waveSchedule.Count && waveSchedule[nextSpawnIndex].Time <= waveTime + Eps)
             {
-                var type = waveSeq[nextSpawnIndex++];
-                if (type == null) continue; // lugar vacío
-                int route = waveLanes.Count > 0 ? waveLanes[spawnedInWave % waveLanes.Count] : 0;
-                spawnedInWave++;
+                var entry = waveSchedule[nextSpawnIndex++];
+                var type = enemyByCode[entry.Code];
+                int route = entry.Route;
                 var track = routes[route];
                 var e = new Enemy
                 {
@@ -292,7 +289,7 @@ namespace ClashDefense.Core
 
         void CheckWaveCleared()
         {
-            if (nextSpawnIndex < waveSeq.Count) return;
+            if (nextSpawnIndex < waveSchedule.Count) return;
             for (int i = 0; i < enemies.Count; i++) if (enemies[i].Alive) return;
             Emit(new SimEvent { Type = SimEventType.WaveCleared, Int1 = WaveNumber, Int2 = WaveCount });
             if (WaveNumber >= WaveCount) EndMatch(MatchState.Victory, "victoria");
@@ -334,6 +331,7 @@ namespace ClashDefense.Core
             {
                 var t = towers[i];
                 if (t.Type.attack == AttackKind.Gold) { Produce(t, dt); continue; }
+                if (t.PulsesLeft > 0) UpdateBurst(t, dt);
                 if (t.Cooldown > 0f)
                 {
                     t.Cooldown -= dt;
@@ -423,7 +421,7 @@ namespace ClashDefense.Core
             return true;
         }
 
-        bool ValidFor(Tower t, Enemy e) => e.Alive && CanTarget(t.Type, e.Layer) && !(e.Armored && t.KnownImmune.Contains(e.Id)) && InReach(t, e);
+        bool ValidFor(Tower t, Enemy e) => e.Alive && CanTarget(t.Type, e.Layer) && !(e.Armored && immuneKnown.Contains(t.Type.id)) && InReach(t, e);
 
         /// <summary>Objetivo válido con menor distancia restante hasta SU llegada (Doc 03 §14); empate: el que apareció antes (S1).</summary>
         public Enemy FindTarget(Tower t)
@@ -552,7 +550,8 @@ namespace ClashDefense.Core
             return true;
         }
 
-        // ---- Lanzallamas: fija el punto del objetivo y lanza una ráfaga lineal; quema y deja fuego en el piso (Doc 04 §6.6)
+        // ---- Lanzallamas: fija el punto del objetivo y lanza una ráfaga lineal; quema y deja fuego en el piso (Doc 04 §6.6).
+        // Con pulseInterval > 0 la ráfaga son pulsos (Doc 05 v2.0 §6.7): el primero sale ya, el resto cada pulseInterval, sobre la misma línea.
         bool FireFlame(Tower t)
         {
             var target = FindTarget(t);
@@ -565,17 +564,46 @@ namespace ClashDefense.Core
             var b = t.Position + dir * s.range;
             float half = s.flameWidth * 0.5f;
             Emit(new SimEvent { Type = SimEventType.Shot, TowerId = t.Id, EnemyId = target.Id, Int1 = 0, Text = t.Type.id, Pos = a, Aim = b, Float1 = s.burnDuration, Float2 = s.flameWidth });
+            if (s.pulseInterval > 0f && s.burstDuration > 0f)
+            {
+                t.BurstA = a;
+                t.BurstB = b;
+                t.PulsesLeft = Math.Max(1, (int)Math.Round(s.burstDuration / s.pulseInterval));
+                t.PulseTimer = 0f;
+                Pulse(t);
+            }
+            else FlameHit(t, a, b, half);
+            if (s.burnDuration > 0f)
+                fires.Add(new FireZone { Id = nextFireId++, TowerId = t.Id, TowerType = t.Type, A = a, B = b, HalfWidth = half, TimeLeft = s.burnDuration, Duration = s.burnDuration, BurnDps = s.burnDps });
+            return true;
+        }
+
+        void UpdateBurst(Tower t, float dt)
+        {
+            t.PulseTimer -= dt;
+            if (t.PulseTimer <= Eps) Pulse(t);
+        }
+
+        void Pulse(Tower t)
+        {
+            var s = t.Stats;
+            FlameHit(t, t.BurstA, t.BurstB, s.flameWidth * 0.5f);
+            t.PulsesLeft--;
+            t.PulseTimer += s.pulseInterval;
+        }
+
+        void FlameHit(Tower t, Vec2 a, Vec2 b, float half)
+        {
+            var s = t.Stats;
             for (int i = 0; i < enemies.Count; i++)
             {
                 var e = enemies[i];
                 if (!e.Alive || !CanTarget(t.Type, e.Layer)) continue;
+                if (e.Armored && immuneKnown.Contains(t.Type.id)) continue; // ya sabe que el metal lo anula (§8.2)
                 if (Vec2.DistanceToSegment(e.Position, a, b) > half) continue;
                 ApplyHit(e, s.damage, t.Type, t, t.Id);
                 if (e.Alive && !e.Armored) ApplyBurn(e, s.burnDps, s.burnDuration, t);
             }
-            if (s.burnDuration > 0f)
-                fires.Add(new FireZone { Id = nextFireId++, TowerId = t.Id, TowerType = t.Type, A = a, B = b, HalfWidth = half, TimeLeft = s.burnDuration, Duration = s.burnDuration, BurnDps = s.burnDps });
-            return true;
         }
 
         void ApplyBurn(Enemy e, float dps, float duration, Tower source)
@@ -645,8 +673,16 @@ namespace ClashDefense.Core
         void Produce(Tower t, float dt)
         {
             var s = t.Stats;
-            if (t.Stored >= s.goldCapacity - Eps) return;
-            t.Stored = Math.Min(s.goldCapacity, t.Stored + s.goldPerSecond * dt);
+            if (t.Stored >= s.goldCapacity - Eps) return;   // lleno: deja de producir (el ciclo no avanza)
+            if (s.goldCycle > 0f)
+            {
+                // por ciclos (Doc 05 v2.0 §6.6): suma goldPerCycle al completar cada ciclo
+                t.CycleTime += dt;
+                if (t.CycleTime < s.goldCycle - Eps) return;
+                t.CycleTime -= s.goldCycle;
+                t.Stored = Math.Min(s.goldCapacity, t.Stored + s.goldPerCycle);
+            }
+            else t.Stored = Math.Min(s.goldCapacity, t.Stored + s.goldPerSecond * dt);
             if (t.Stored >= s.goldCapacity - Eps && !t.Full)
             {
                 t.Full = true;
@@ -684,7 +720,8 @@ namespace ClashDefense.Core
                 float eff = type.metalEfficiency;
                 if (eff <= 0f)
                 {
-                    bool discovery = recordImmunity && tower != null && tower.KnownImmune.Add(e.Id);
+                    // el descubrimiento es del tipo de torre y dura el nivel (Doc 05 v2.0 §8.2)
+                    bool discovery = recordImmunity && tower != null && immuneKnown.Add(type.id);
                     Emit(new SimEvent { Type = SimEventType.AttackImmune, EnemyId = e.Id, TowerId = towerId, Int1 = discovery ? 1 : 0, Text = type.id, Pos = e.Position });
                     return;
                 }
@@ -806,7 +843,11 @@ namespace ClashDefense.Core
             Gold -= cost;
             t.Level++;
             t.Invested += cost;
-            if (t.Type.attack == AttackKind.Gold && t.Stored < t.Stats.goldCapacity - Eps) t.Full = false; // la capacidad nueva vuelve a producir
+            if (t.Type.attack == AttackKind.Gold)
+            {
+                if (t.Stored < t.Stats.goldCapacity - Eps) t.Full = false; // la capacidad nueva vuelve a producir
+                t.CycleTime = 0f;                                           // la producción recomienza al terminar la mejora (§6.6)
+            }
             Emit(new SimEvent { Type = SimEventType.TowerUpgraded, TowerId = t.Id, Text = t.Type.id, Int1 = cost, Int2 = t.Level, Pos = t.Position });
             Emit(new SimEvent { Type = SimEventType.GoldChanged, Int1 = -cost, Int2 = Gold, Text = "mejora", Pos = t.Position });
             reason = RejectReason.None;

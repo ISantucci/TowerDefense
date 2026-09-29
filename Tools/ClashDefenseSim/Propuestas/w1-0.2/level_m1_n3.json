@@ -1,0 +1,147 @@
+{
+ "id": "m1_n3",
+ "displayName": "Mundo 1 · Nivel 3 — El cruce",
+ "path": [],
+ "routes": [
+  {
+   "points": [
+    {
+     "x": -21.0,
+     "z": 8.0
+    },
+    {
+     "x": -6.0,
+     "z": 8.0
+    },
+    {
+     "x": -6.0,
+     "z": 0.0
+    },
+    {
+     "x": 6.0,
+     "z": 0.0
+    },
+    {
+     "x": 6.0,
+     "z": 7.0
+    },
+    {
+     "x": 15.0,
+     "z": 7.0
+    },
+    {
+     "x": 15.0,
+     "z": -6.0
+    },
+    {
+     "x": 8.0,
+     "z": -6.0
+    }
+   ]
+  },
+  {
+   "points": [
+    {
+     "x": -21.0,
+     "z": -8.0
+    },
+    {
+     "x": -6.0,
+     "z": -8.0
+    },
+    {
+     "x": -6.0,
+     "z": 0.0
+    },
+    {
+     "x": 6.0,
+     "z": 0.0
+    },
+    {
+     "x": 6.0,
+     "z": 7.0
+    },
+    {
+     "x": 15.0,
+     "z": 7.0
+    },
+    {
+     "x": 15.0,
+     "z": -6.0
+    },
+    {
+     "x": 8.0,
+     "z": -6.0
+    }
+   ]
+  }
+ ],
+ "pathWidth": 2.200000047683716,
+ "buildArea": {
+  "minX": -20.0,
+  "minZ": -11.0,
+  "maxX": 20.0,
+  "maxZ": 11.0
+ },
+ "blocked": [
+  {
+   "x": -14.0,
+   "z": 0.0,
+   "radius": 2.0
+  },
+  {
+   "x": 0.0,
+   "z": 5.5,
+   "radius": 1.600000023841858
+  },
+  {
+   "x": 18.5,
+   "z": 9.5,
+   "radius": 1.2000000476837158
+  },
+  {
+   "x": 1.0,
+   "z": -8.0,
+   "radius": 1.5
+  }
+ ],
+ "baseRadius": 1.600000023841858,
+ "tutorialTowerId": "",
+ "tutorialHint": {
+  "x": 0.0,
+  "z": 0.0,
+  "radius": 0.0
+ },
+ "waves": [
+  {
+   "composition": "D12 E6",
+   "spawnInterval": 1.3
+  },
+  {
+   "composition": "D10 E10 V4",
+   "spawnInterval": 1.2
+  },
+  {
+   "composition": "D12 E12 V6",
+   "spawnInterval": 1.1
+  },
+  {
+   "composition": "D10 E16 V8",
+   "spawnInterval": 1.0
+  },
+  {
+   "composition": "D14 E14 V10",
+   "spawnInterval": 0.9
+  },
+  {
+   "composition": "D16 E18 V12",
+   "spawnInterval": 0.85
+  },
+  {
+   "composition": "D18 E20 V14",
+   "spawnInterval": 0.8,
+   "miniboss": "G"
+  }
+ ],
+ "theme": "praderas"
+}

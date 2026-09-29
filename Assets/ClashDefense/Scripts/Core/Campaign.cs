@@ -14,8 +14,12 @@ namespace ClashDefense.Core
         public string currencyName;
         /// <summary>Multiplicador de la recompensa por estrellas (Doc 05 §9): [1★, 2★, 3★].</summary>
         public float[] starMultipliers;
-        /// <summary>Qué fracción de la recompensa paga una victoria repetida (GDS-002.3 S18).</summary>
+        /// <summary>Qué fracción de la recompensa paga una victoria repetida (GDS-002.3 S18). Sin uso con bestResultOnly.</summary>
         public float replayFactor;
+        /// <summary>Regla de mejor resultado (Doc 05 v2.0 §12.2, GDS-004.2): cada nivel paga una sola vez la diferencia al mejorar su récord
+        /// de estrellas; el valor de cada estrella se redondea con 0,5 hacia arriba. Con esta regla la moneda es función del guardado:
+        /// suma de los valores de los récords menos lo comprado, y así se recalcula al cargar (migración de guardados viejos).</summary>
+        public bool bestResultOnly;
         public string[] initialTowers;
         /// <summary>Las doce torres de la beta, en orden de desbloqueo (Doc 04 §7).</summary>
         public RosterEntry[] roster;
@@ -88,11 +92,16 @@ namespace ClashDefense.Core
         public StatMod[] mods;
     }
 
+    /// <summary>Mejora de tanda; desde el Doc 05 v2.0 §7.1, Insignia de maestría: una por tanda completada, redistribuible.</summary>
     [Serializable]
     public class TandaData
     {
         public string description;
         public TandaOption[] options;
+        /// <summary>Máximo de insignias por torre (Doc 05 v2.0 §7.1: 2). 0 = sin tope.</summary>
+        public int maxPerTower;
+        /// <summary>Si se pueden devolver y reasignar gratis desde el mapa (Doc 05 v2.0 §7.1).</summary>
+        public bool redistributable;
     }
 
     [Serializable]
@@ -173,6 +182,46 @@ namespace ClashDefense.Core
             s.seenWorlds = s.seenWorlds ?? new string[0];
             if (Campaign.initialTowers != null)
                 foreach (var t in Campaign.initialTowers) s.unlockedTowers = Add(s.unlockedTowers, t);
+            MigrateInsignias();
+            if (Campaign.bestResultOnly) RecomputeCurrency();
+        }
+
+        /// <summary>Tope de insignias por torre: lo que un guardado viejo tenga de más vuelve a quedar sin asignar.</summary>
+        void MigrateInsignias()
+        {
+            int max = Campaign.tanda != null ? Campaign.tanda.maxPerTower : 0;
+            if (max <= 0) return;
+            var kept = new List<string>();
+            foreach (var pick in Save.tandaPicks)
+            {
+                int c = 0; foreach (var k in kept) if (k == pick) c++;
+                if (c < max) kept.Add(pick); else Save.tandaPending++;
+            }
+            Save.tandaPicks = kept.ToArray();
+        }
+
+        /// <summary>Doc 05 v2.0 §12: la moneda es la suma de los valores de los récords menos las compras que existen en la tienda.
+        /// Una compra que la tienda ya no tiene se descarta (se devuelve).</summary>
+        void RecomputeCurrency()
+        {
+            int earned = 0;
+            foreach (var r in Save.levels)
+            {
+                var lm = FindLevel(r.id);
+                r.currencyEarned = lm != null ? StarValue(lm, r.stars) : 0;
+                earned += r.currencyEarned;
+            }
+            var kept = new List<string>();
+            int spent = 0;
+            foreach (var id in Save.purchased)
+            {
+                var item = FindShopItem(id);
+                if (item == null || kept.Contains(id)) continue;
+                kept.Add(id);
+                spent += item.cost;
+            }
+            Save.purchased = kept.ToArray();
+            Save.currency = Math.Max(0, earned - spent);
         }
 
         static string[] Add(string[] arr, string v)
@@ -292,6 +341,10 @@ namespace ClashDefense.Core
             return new MatchOptions { Tutorial = tutorial, AllowedTowers = new List<string>(Save.unlockedTowers), Mods = mods };
         }
 
+        /// <summary>Valor acumulado de un récord de estrellas (Doc 05 v2.0 §12.1): baseReward × multiplicador, 0,5 hacia arriba.</summary>
+        public int StarValue(LevelMeta lm, int stars) =>
+            lm == null || stars <= 0 ? 0 : (int)Math.Round(lm.baseReward * (double)StarMultiplier(stars), MidpointRounding.AwayFromZero);
+
         public float StarMultiplier(int stars)
         {
             if (stars <= 0 || Campaign.starMultipliers == null || Campaign.starMultipliers.Length == 0) return 0f;
@@ -305,6 +358,7 @@ namespace ClashDefense.Core
             var lm = FindLevel(levelId);
             if (lm == null || stars <= 0) return 0;
             var rec = Peek(levelId);
+            if (Campaign.bestResultOnly) return Math.Max(0, StarValue(lm, stars) - StarValue(lm, rec.stars));
             float m = StarMultiplier(stars);
             if (rec.wins == 0) return (int)Math.Round(lm.baseReward * m);
             int r = (int)Math.Round(lm.baseReward * Campaign.replayFactor * m);
@@ -386,18 +440,35 @@ namespace ClashDefense.Core
             return true;
         }
 
-        /// <summary>Aplica una mejora de tanda pendiente a una torre base (Doc 02 §8). Se puede repetir la misma torre.</summary>
+        /// <summary>Aplica una mejora de tanda (insignia) pendiente a una torre base (Doc 02 §8, Doc 05 v2.0 §7.1).
+        /// Se puede repetir la misma torre hasta el tope.</summary>
         public bool ChooseTanda(string towerId)
         {
             if (Save.tandaPending <= 0 || Campaign.tanda?.options == null) return false;
             bool valid = false;
             foreach (var o in Campaign.tanda.options) if (o.tower == towerId) valid = true;
             if (!valid) return false;
+            if (Campaign.tanda.maxPerTower > 0 && TandaTier(towerId) >= Campaign.tanda.maxPerTower) return false;
             var n = new string[Save.tandaPicks.Length + 1];
             Array.Copy(Save.tandaPicks, n, Save.tandaPicks.Length);
             n[Save.tandaPicks.Length] = towerId;
             Save.tandaPicks = n;
             Save.tandaPending--;
+            return true;
+        }
+
+        /// <summary>Devuelve una insignia de esa torre a las pendientes, gratis (Doc 05 v2.0 §7.1). Solo desde el mapa: la capa de juego
+        /// no lo ofrece durante una partida.</summary>
+        public bool ReturnTanda(string towerId)
+        {
+            if (Campaign.tanda == null || !Campaign.tanda.redistributable) return false;
+            int i = Array.LastIndexOf(Save.tandaPicks, towerId);
+            if (i < 0) return false;
+            var n = new string[Save.tandaPicks.Length - 1];
+            Array.Copy(Save.tandaPicks, 0, n, 0, i);
+            Array.Copy(Save.tandaPicks, i + 1, n, i, Save.tandaPicks.Length - i - 1);
+            Save.tandaPicks = n;
+            Save.tandaPending++;
             return true;
         }
 

@@ -1,0 +1,162 @@
+{
+ "id": "m1_n5",
+ "displayName": "Mundo 1 · Nivel 5 — Dos puertas",
+ "path": [],
+ "routes": [
+  {
+   "points": [
+    {
+     "x": -21.0,
+     "z": 0.0
+    },
+    {
+     "x": -12.0,
+     "z": 0.0
+    },
+    {
+     "x": -12.0,
+     "z": 9.0
+    },
+    {
+     "x": -2.0,
+     "z": 9.0
+    },
+    {
+     "x": -2.0,
+     "z": 4.0
+    },
+    {
+     "x": 8.0,
+     "z": 4.0
+    },
+    {
+     "x": 8.0,
+     "z": 9.0
+    },
+    {
+     "x": 14.0,
+     "z": 9.0
+    },
+    {
+     "x": 14.0,
+     "z": 0.0
+    }
+   ]
+  },
+  {
+   "points": [
+    {
+     "x": -21.0,
+     "z": 0.0
+    },
+    {
+     "x": -12.0,
+     "z": 0.0
+    },
+    {
+     "x": -12.0,
+     "z": -9.0
+    },
+    {
+     "x": -2.0,
+     "z": -9.0
+    },
+    {
+     "x": -2.0,
+     "z": -4.0
+    },
+    {
+     "x": 8.0,
+     "z": -4.0
+    },
+    {
+     "x": 8.0,
+     "z": -9.0
+    },
+    {
+     "x": 14.0,
+     "z": -9.0
+    },
+    {
+     "x": 14.0,
+     "z": 0.0
+    }
+   ]
+  }
+ ],
+ "pathWidth": 2.200000047683716,
+ "buildArea": {
+  "minX": -20.0,
+  "minZ": -11.0,
+  "maxX": 20.0,
+  "maxZ": 11.0
+ },
+ "blocked": [
+  {
+   "x": -16.5,
+   "z": 3.4000000953674316,
+   "radius": 2.200000047683716
+  },
+  {
+   "x": -16.5,
+   "z": -3.4000000953674316,
+   "radius": 2.200000047683716
+  },
+  {
+   "x": 18.0,
+   "z": 6.0,
+   "radius": 1.2000000476837158
+  },
+  {
+   "x": 18.0,
+   "z": -6.0,
+   "radius": 1.2000000476837158
+  }
+ ],
+ "baseRadius": 1.600000023841858,
+ "tutorialTowerId": "",
+ "tutorialHint": {
+  "x": 0.0,
+  "z": 0.0,
+  "radius": 0.0
+ },
+ "waves": [
+  {
+   "composition": "D12 E10 V4",
+   "spawnInterval": 1.25
+  },
+  {
+   "composition": "D10 E12 T2",
+   "spawnInterval": 1.2
+  },
+  {
+   "composition": "D12 E14 V8 T3",
+   "spawnInterval": 1.1
+  },
+  {
+   "composition": "D14 E16 V10 T4",
+   "spawnInterval": 1.05
+  },
+  {
+   "composition": "D10 E20 V12 T4",
+   "spawnInterval": 1.0
+  },
+  {
+   "composition": "D16 E18 V10 T5",
+   "spawnInterval": 0.95
+  },
+  {
+   "composition": "D18 E20 V12 T6",
+   "spawnInterval": 0.9
+  },
+  {
+   "composition": "D20 E22 V14 T7",
+   "spawnInterval": 0.85
+  },
+  {
+   "composition": "D22 E24 V16 T8",
+   "spawnInterval": 0.8
+  }
+ ],
+ "theme": "desfiladero"
+}

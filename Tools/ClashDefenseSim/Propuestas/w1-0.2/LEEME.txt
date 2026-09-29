@@ -1,0 +1,9 @@
+PROPUESTA w1-0.2 — Documento 05 v2.0 (28-09-2026) aplicado sobre la exportación w1-0.1 de Datos/.
+
+No es la fuente del juego: la fuente son los assets de Assets/ClashDefense/Data (PRJ-016). Esta carpeta existe para medir el
+Doc 05 v2.0 con el simulador antes de pasarlo a los assets (etapa B de TL-004). Cuando los assets lleven w1-0.2 y Unity
+exporte Datos/, esta carpeta se borra.
+
+Se regenera desde la exportación con:  python generar.py <carpeta>   (sobre una copia de Datos/)
+Se mide con:  dotnet run test Propuestas/w1-0.2   ·   dotnet run mundo1 Propuestas/w1-0.2   ·   dotnet run economia Propuestas/w1-0.2
+Supuestos y trazabilidad: GDS-004.2 y SOL-004.2 del proyecto ClashDefense en Vaultrum.

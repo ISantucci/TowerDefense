@@ -41,7 +41,8 @@ namespace ClashDefense.Core
         public float Cooldown;       // <= 0: lista para atacar
         public int Invested;         // costo + mejoras pagadas
         public bool Sold;
-        /// <summary>Enemigos que ESTA torre ya descubrió inmunes (S2: por torre individual).</summary>
+        /// <summary>Sin uso desde GDS-004.2: el descubrimiento de inmunidad es por tipo de torre y por nivel (Doc 05 v2.0 §8.2),
+        /// y lo guarda la partida (Match.ImmuneKnown). Se conserva para no romper a quien lo lea.</summary>
         public readonly HashSet<int> KnownImmune = new HashSet<int>();
         // Infernal: objetivo fijado y tiempo que lleva fijado
         public int LockedId;
@@ -50,6 +51,12 @@ namespace ClashDefense.Core
         // Oro: lo guardado y si llegó al tope
         public float Stored;
         public bool Full;
+        /// <summary>Oro por ciclo (Doc 05 v2.0 §6.6): segundos del ciclo en curso.</summary>
+        public float CycleTime;
+        // Lanzallamas por pulsos (Doc 05 v2.0 §6.7): pulsos que faltan de la ráfaga, espera al siguiente y la línea fijada
+        public int PulsesLeft;
+        public float PulseTimer;
+        public Vec2 BurstA, BurstB;
 
         public TowerLevelData Stats => Type.levels[Level - 1];
         public bool CanUpgrade => Level < Type.levels.Length;
@@ -60,7 +67,15 @@ namespace ClashDefense.Core
             get
             {
                 var s = Stats;
-                if (s.rampDps == null || s.rampDps.Length == 0 || s.rampStep <= 0f) return 0;
+                if (s.rampDps == null || s.rampDps.Length == 0) return 0;
+                if (s.rampTimes != null && s.rampTimes.Length == s.rampDps.Length)
+                {
+                    // umbrales explícitos (Doc 05 v2.0 §6.5): la etapa i empieza a los rampTimes[i] segundos fijado
+                    int k = 0;
+                    for (int i = 1; i < s.rampTimes.Length; i++) if (LockTime >= s.rampTimes[i] - 1e-4f) k = i;
+                    return k;
+                }
+                if (s.rampStep <= 0f) return 0;
                 int st = (int)(LockTime / s.rampStep + 1e-4f);
                 return st < 0 ? 0 : st >= s.rampDps.Length ? s.rampDps.Length - 1 : st;
             }

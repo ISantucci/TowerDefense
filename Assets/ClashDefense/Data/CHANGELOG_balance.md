@@ -28,6 +28,7 @@ El Mundo 1 (`TL-002`) tiene su propio archivo de balance: el P0 (`balance_p0.jso
 | Versión | Fecha | Qué cambió | Problema que intenta resolver | Resultado medido |
 |---|---|---|---|---|
 | w1-0.1 | 2026-09-27 | Línea base del Mundo 1: torres iniciales y D/E/V/A del Doc 05 sin tocar; seis torres, tres enemigos, economía persistente y seis niveles como hipótesis | — (línea base) | simulador: los seis niveles se ganan con 3★ con un plan competente en 5:25 / 6:32 / 7:19 / 8:28 / 9:37 / 11:25; Arqueras solas ganan 1–5 y pierden el 6; Cañón solo pierde el 5 y el 6 (`LDS-002.6`). Pendiente de playtest |
+| w1-0.2 | 2026-09-28 | **Propuesta, todavía no está en los assets.** Documento 05 v2.0 del owner tal cual: costos (Mortero 180, Bombardera 160, Eléctrica 170, Oro 175, Lanzallamas 190), estadísticas N1/N2, siete enemigos, oro inicial 150 (100 con tutorial), oleadas por composición (5 a 10 por nivel), moneda por mejor resultado (100 a 240 por nivel), tienda de seis mejoras e insignias de maestría. Vive en `Tools/ClashDefenseSim/Propuestas/w1-0.2` (`GDS-004.2`, `SOL-004.2`) | el owner: "demasiado source y muy poco sink" (`TL-004`); línea base en `MET-004.1` | simulador (`MET-004.1`, *Medición w1-0.2*): oro por bajas −7 a −54 %; holgura del competente 1,43 · 5,00 · 2,86 · 2,00 · 1,43 · 1,82; duración 3:12 a 8:29, **0 de 6 niveles** dentro de su objetivo del §11; Arqueras solas 3★ en 1–5. Pendiente: decisiones del owner y pasar a los assets (etapa B) |
 
 ## Valores del Mundo 1 que no vienen de los documentos
 
